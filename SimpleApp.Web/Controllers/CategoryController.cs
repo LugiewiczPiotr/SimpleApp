@@ -28,7 +28,7 @@ namespace SimpleApp.Web.Controllers
                 return NotFound();
             }
 
-            var category = _context.Category.Find(id);
+            var category = _context.Categories.Find(id);
             if (category == null)
             {
                 return NotFound();
@@ -63,7 +63,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var category = _context.Category.Find(id);
+            var category = _context.Categories.Find(id);
             if (category == null)
             {
                 return NotFound();
@@ -91,7 +91,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var category = _context.Category.Find(id);
+            var category = _context.Categories.Find(id);
             if(category == null)
             {
                 return NotFound();
@@ -104,8 +104,8 @@ namespace SimpleApp.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            var category = _context.Category.Find(id);
-            _context.Category.Remove(category);
+            var category = _context.Categories.Find(id);
+            _context.Categories.Remove(category);
             _context.SaveChanges();
             return RedirectToAction("Index");
 
