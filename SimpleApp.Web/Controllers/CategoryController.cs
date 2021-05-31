@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Infrastructure.Data;
 using SimpleApp.Core.Models;
-
+using System.Linq;
 
 namespace SimpleApp.Web.Controllers
 {
@@ -17,7 +17,7 @@ namespace SimpleApp.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View(_context.Categories.ToList()) ;
         }
 
         // GET: CategoryController/Details/5
