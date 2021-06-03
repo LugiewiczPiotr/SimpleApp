@@ -46,7 +46,7 @@ namespace SimpleApp.Web.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Name")] Category category)
+        public ActionResult Create(Category category)
         {
             if (ModelState.IsValid)
             {
