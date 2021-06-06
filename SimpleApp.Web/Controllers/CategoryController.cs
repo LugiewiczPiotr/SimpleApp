@@ -4,6 +4,7 @@ using SimpleApp.Infrastructure.Data;
 using SimpleApp.Core.Models;
 using System.Linq;
 using System;
+using SimpleApp.Web.Models;
 
 namespace SimpleApp.Web.Controllers
 {
@@ -18,7 +19,15 @@ namespace SimpleApp.Web.Controllers
 
         public ActionResult Index()
         {
-            return View(_context.Categories.ToList()) ;
+            var categories = _context.Categories.ToList();
+            var indexViewModel = new IndexViewModel()
+            {
+                CategoriesViewModels = categories.Select(x => new CategoryViewModel
+                {
+                    Name = x.Name
+                })
+            };
+            return View(indexViewModel) ;
         }
 
         // GET: CategoryController/Details/5
