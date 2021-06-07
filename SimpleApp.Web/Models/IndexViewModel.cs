@@ -4,6 +4,6 @@ namespace SimpleApp.Web.Models
 {
     public class IndexViewModel
     {
-        public IEnumerable<CategoryViewModel> CategoriesViewModels { get; set; }
+        public IList<CategoryViewModel> CategoriesViewModels { get; set; }
     }
 }

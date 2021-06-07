@@ -1,9 +1,10 @@
-﻿using SimpleApp.Core.Models;
+﻿using System;
 
 namespace SimpleApp.Web.Models
 {
-    public class CategoryViewModel : BaseModel
+    public class CategoryViewModel 
     {
+        public Guid id { get; set; }
         public string Name { get; set; }
         
     }

@@ -25,7 +25,7 @@ namespace SimpleApp.Web.Controllers
                 CategoriesViewModels = categories.Select(x => new CategoryViewModel
                 {
                     Name = x.Name
-                })
+                }).ToList
             };
             return View(indexViewModel) ;
         }
