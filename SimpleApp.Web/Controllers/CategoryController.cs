@@ -9,7 +9,7 @@ namespace SimpleApp.Web.Controllers
 {
     public class CategoryController : Controller
     {
-        // GET: CategoryController
+       
         private readonly AppDbContext _context;
         public CategoryController(AppDbContext context)
         {
@@ -18,7 +18,7 @@ namespace SimpleApp.Web.Controllers
 
         public ActionResult Index()
         {
-            var categories = _context.Categories.ToList();
+            var categories = _context.Categories;
             var indexViewModel = new IndexViewModel()
             {
                 CategoriesViewModels = categories.Select(x => new CategoryViewModel
@@ -103,17 +103,19 @@ namespace SimpleApp.Web.Controllers
             {
                 return View(categoryViewModel);
             }
-            var category = new Category()
-            {
-                Id = categoryViewModel.Id,
-                Name = categoryViewModel.Name
-            };
 
+            var category = _context.Categories.FirstOrDefault(x => x.Id == categoryViewModel.Id);
+            if(category == null)
+            {
+                return NotFound();
+            }
+            category.Name = categoryViewModel.Name;
             _context.Update(category);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
         // GET: CategoryController/Delete/5
+        [HttpGet]
         public ActionResult Delete(Guid id)
         {
             if (id == Guid.Empty)
@@ -135,20 +137,13 @@ namespace SimpleApp.Web.Controllers
         // POST: CategoryController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Guid id, CategoryViewModel categoryViewModel)
+        [ActionName("Delete")]
+        public ActionResult DeletePost(Guid id)
         {
-            
-            var category = new Category
-            {
-                Name = categoryViewModel.Name,
-                Id = categoryViewModel.Id
-            };
             var result = _context.Categories.Find(id);
             _context.Categories.Remove(result);
             _context.SaveChanges();
             return RedirectToAction("Index");
-
-
 
         }
     }
