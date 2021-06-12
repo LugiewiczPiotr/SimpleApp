@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core.Models;
 using SimpleApp.Infrastructure.Data;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using SimpleApp.Web.Models;
 
 namespace SimpleApp.Web.Controllers
 {
@@ -20,7 +17,19 @@ namespace SimpleApp.Web.Controllers
         // GET: ProductController1
         public ActionResult Index()
         {
-            return View(_context.Products.ToList());
+            var products = _context.Products;
+            var indexViewModel = new ViewModels.Product.IndexViewModel()
+            {
+                ProductsViewModels = products.Select(x => new ProductViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Price = x.Price,
+                    Description = x.Description,
+
+                }).ToList()
+            };
+            return View(indexViewModel);
         }
 
         // GET: ProductController1/Details/5
@@ -30,35 +39,47 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-
-            var product = _context.Products.Find(id);
+            var product = _context.Products.FirstOrDefault(x => x.Id == id);
             if(product == null)
             {
-                return (NotFound());
+                return NotFound();
             }
-
-            return View(product);
+            var productViewModel = new ProductViewModel
+            {
+                Id = product.Id,
+                Description = product.Description,
+                Name = product.Name,
+                Price = product.Price
+            };
+             
+            return View(productViewModel);
         }
 
         // GET: ProductController1/Create
         public ActionResult Create()
         {
-            return View();
+            var productViewModel = new ProductViewModel();
+            return View(productViewModel);
         }
 
         // POST: ProductController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Product product)
+        public ActionResult Create(ProductViewModel productViewModel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid == false)
             {
-                _context.Add(product);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-
+                return View(productViewModel);
             }
-            return View(product);
+            var product = new Product
+            {
+                Name = productViewModel.Name,
+                Description = productViewModel.Description,
+                Price = productViewModel.Price
+            };
+            _context.Add(product);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: ProductController1/Edit/5
@@ -66,32 +87,49 @@ namespace SimpleApp.Web.Controllers
         {
             if (id == Guid.Empty)
             {
-                return (NotFound());
+                return NotFound();
             }
-
-            var product = _context.Products.Find(id);
+            var product = _context.Products.FirstOrDefault(x => x.Id == id);
             if (product == null)
             {
-                return (NotFound());
+                return NotFound();
             }
-            return View(product);
+            var productViewModel = new ProductViewModel()
+            {
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price
+            };
+            return View(productViewModel);
         }
 
         // POST: ProductController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit(ProductViewModel productViewModel)
         {
-            if (ModelState.IsValid)
+
+            if (ModelState.IsValid == false)
             {
-                _context.Products.Update(product);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                return View(productViewModel);
             }
-            return View(product);
+
+            var product = _context.Products.FirstOrDefault(x => x.Id == productViewModel.Id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            product.Name = productViewModel.Name;
+            product.Description = productViewModel.Description;
+            product.Price = productViewModel.Price;
+
+            _context.Update(product);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: ProductController1/Delete/5
+        [HttpGet]
         public ActionResult Delete(Guid id)
         {
             if (id == Guid.Empty)
@@ -99,18 +137,25 @@ namespace SimpleApp.Web.Controllers
                 return NotFound();
             }
 
-            var product = _context.Products.Find(id);
+            var product = _context.Products.FirstOrDefault(x => x.Id == id);
             if (product == null)
             {
                 return (NotFound());
             }
-            return View(product);
+            var productViewModel = new ProductViewModel
+            {
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price
+            };
+            return View(productViewModel);
         }
 
         // POST: ProductController1/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Guid id, IFormCollection collection)
+        [ActionName("Delete")]
+        public ActionResult DeletePost(Guid id)
         {
             var product = _context.Products.Find(id);
             _context.Products.Remove(product);
