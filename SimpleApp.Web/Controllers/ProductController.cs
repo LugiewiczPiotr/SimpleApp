@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core.Models;
 using SimpleApp.Infrastructure.Data;
-using SimpleApp.Web.Models;
 using System;
 using System.Linq;
+using SimpleApp.Web.Models;
 
 namespace SimpleApp.Web.Controllers
 {
@@ -19,7 +18,7 @@ namespace SimpleApp.Web.Controllers
         public ActionResult Index()
         {
             var products = _context.Products;
-            var indexViewModel = new IndexViewModel
+            var indexViewModel = new ViewModels.Product.IndexViewModel()
             {
                 ProductsViewModels = products.Select(x => new ProductViewModel
                 {
@@ -43,7 +42,7 @@ namespace SimpleApp.Web.Controllers
             var product = _context.Products.FirstOrDefault(x => x.Id == id);
             if(product == null)
             {
-                return (NotFound());
+                return NotFound();
             }
             var productViewModel = new ProductViewModel
             {
