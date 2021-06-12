@@ -45,7 +45,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return (NotFound());
             }
-            var producktViewModel = new ProductViewModel
+            var productViewModel = new ProductViewModel
             {
                 Id = product.Id,
                 Description = product.Description,
@@ -53,7 +53,7 @@ namespace SimpleApp.Web.Controllers
                 Price = product.Price
             };
              
-            return View(producktViewModel);
+            return View(productViewModel);
         }
 
         // GET: ProductController1/Create
@@ -90,14 +90,16 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var result = _context.Products.FirstOrDefault(x => x.Id == id);
-            if (result == null)
+            var product = _context.Products.FirstOrDefault(x => x.Id == id);
+            if (product == null)
             {
                 return NotFound();
             }
             var productViewModel = new ProductViewModel()
             {
-                Name = result.Name
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price
             };
             return View(productViewModel);
         }
@@ -113,12 +115,15 @@ namespace SimpleApp.Web.Controllers
                 return View(productViewModel);
             }
 
-            var product = _context.Categories.FirstOrDefault(x => x.Id == productViewModel.Id);
+            var product = _context.Products.FirstOrDefault(x => x.Id == productViewModel.Id);
             if (product == null)
             {
                 return NotFound();
             }
-           product.Name = productViewModel.Name;
+            product.Name = productViewModel.Name;
+            product.Description = productViewModel.Description;
+            product.Price = productViewModel.Price;
+
             _context.Update(product);
             _context.SaveChanges();
             return RedirectToAction("Index");
