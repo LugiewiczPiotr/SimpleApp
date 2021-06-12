@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Infrastructure.Data;
 using SimpleApp.Core.Models;
 using System.Linq;
@@ -24,8 +23,10 @@ namespace SimpleApp.Web.Controllers
             {
                 CategoriesViewModels = categories.Select(x => new CategoryViewModel
                 {
+                    Id = x.Id,
                     Name = x.Name
-                }).ToList
+
+                }).ToList()
             };
             return View(indexViewModel) ;
         }
@@ -37,35 +38,43 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-
-            var category = _context.Categories.Find(id);
-            if (category == null)
+            var result = _context.Categories.FirstOrDefault(x => x.Id == id);
+            if(result == null)
             {
                 return NotFound();
             }
+            var categoryViewModel = new CategoryViewModel()
+            {
+                Name = result.Name
+            };
 
-            return View(category);
+            return View(categoryViewModel);
         }
         // GET: CategoryController/Create
         public ActionResult Create()
         {
-            return View();
+            var categoryViewModel = new CategoryViewModel();
+            return View(categoryViewModel);
         }
 
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Category category)
+        public ActionResult Create(CategoryViewModel categoryViewModel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid == false)
             {
-                _context.Add(category);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                return View(categoryViewModel);
             }
-            return View(category);
+            var category = new Category()
+            {
+                Name = categoryViewModel.Name
+            };
+           
+            _context.Add(category);
+            _context.SaveChanges();
+            return RedirectToAction("Index"); 
         }
-
         // GET: CategoryController/Edit/5
         public ActionResult Edit(Guid id)
         {
@@ -73,26 +82,36 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var category = _context.Categories.Find(id);
-            if (category == null)
+            var result = _context.Categories.FirstOrDefault(x => x.Id == id);
+            if (result == null)
             {
                 return NotFound();
             }
-            return View(category);
+            var categoryViewModel = new CategoryViewModel()
+            {
+                Name = result.Name
+            };
+            return View(categoryViewModel);
         }
 
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( Category category)
+        public ActionResult Edit(CategoryViewModel categoryViewModel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid == false)
             {
-                _context.Categories.Update(category);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                return View(categoryViewModel);
             }
-            return View(category);
+            var category = new Category()
+            {
+                Id = categoryViewModel.Id,
+                Name = categoryViewModel.Name
+            };
+
+            _context.Update(category);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
         // GET: CategoryController/Delete/5
         public ActionResult Delete(Guid id)
@@ -101,23 +120,35 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var category = _context.Categories.Find(id);
-            if(category == null)
+            var result = _context.Categories.FirstOrDefault(x => x.Id == id);
+            if (result == null)
             {
                 return NotFound();
             }
-            return View(category);
+            var categoryViewModel = new CategoryViewModel
+            {
+                Name = result.Name
+            };
+            return View(categoryViewModel);
         }
 
         // POST: CategoryController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Guid id, IFormCollection collection)
+        public ActionResult Delete(Guid id, CategoryViewModel categoryViewModel)
         {
-            var category = _context.Categories.Find(id);
-            _context.Categories.Remove(category);
+            
+            var category = new Category
+            {
+                Name = categoryViewModel.Name,
+                Id = categoryViewModel.Id
+            };
+            var result = _context.Categories.Find(id);
+            _context.Categories.Remove(result);
             _context.SaveChanges();
             return RedirectToAction("Index");
+
+
 
         }
     }
