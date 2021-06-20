@@ -4,6 +4,7 @@ using SimpleApp.Infrastructure.Data;
 using System;
 using System.Linq;
 using SimpleApp.Web.Models;
+using SimpleApp.Web.ViewModels;
 
 namespace SimpleApp.Web.Controllers
 {
@@ -59,6 +60,7 @@ namespace SimpleApp.Web.Controllers
         public ActionResult Create()
         {
             var productViewModel = new ProductViewModel();
+            Supply(productViewModel);
             return View(productViewModel);
         }
 
@@ -69,14 +71,21 @@ namespace SimpleApp.Web.Controllers
         {
             if (ModelState.IsValid == false)
             {
+                Supply(productViewModel);
                 return View(productViewModel);
             }
+
+            var selectedCategory = _context.Categories
+              .FirstOrDefault(x => x.Id == productViewModel.SelectedCategory);
+
             var product = new Product
             {
                 Name = productViewModel.Name,
                 Description = productViewModel.Description,
-                Price = productViewModel.Price
+                Price = productViewModel.Price,
+                Category = selectedCategory
             };
+            
             _context.Add(product);
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -100,6 +109,9 @@ namespace SimpleApp.Web.Controllers
                 Description = product.Description,
                 Price = product.Price
             };
+
+            Supply(productViewModel);
+
             return View(productViewModel);
         }
 
@@ -111,6 +123,7 @@ namespace SimpleApp.Web.Controllers
 
             if (ModelState.IsValid == false)
             {
+                Supply(productViewModel);
                 return View(productViewModel);
             }
 
@@ -122,6 +135,8 @@ namespace SimpleApp.Web.Controllers
             product.Name = productViewModel.Name;
             product.Description = productViewModel.Description;
             product.Price = productViewModel.Price;
+            product.Category = _context.Categories.FirstOrDefault(x => x.Id == productViewModel.SelectedCategory);
+
 
             _context.Update(product);
             _context.SaveChanges();
@@ -161,6 +176,17 @@ namespace SimpleApp.Web.Controllers
             _context.Products.Remove(product);
             _context.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        private void Supply(ProductViewModel viewModel)
+        {
+            var categories = _context.Categories.ToList();
+            viewModel.AvailableCategories = categories.Select(x => new SelectItemViewModel()
+            {
+                Value = x.Id.ToString(),
+                Display = x.Name
+
+            });
         }
     }
 }
