@@ -1,4 +1,5 @@
 ﻿@model SimpleApp.Web.Models.ProductViewModel
+@using SimpleApp.Web.ViewModels
 
 
 @{
@@ -10,7 +11,7 @@
 <h4>Product</h4>
 <hr />
 <div class="row">
-    
+
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -39,8 +40,8 @@
                     @Html.DropDownListFor(m => m.SelectedCategory,
                    new SelectList(
                        Model.AvailableCategories,
-                       nameof(SimpleApp.Web.ViewModels.SelectItemViewModel.Value),
-                       nameof(SimpleApp.Web.ViewModels.SelectItemViewModel.Display)),
+                       nameof(SelectItemViewModel.Value),
+                       nameof(SelectItemViewModel.Display)),
                        new { @class = "form-control" })
                 </div>
             </div>

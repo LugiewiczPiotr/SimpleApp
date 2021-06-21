@@ -1,4 +1,5 @@
 ﻿@model SimpleApp.Web.Models.ProductViewModel
+@using SimpleApp.Web.ViewModels
 
 @{
     ViewData["Title"] = "Edit";
@@ -37,8 +38,8 @@
                     @Html.DropDownListFor(m => m.SelectedCategory,
                    new SelectList(
                        Model.AvailableCategories,
-                       nameof(SimpleApp.Web.ViewModels.SelectItemViewModel.Value),
-                       nameof(SimpleApp.Web.ViewModels.SelectItemViewModel.Display)),
+                       nameof(SelectItemViewModel.Value),
+                       nameof(SelectItemViewModel.Display)),
                        new { @class = "form-control" })
                 </div>
             </div>

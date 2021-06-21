@@ -107,7 +107,9 @@ namespace SimpleApp.Web.Controllers
             {
                 Name = product.Name,
                 Description = product.Description,
-                Price = product.Price
+                Price = product.Price,
+                SelectedCategory = product.CategoryId
+
             };
 
             Supply(productViewModel);
