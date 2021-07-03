@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SimpleApp.Web.ViewModels;
+using System;
+using System.Collections.Generic;
 
 namespace SimpleApp.Web.Models
 {
@@ -9,5 +11,8 @@ namespace SimpleApp.Web.Models
         public string Description { get; set; }
         public CategoryViewModel Category { get; set; }
         public decimal Price { get; set; }
+
+        public IEnumerable<SelectItemViewModel> AvailableCategories { get; set; }
+        public Guid SelectedCategory { get; set; }
     }
 }
