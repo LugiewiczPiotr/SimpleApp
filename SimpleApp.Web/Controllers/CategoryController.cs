@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SimpleApp.Infrastructure.Data;
 using SimpleApp.Core.Models;
 using System.Linq;
 using System;
@@ -20,6 +19,7 @@ namespace SimpleApp.Web.Controllers
         public ActionResult Index()
         {
             var categories = _categoryLogic.GetAllActive();
+
             var indexViewModel = new IndexViewModel()
             {
                 CategoriesViewModels = categories.Value.Select(x => new CategoryViewModel
@@ -39,14 +39,17 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var result = _categoryLogic.GetById(id);
-            if (result.Success == false)
+
+            var getResult = _categoryLogic.GetById(id);
+
+            if (getResult.Success == false)
             {
                 return NotFound();
             }
+
             var categoryViewModel = new CategoryViewModel()
             {
-                Name = result.Value.Name
+                Name = getResult.Value.Name
             };
 
             return View(categoryViewModel);
@@ -67,13 +70,15 @@ namespace SimpleApp.Web.Controllers
             {
                 return View(categoryViewModel);
             }
+
             var category = new Category()
             {
                 Name = categoryViewModel.Name
             };
 
-            var result =_categoryLogic.Add(category);
-            if (result.Success == false)
+            var getResult = _categoryLogic.Add(category);
+
+            if (getResult.Success == false)
             {
                 return View(categoryViewModel);
             }
@@ -86,14 +91,16 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var result = _categoryLogic.GetById(id);
-            if (result.Success == false)
+            var getResult = _categoryLogic.GetById(id);
+
+            if (getResult.Success == false)
             {
                 return NotFound();
             }
             var categoryViewModel = new CategoryViewModel()
+
             {
-                Name = result.Value.Name
+                Name = getResult.Value.Name
             };
             return View(categoryViewModel);
         }
@@ -109,12 +116,15 @@ namespace SimpleApp.Web.Controllers
             }
 
             var getResult = _categoryLogic.GetById(categoryViewModel.Id);
+
             if (getResult.Success == false)
             {
                 return NotFound();
             }
+
             getResult.Value.Name = categoryViewModel.Name;
             var result = _categoryLogic.Update(getResult.Value);
+
             if(result.Success == false)
             {
                 return View(categoryViewModel);
@@ -129,14 +139,16 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var result = _categoryLogic.GetById(id);
-            if (result.Success == false)
+            var getResult = _categoryLogic.GetById(id);
+
+            if (getResult.Success == false)
             {
                 return NotFound();
             }
+
             var categoryViewModel = new CategoryViewModel
             {
-                Name = result.Value.Name
+                Name = getResult.Value.Name
             };
             return View(categoryViewModel);
         }
@@ -148,11 +160,14 @@ namespace SimpleApp.Web.Controllers
         public ActionResult DeletePost(Guid id)
         {
             var getResult = _categoryLogic.GetById(id);
+
             if (getResult.Success == false)
             {
                 return NotFound();
             }
+
             var deleteResult = _categoryLogic.Delete(getResult.Value);
+
             if (deleteResult.Success == false)
             {
                 return BadRequest();
