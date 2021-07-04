@@ -1,27 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core.Models;
-using SimpleApp.Infrastructure.Data;
 using System;
 using System.Linq;
 using SimpleApp.Web.Models;
 using SimpleApp.Web.ViewModels;
+using SimpleApp.Core.Interfaces.Logics;
 
 namespace SimpleApp.Web.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly AppDbContext _context;
-        public ProductController(AppDbContext context)
+        private readonly IProductLogic _productLogic;
+        private readonly ICategoryLogic _categoryLogic;
+      
+        public ProductController(IProductLogic productLogic, ICategoryLogic categoryLogic)
         {
-            _context = context;
+            _productLogic = productLogic;
+            _categoryLogic = categoryLogic;
+
         }
         // GET: ProductController1
         public ActionResult Index()
         {
-            var products = _context.Products;
+            var products = _productLogic.GetAllActive();
             var indexViewModel = new ViewModels.Product.IndexViewModel()
             {
-                ProductsViewModels = products.Select(x => new ProductViewModel
+                ProductsViewModels = products.Value.Select(x => new ProductViewModel
                 {
                     Id = x.Id,
                     Name = x.Name,
@@ -40,17 +44,17 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var product = _context.Products.FirstOrDefault(x => x.Id == id);
-            if(product == null)
+            var getResult = _productLogic.GetById(id);
+            if(getResult.Success == false)
             {
                 return NotFound();
             }
             var productViewModel = new ProductViewModel
             {
-                Id = product.Id,
-                Description = product.Description,
-                Name = product.Name,
-                Price = product.Price
+                Id = getResult.Value.Id,
+                Description = getResult.Value.Description,
+                Name = getResult.Value.Name,
+                Price = getResult.Value.Price
             };
              
             return View(productViewModel);
@@ -67,7 +71,7 @@ namespace SimpleApp.Web.Controllers
         // POST: ProductController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ProductViewModel productViewModel)
+        public ActionResult Create(ProductViewModel productViewModel, Guid id)
         {
             if (ModelState.IsValid == false)
             {
@@ -75,19 +79,23 @@ namespace SimpleApp.Web.Controllers
                 return View(productViewModel);
             }
 
-            var selectedCategory = _context.Categories
-              .FirstOrDefault(x => x.Id == productViewModel.SelectedCategory);
-
+            var getResult = _categoryLogic.GetAllActive();
+            var selectedCategory = getResult.Value.FirstOrDefault(x => x.Id == productViewModel.SelectedCategory);
             var product = new Product
             {
                 Name = productViewModel.Name,
                 Description = productViewModel.Description,
                 Price = productViewModel.Price,
                 Category = selectedCategory
+
             };
-            
-            _context.Add(product);
-            _context.SaveChanges();
+
+            var addProduct =_productLogic.Add(product);
+            if (addProduct.Success == false)
+            {
+                return View(productViewModel);
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -98,17 +106,17 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var product = _context.Products.FirstOrDefault(x => x.Id == id);
-            if (product == null)
+            var getResult = _productLogic.GetById(id);
+            if (getResult.Success == false)
             {
                 return NotFound();
             }
             var productViewModel = new ProductViewModel()
             {
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                SelectedCategory = product.CategoryId
+                Name = getResult.Value.Name,
+                Description = getResult.Value.Description,
+                Price = getResult.Value.Price,
+                SelectedCategory = getResult.Value.CategoryId
 
             };
 
@@ -120,7 +128,7 @@ namespace SimpleApp.Web.Controllers
         // POST: ProductController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ProductViewModel productViewModel)
+        public ActionResult Edit(ProductViewModel productViewModel, Guid id)
         {
 
             if (ModelState.IsValid == false)
@@ -129,19 +137,23 @@ namespace SimpleApp.Web.Controllers
                 return View(productViewModel);
             }
 
-            var product = _context.Products.FirstOrDefault(x => x.Id == productViewModel.Id);
-            if (product == null)
+            var getResult = _productLogic.GetById(productViewModel.Id);
+            var getResultCategory = _categoryLogic.GetAllActive();
+            var selectedCategory = getResultCategory.Value.FirstOrDefault(x => x.Id == productViewModel.SelectedCategory);
+
+            if (getResult.Success == false)
             {
                 return NotFound();
             }
-            product.Name = productViewModel.Name;
-            product.Description = productViewModel.Description;
-            product.Price = productViewModel.Price;
-            product.Category = _context.Categories.FirstOrDefault(x => x.Id == productViewModel.SelectedCategory);
+
+            getResult.Value.Name = productViewModel.Name;
+            getResult.Value.Description = productViewModel.Description;
+            getResult.Value.Price = productViewModel.Price;
+            getResult.Value.Category = selectedCategory;
 
 
-            _context.Update(product);
-            _context.SaveChanges();
+            _productLogic.Update(getResult.Value);
+            
             return RedirectToAction("Index");
         }
 
@@ -154,16 +166,16 @@ namespace SimpleApp.Web.Controllers
                 return NotFound();
             }
 
-            var product = _context.Products.FirstOrDefault(x => x.Id == id);
-            if (product == null)
+            var getResult = _productLogic.GetById(id);
+            if (getResult.Success == false)
             {
-                return (NotFound());
+                return NotFound();
             }
             var productViewModel = new ProductViewModel
             {
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price
+                Name = getResult.Value.Name,
+                Description = getResult.Value.Description,
+                Price = getResult.Value.Price
             };
             return View(productViewModel);
         }
@@ -174,16 +186,21 @@ namespace SimpleApp.Web.Controllers
         [ActionName("Delete")]
         public ActionResult DeletePost(Guid id)
         {
-            var product = _context.Products.Find(id);
-            _context.Products.Remove(product);
-            _context.SaveChanges();
+            var getResult = _productLogic.GetById(id);
+            var deleteResult = _productLogic.Delete(getResult.Value);
+         
             return RedirectToAction("Index");
+
+            if (deleteResult.Success == false)
+            {
+                return BadRequest();
+            }
         }
 
         private void Supply(ProductViewModel viewModel)
         {
-            var categories = _context.Categories.ToList();
-            viewModel.AvailableCategories = categories.Select(x => new SelectItemViewModel()
+            var categoriesList = _categoryLogic.GetAllActive();
+            viewModel.AvailableCategories = categoriesList.Value.Select(x => new SelectItemViewModel()
             {
                 Value = x.Id.ToString(),
                 Display = x.Name
