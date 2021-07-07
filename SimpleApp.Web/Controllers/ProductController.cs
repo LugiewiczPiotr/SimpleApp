@@ -79,14 +79,18 @@ namespace SimpleApp.Web.Controllers
                 return View(productViewModel);
             }
 
+
             var getResult = _categoryLogic.GetAllActive();
-            var selectedCategory = getResult.Value.FirstOrDefault(x => x.Id == productViewModel.SelectedCategory);
+            var getResultCategory = _categoryLogic.GetById(productViewModel.Id);
+
+
+
             var product = new Product
             {
                 Name = productViewModel.Name,
                 Description = productViewModel.Description,
                 Price = productViewModel.Price,
-                Category = selectedCategory
+                CategoryId = productViewModel.SelectedCategory
 
             };
 
@@ -128,7 +132,7 @@ namespace SimpleApp.Web.Controllers
         // POST: ProductController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ProductViewModel productViewModel, Guid id)
+        public ActionResult Edit(ProductViewModel productViewModel)
         {
 
             if (ModelState.IsValid == false)
@@ -138,8 +142,8 @@ namespace SimpleApp.Web.Controllers
             }
 
             var getResult = _productLogic.GetById(productViewModel.Id);
-            var getResultCategory = _categoryLogic.GetAllActive();
-            var selectedCategory = getResultCategory.Value.FirstOrDefault(x => x.Id == productViewModel.SelectedCategory);
+            var getResultCategory = _categoryLogic.GetById(productViewModel.Id);
+            
 
             if (getResult.Success == false)
             {
@@ -149,10 +153,14 @@ namespace SimpleApp.Web.Controllers
             getResult.Value.Name = productViewModel.Name;
             getResult.Value.Description = productViewModel.Description;
             getResult.Value.Price = productViewModel.Price;
-            getResult.Value.Category = selectedCategory;
+            getResult.Value.CategoryId = productViewModel.SelectedCategory;
 
 
-            _productLogic.Update(getResult.Value);
+            var updateResult = _productLogic.Update(getResult.Value);
+            if(updateResult.Success == false)
+            {
+                return BadRequest();
+            }
             
             return RedirectToAction("Index");
         }
@@ -187,14 +195,21 @@ namespace SimpleApp.Web.Controllers
         public ActionResult DeletePost(Guid id)
         {
             var getResult = _productLogic.GetById(id);
+            if (getResult.Success == false)
+            {
+                return NotFound();
+            }
+
             var deleteResult = _productLogic.Delete(getResult.Value);
-         
-            return RedirectToAction("Index");
 
             if (deleteResult.Success == false)
             {
                 return BadRequest();
             }
+
+            return RedirectToAction("Index");
+
+            
         }
 
         private void Supply(ProductViewModel viewModel)
