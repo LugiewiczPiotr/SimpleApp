@@ -148,7 +148,11 @@ namespace SimpleApp.Web.Controllers
                 return NotFound();
             }
             var getResultCategory = _categoryLogic.GetById(productViewModel.SelectedCategory);
-            
+            if (getResultCategory.Success == false)
+            {
+                return NotFound();
+            }
+
             getResult.Value.Name = productViewModel.Name;
             getResult.Value.Description = productViewModel.Description;
             getResult.Value.Price = productViewModel.Price;
