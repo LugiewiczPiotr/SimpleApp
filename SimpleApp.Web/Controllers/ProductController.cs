@@ -71,18 +71,18 @@ namespace SimpleApp.Web.Controllers
         // POST: ProductController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ProductViewModel productViewModel, Guid id)
+        public ActionResult Create(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid == false)
             {
                 Supply(productViewModel);
                 return View(productViewModel);
             }
-
-
-            var getResult = _categoryLogic.GetAllActive();
-            var getResultCategory = _categoryLogic.GetById(productViewModel.Id);
-
+            var getResultCategory = _categoryLogic.GetById(productViewModel.SelectedCategory);
+            if (getResultCategory.Success == false)
+            {
+                return NotFound();
+            }
 
 
             var product = new Product
@@ -90,7 +90,7 @@ namespace SimpleApp.Web.Controllers
                 Name = productViewModel.Name,
                 Description = productViewModel.Description,
                 Price = productViewModel.Price,
-                CategoryId = productViewModel.SelectedCategory
+                CategoryId = getResultCategory.Value.Id
 
             };
 
@@ -111,6 +111,7 @@ namespace SimpleApp.Web.Controllers
                 return NotFound();
             }
             var getResult = _productLogic.GetById(id);
+            
             if (getResult.Success == false)
             {
                 return NotFound();
@@ -142,18 +143,16 @@ namespace SimpleApp.Web.Controllers
             }
 
             var getResult = _productLogic.GetById(productViewModel.Id);
-            var getResultCategory = _categoryLogic.GetById(productViewModel.Id);
-            
-
             if (getResult.Success == false)
             {
                 return NotFound();
             }
-
+            var getResultCategory = _categoryLogic.GetById(productViewModel.SelectedCategory);
+            
             getResult.Value.Name = productViewModel.Name;
             getResult.Value.Description = productViewModel.Description;
             getResult.Value.Price = productViewModel.Price;
-            getResult.Value.CategoryId = productViewModel.SelectedCategory;
+            getResult.Value.CategoryId = getResultCategory.Value.Id;
 
 
             var updateResult = _productLogic.Update(getResult.Value);
