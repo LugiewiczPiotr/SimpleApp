@@ -1,34 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SimpleApp.Infrastructure.Data;
 using SimpleApp.Core.Models;
 using System.Linq;
 using System;
 using SimpleApp.Web.Models;
+using SimpleApp.Core.Interfaces.Logics;
 
 namespace SimpleApp.Web.Controllers
 {
     public class CategoryController : Controller
     {
-       
-        private readonly AppDbContext _context;
-        public CategoryController(AppDbContext context)
+
+        private readonly ICategoryLogic _categoryLogic;
+        public CategoryController(ICategoryLogic categoryLogic)
         {
-            _context = context;
+            _categoryLogic = categoryLogic;
         }
 
         public ActionResult Index()
         {
-            var categories = _context.Categories;
+            var categories = _categoryLogic.GetAllActive();
+
             var indexViewModel = new IndexViewModel()
             {
-                CategoriesViewModels = categories.Select(x => new CategoryViewModel
+                CategoriesViewModels = categories.Value.Select(x => new CategoryViewModel
                 {
                     Id = x.Id,
                     Name = x.Name
 
                 }).ToList()
             };
-            return View(indexViewModel) ;
+            return View(indexViewModel);
         }
 
         // GET: CategoryController/Details/5
@@ -38,14 +39,17 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var result = _context.Categories.FirstOrDefault(x => x.Id == id);
-            if(result == null)
+
+            var getResult = _categoryLogic.GetById(id);
+
+            if (getResult.Success == false)
             {
                 return NotFound();
             }
+
             var categoryViewModel = new CategoryViewModel()
             {
-                Name = result.Name
+                Name = getResult.Value.Name
             };
 
             return View(categoryViewModel);
@@ -66,14 +70,19 @@ namespace SimpleApp.Web.Controllers
             {
                 return View(categoryViewModel);
             }
+
             var category = new Category()
             {
                 Name = categoryViewModel.Name
             };
-           
-            _context.Add(category);
-            _context.SaveChanges();
-            return RedirectToAction("Index"); 
+
+            var getResult = _categoryLogic.Add(category);
+
+            if (getResult.Success == false)
+            {
+                return View(categoryViewModel);
+            }
+            return RedirectToAction("Index");
         }
         // GET: CategoryController/Edit/5
         public ActionResult Edit(Guid id)
@@ -82,14 +91,16 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var result = _context.Categories.FirstOrDefault(x => x.Id == id);
-            if (result == null)
+            var getResult = _categoryLogic.GetById(id);
+
+            if (getResult.Success == false)
             {
                 return NotFound();
             }
             var categoryViewModel = new CategoryViewModel()
+
             {
-                Name = result.Name
+                Name = getResult.Value.Name
             };
             return View(categoryViewModel);
         }
@@ -104,14 +115,20 @@ namespace SimpleApp.Web.Controllers
                 return View(categoryViewModel);
             }
 
-            var category = _context.Categories.FirstOrDefault(x => x.Id == categoryViewModel.Id);
-            if(category == null)
+            var getResult = _categoryLogic.GetById(categoryViewModel.Id);
+
+            if (getResult.Success == false)
             {
                 return NotFound();
             }
-            category.Name = categoryViewModel.Name;
-            _context.Update(category);
-            _context.SaveChanges();
+
+            getResult.Value.Name = categoryViewModel.Name;
+            var result = _categoryLogic.Update(getResult.Value);
+
+            if(result.Success == false)
+            {
+                return View(categoryViewModel);
+            }
             return RedirectToAction("Index");
         }
         // GET: CategoryController/Delete/5
@@ -122,14 +139,16 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var result = _context.Categories.FirstOrDefault(x => x.Id == id);
-            if (result == null)
+            var getResult = _categoryLogic.GetById(id);
+
+            if (getResult.Success == false)
             {
                 return NotFound();
             }
+
             var categoryViewModel = new CategoryViewModel
             {
-                Name = result.Name
+                Name = getResult.Value.Name
             };
             return View(categoryViewModel);
         }
@@ -140,9 +159,19 @@ namespace SimpleApp.Web.Controllers
         [ActionName("Delete")]
         public ActionResult DeletePost(Guid id)
         {
-            var result = _context.Categories.Find(id);
-            _context.Categories.Remove(result);
-            _context.SaveChanges();
+            var getResult = _categoryLogic.GetById(id);
+
+            if (getResult.Success == false)
+            {
+                return NotFound();
+            }
+
+            var deleteResult = _categoryLogic.Delete(getResult.Value);
+
+            if (deleteResult.Success == false)
+            {
+                return BadRequest();
+            }
             return RedirectToAction("Index");
 
         }
