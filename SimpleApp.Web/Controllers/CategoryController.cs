@@ -4,6 +4,7 @@ using System.Linq;
 using System;
 using SimpleApp.Web.Models;
 using SimpleApp.Core.Interfaces.Logics;
+using AutoMapper;
 
 namespace SimpleApp.Web.Controllers
 {
@@ -11,24 +12,19 @@ namespace SimpleApp.Web.Controllers
     {
 
         private readonly ICategoryLogic _categoryLogic;
-        public CategoryController(ICategoryLogic categoryLogic)
+        private readonly IMapper _mapper;
+        public CategoryController(ICategoryLogic categoryLogic, IMapper mapper)
         {
             _categoryLogic = categoryLogic;
+            _mapper = mapper;
         }
 
         public ActionResult Index()
         {
             var categories = _categoryLogic.GetAllActive();
 
-            var indexViewModel = new IndexViewModel()
-            {
-                CategoriesViewModels = categories.Value.Select(x => new CategoryViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name
-
-                }).ToList()
-            };
+            var indexViewModel = _mapper.Map<CategoryViewModel>(categories);
+           
             return View(indexViewModel);
         }
 
