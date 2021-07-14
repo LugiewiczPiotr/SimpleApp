@@ -2,9 +2,9 @@
 using SimpleApp.Core.Models;
 using System.Linq;
 using System;
-using SimpleApp.Web.Models;
 using SimpleApp.Core.Interfaces.Logics;
 using AutoMapper;
+using SimpleApp.Web.ViewModels.Categories;
 
 namespace SimpleApp.Web.Controllers
 {
@@ -23,7 +23,7 @@ namespace SimpleApp.Web.Controllers
         {
             var categories = _categoryLogic.GetAllActive();
 
-            var indexViewModel = _mapper.Map<CategoryViewModel>(categories);
+            var indexViewModel = _mapper.Map<IndexItemViewModel>(categories);
            
             return View(indexViewModel);
         }
@@ -43,10 +43,7 @@ namespace SimpleApp.Web.Controllers
                 return NotFound();
             }
 
-            var categoryViewModel = new CategoryViewModel()
-            {
-                Name = getResult.Value.Name
-            };
+            var categoryViewModel = _mapper.Map<CategoryViewModel>(getResult);
 
             return View(categoryViewModel);
         }
@@ -67,10 +64,7 @@ namespace SimpleApp.Web.Controllers
                 return View(categoryViewModel);
             }
 
-            var category = new Category()
-            {
-                Name = categoryViewModel.Name
-            };
+            var category = _mapper.Map<Category>(categoryViewModel);
 
             var getResult = _categoryLogic.Add(category);
 
@@ -93,11 +87,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var categoryViewModel = new CategoryViewModel()
-
-            {
-                Name = getResult.Value.Name
-            };
+            var categoryViewModel = _mapper.Map<CategoryViewModel>(getResult);
             return View(categoryViewModel);
         }
 
@@ -141,11 +131,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-
-            var categoryViewModel = new CategoryViewModel
-            {
-                Name = getResult.Value.Name
-            };
+            var categoryViewModel = _mapper.Map(CategoryViewModel)(getResult);
             return View(categoryViewModel);
         }
 
