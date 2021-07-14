@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using SimpleApp.Core.Models;
-using SimpleApp.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SimpleApp.Web.ViewModels.Categories;
+using SimpleApp.Web.ViewModels.Products;
 
 namespace SimpleApp.Web.AutoMapperProfiles
 {
@@ -12,7 +9,11 @@ namespace SimpleApp.Web.AutoMapperProfiles
     {
         public ProductProfile()
         {
-            CreateMap<Product, ProductViewModel>();
+            CreateMap<Product, ProductViewModel>()
+                .ReverseMap()
+                .ForMember(p => p.Id, opt => opt.Ignore());
+
+            CreateMap<Product, ViewModels.Categories.IndexItemViewModel>();
         }
     }
 }
