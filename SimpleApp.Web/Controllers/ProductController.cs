@@ -6,6 +6,7 @@ using SimpleApp.Web.ViewModels;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Web.ViewModels.Products;
 using AutoMapper;
+using System.Collections.Generic;
 
 namespace SimpleApp.Web.Controllers
 {
@@ -26,7 +27,8 @@ namespace SimpleApp.Web.Controllers
         public ActionResult Index()
         {
             var products = _productLogic.GetAllActive();
-            var indexViewModel = _mapper.Map<IndexItemViewModel>(products);
+            var indexViewModel = new IndexViewModel();
+            indexViewModel.Products = _mapper.Map<IList<IndexItemViewModel>>(products);
            
             return View(indexViewModel);
         }
@@ -43,7 +45,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var productViewModel = _mapper.Map<ProductViewModel>(getResult);
+            var productViewModel = _mapper.Map<ProductViewModel>(getResult.Value);
              
             return View(productViewModel);
         }
@@ -97,7 +99,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var productViewModel = _mapper.Map<ProductViewModel>(getResult);
+            var productViewModel = _mapper.Map<ProductViewModel>(getResult.Value);
 
             Supply(productViewModel);
 
@@ -127,7 +129,7 @@ namespace SimpleApp.Web.Controllers
                 return NotFound();
             }
 
-            var productViewModels = _mapper.Map<ProductViewModel>(getResult);
+            var productViewModels = _mapper.Map(productViewModel, getResult.Value);
 
             var updateResult = _productLogic.Update(getResult.Value);
             if(updateResult.Success == false)
@@ -152,7 +154,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var productViewModel = _mapper.Map<ProductViewModel>(getResult);
+            var productViewModel = _mapper.Map<ProductViewModel>(getResult.Value);
             return View(productViewModel);
         }
 
@@ -183,12 +185,7 @@ namespace SimpleApp.Web.Controllers
         private void Supply(ProductViewModel viewModel)
         {
             var categoriesList = _categoryLogic.GetAllActive();
-            viewModel.AvailableCategories = categoriesList.Value.Select(x => new SelectItemViewModel()
-            {
-                Value = x.Id.ToString(),
-                Display = x.Name
-
-            });
+            _mapper.Map(categoriesList, viewModel.AvailableCategories);
         }
     }
 }
