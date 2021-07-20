@@ -13,7 +13,10 @@ namespace SimpleApp.Web.AutoMapperProfiles
                 .ReverseMap()
                 .ForMember(p => p.Id, opt => opt.Ignore());
 
-            CreateMap<Product, ViewModels.Categories.IndexItemViewModel>();
+            CreateMap<Product, ViewModels.Products.IndexItemViewModel>();
+           
+
+
         }
     }
 }
