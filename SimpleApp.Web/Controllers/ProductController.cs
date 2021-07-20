@@ -27,9 +27,12 @@ namespace SimpleApp.Web.Controllers
         public ActionResult Index()
         {
             var products = _productLogic.GetAllActive();
-            var indexViewModel = new IndexViewModel();
-            indexViewModel.Products = _mapper.Map<IList<IndexItemViewModel>>(products);
-           
+            var indexViewModel = new IndexViewModel()
+            {
+                Products = _mapper.Map<IList<IndexItemViewModel>>(products.Value)
+            };
+
+
             return View(indexViewModel);
         }
 
@@ -45,8 +48,10 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
+            
             var productViewModel = _mapper.Map<ProductViewModel>(getResult.Value);
-             
+            
+
             return View(productViewModel);
         }
 
@@ -99,6 +104,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
+
             var productViewModel = _mapper.Map<ProductViewModel>(getResult.Value);
 
             Supply(productViewModel);
@@ -128,8 +134,8 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-
-            var productViewModels = _mapper.Map(productViewModel, getResult.Value);
+            
+            _mapper.Map(productViewModel, getResult.Value);
 
             var updateResult = _productLogic.Update(getResult.Value);
             if(updateResult.Success == false)
@@ -174,6 +180,7 @@ namespace SimpleApp.Web.Controllers
 
             if (deleteResult.Success == false)
             {
+                
                 return BadRequest();
             }
 
@@ -185,7 +192,11 @@ namespace SimpleApp.Web.Controllers
         private void Supply(ProductViewModel viewModel)
         {
             var categoriesList = _categoryLogic.GetAllActive();
-            _mapper.Map(categoriesList, viewModel.AvailableCategories);
+
+            viewModel.AvailableCategories = _mapper.Map<IEnumerable<SelectItemViewModel>>(categoriesList.Value);
+
+
+
         }
     }
 }
