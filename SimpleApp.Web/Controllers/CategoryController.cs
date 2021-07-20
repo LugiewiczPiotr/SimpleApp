@@ -23,8 +23,11 @@ namespace SimpleApp.Web.Controllers
         {
             var categories = _categoryLogic.GetAllActive();
 
-            var indexViewModel = new IndexViewModel();
-            indexViewModel.Categories = _mapper.Map<IList<IndexItemViewModel>>(categories);
+            var indexViewModel = new IndexViewModel()
+            {
+                Categories = _mapper.Map<IList<IndexItemViewModel>>(categories.Value)
+            };
+            
 
 
             return View(indexViewModel);
@@ -68,9 +71,9 @@ namespace SimpleApp.Web.Controllers
 
             var category = _mapper.Map<Category>(categoryViewModel);
 
-            var getResult = _categoryLogic.Add(category);
+            var addResult = _categoryLogic.Add(category);
 
-            if (getResult.Success == false)
+            if (addResult.Success == false)
             {
                 return View(categoryViewModel);
             }
