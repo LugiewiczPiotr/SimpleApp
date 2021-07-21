@@ -4,6 +4,7 @@ using SimpleApp.Core.Models;
 using SimpleApp.Infrastructure.Data;
 using System;
 using System.Linq;
+using Z.EntityFramework.Plus;
 
 namespace SimpleApp.Infrastructure.Repositories
 {
@@ -25,12 +26,9 @@ namespace SimpleApp.Infrastructure.Repositories
 
         public void DeleteByCategoryId(Guid id)
         {
-            var productCategory = Context.Products.Where(e => e.CategoryId == id).ToList();
-            foreach (var elements in productCategory)
-            {
-                elements.IsActive = false;
-            }
-            
+            Context.Products.Where(e => e.CategoryId == id).
+                Update(x => new Product() { IsActive = false });
+           
         }
 
         
