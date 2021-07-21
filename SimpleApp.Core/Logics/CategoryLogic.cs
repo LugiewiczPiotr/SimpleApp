@@ -10,10 +10,12 @@ namespace SimpleApp.Core.Logics
     public class CategoryLogic : ICategoryLogic
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IProductRepository _productRepository;
 
-        public CategoryLogic(ICategoryRepository categoryRepository)
+        public CategoryLogic(ICategoryRepository categoryRepository, IProductRepository productRepository)
         {
             _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
         }
         
 
@@ -67,9 +69,10 @@ namespace SimpleApp.Core.Logics
                 throw new ArgumentNullException(nameof(category));
             }
 
+            _productRepository.DeleteByCategoryId(category.Id);
             _categoryRepository.Delete(category);
             _categoryRepository.SaveChanges();
-
+            
             return Result.Ok();
         }
     }

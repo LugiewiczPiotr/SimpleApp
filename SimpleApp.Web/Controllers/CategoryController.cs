@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core.Models;
-using System.Linq;
 using System;
-using SimpleApp.Web.Models;
 using SimpleApp.Core.Interfaces.Logics;
+using AutoMapper;
+using SimpleApp.Web.ViewModels.Categories;
+using System.Collections.Generic;
 
 namespace SimpleApp.Web.Controllers
 {
@@ -11,9 +12,11 @@ namespace SimpleApp.Web.Controllers
     {
 
         private readonly ICategoryLogic _categoryLogic;
-        public CategoryController(ICategoryLogic categoryLogic)
+        private readonly IMapper _mapper;
+        public CategoryController(ICategoryLogic categoryLogic, IMapper mapper)
         {
             _categoryLogic = categoryLogic;
+            _mapper = mapper;
         }
 
         public ActionResult Index()
@@ -22,13 +25,11 @@ namespace SimpleApp.Web.Controllers
 
             var indexViewModel = new IndexViewModel()
             {
-                CategoriesViewModels = categories.Value.Select(x => new CategoryViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name
-
-                }).ToList()
+                Categories = _mapper.Map<IList<IndexItemViewModel>>(categories.Value)
             };
+            
+
+
             return View(indexViewModel);
         }
 
@@ -47,10 +48,7 @@ namespace SimpleApp.Web.Controllers
                 return NotFound();
             }
 
-            var categoryViewModel = new CategoryViewModel()
-            {
-                Name = getResult.Value.Name
-            };
+            var categoryViewModel = _mapper.Map<CategoryViewModel>(getResult.Value);
 
             return View(categoryViewModel);
         }
@@ -71,14 +69,11 @@ namespace SimpleApp.Web.Controllers
                 return View(categoryViewModel);
             }
 
-            var category = new Category()
-            {
-                Name = categoryViewModel.Name
-            };
+            var category = _mapper.Map<Category>(categoryViewModel);
 
-            var getResult = _categoryLogic.Add(category);
+            var addResult = _categoryLogic.Add(category);
 
-            if (getResult.Success == false)
+            if (addResult.Success == false)
             {
                 return View(categoryViewModel);
             }
@@ -97,11 +92,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var categoryViewModel = new CategoryViewModel()
-
-            {
-                Name = getResult.Value.Name
-            };
+            var categoryViewModel = _mapper.Map<CategoryViewModel>(getResult.Value);
             return View(categoryViewModel);
         }
 
@@ -121,8 +112,8 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-
-            getResult.Value.Name = categoryViewModel.Name;
+            _mapper.Map(categoryViewModel, getResult.Value);
+           
             var result = _categoryLogic.Update(getResult.Value);
 
             if(result.Success == false)
@@ -145,11 +136,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-
-            var categoryViewModel = new CategoryViewModel
-            {
-                Name = getResult.Value.Name
-            };
+            var categoryViewModel = _mapper.Map<CategoryViewModel>(getResult.Value);
             return View(categoryViewModel);
         }
 

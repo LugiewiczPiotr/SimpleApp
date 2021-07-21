@@ -2,9 +2,11 @@
 using SimpleApp.Core.Models;
 using System;
 using System.Linq;
-using SimpleApp.Web.Models;
 using SimpleApp.Web.ViewModels;
 using SimpleApp.Core.Interfaces.Logics;
+using SimpleApp.Web.ViewModels.Products;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace SimpleApp.Web.Controllers
 {
@@ -12,28 +14,25 @@ namespace SimpleApp.Web.Controllers
     {
         private readonly IProductLogic _productLogic;
         private readonly ICategoryLogic _categoryLogic;
-      
-        public ProductController(IProductLogic productLogic, ICategoryLogic categoryLogic)
+        private readonly IMapper _mapper;
+
+        public ProductController(IProductLogic productLogic, ICategoryLogic categoryLogic, IMapper mapper)
         {
             _productLogic = productLogic;
             _categoryLogic = categoryLogic;
+            _mapper = mapper;
 
         }
         // GET: ProductController1
         public ActionResult Index()
         {
             var products = _productLogic.GetAllActive();
-            var indexViewModel = new ViewModels.Product.IndexViewModel()
+            var indexViewModel = new IndexViewModel()
             {
-                ProductsViewModels = products.Value.Select(x => new ProductViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Price = x.Price,
-                    Description = x.Description,
-
-                }).ToList()
+                Products = _mapper.Map<IList<IndexItemViewModel>>(products.Value)
             };
+
+
             return View(indexViewModel);
         }
 
@@ -49,14 +48,10 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var productViewModel = new ProductViewModel
-            {
-                Id = getResult.Value.Id,
-                Description = getResult.Value.Description,
-                Name = getResult.Value.Name,
-                Price = getResult.Value.Price
-            };
-             
+            
+            var productViewModel = _mapper.Map<ProductViewModel>(getResult.Value);
+            
+
             return View(productViewModel);
         }
 
@@ -78,21 +73,14 @@ namespace SimpleApp.Web.Controllers
                 Supply(productViewModel);
                 return View(productViewModel);
             }
-            var getResultCategory = _categoryLogic.GetById(productViewModel.SelectedCategory);
+            var getResultCategory = _categoryLogic.GetById(productViewModel.Category);
             if (getResultCategory.Success == false)
             {
                 return NotFound();
             }
 
 
-            var product = new Product
-            {
-                Name = productViewModel.Name,
-                Description = productViewModel.Description,
-                Price = productViewModel.Price,
-                CategoryId = getResultCategory.Value.Id
-
-            };
+            var product = _mapper.Map<Product>(productViewModel);
 
             var addProduct =_productLogic.Add(product);
             if (addProduct.Success == false)
@@ -116,14 +104,8 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var productViewModel = new ProductViewModel()
-            {
-                Name = getResult.Value.Name,
-                Description = getResult.Value.Description,
-                Price = getResult.Value.Price,
-                SelectedCategory = getResult.Value.CategoryId
 
-            };
+            var productViewModel = _mapper.Map<ProductViewModel>(getResult.Value);
 
             Supply(productViewModel);
 
@@ -147,17 +129,13 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var getResultCategory = _categoryLogic.GetById(productViewModel.SelectedCategory);
+            var getResultCategory = _categoryLogic.GetById(productViewModel.Category);
             if (getResultCategory.Success == false)
             {
                 return NotFound();
             }
-
-            getResult.Value.Name = productViewModel.Name;
-            getResult.Value.Description = productViewModel.Description;
-            getResult.Value.Price = productViewModel.Price;
-            getResult.Value.CategoryId = getResultCategory.Value.Id;
-
+            
+            _mapper.Map(productViewModel, getResult.Value);
 
             var updateResult = _productLogic.Update(getResult.Value);
             if(updateResult.Success == false)
@@ -182,12 +160,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var productViewModel = new ProductViewModel
-            {
-                Name = getResult.Value.Name,
-                Description = getResult.Value.Description,
-                Price = getResult.Value.Price
-            };
+            var productViewModel = _mapper.Map<ProductViewModel>(getResult.Value);
             return View(productViewModel);
         }
 
@@ -207,6 +180,7 @@ namespace SimpleApp.Web.Controllers
 
             if (deleteResult.Success == false)
             {
+                
                 return BadRequest();
             }
 
@@ -218,12 +192,11 @@ namespace SimpleApp.Web.Controllers
         private void Supply(ProductViewModel viewModel)
         {
             var categoriesList = _categoryLogic.GetAllActive();
-            viewModel.AvailableCategories = categoriesList.Value.Select(x => new SelectItemViewModel()
-            {
-                Value = x.Id.ToString(),
-                Display = x.Name
 
-            });
+            viewModel.AvailableCategories = _mapper.Map<IEnumerable<SelectItemViewModel>>(categoriesList.Value);
+
+
+
         }
     }
 }
