@@ -14,9 +14,6 @@ namespace SimpleApp.Web.AutoMapperProfiles
                 .ForMember(p => p.Id, opt => opt.Ignore());
 
             CreateMap<Product, ViewModels.Products.IndexItemViewModel>();
-           
-
-
         }
     }
 }
