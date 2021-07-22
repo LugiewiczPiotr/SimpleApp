@@ -1,16 +1,13 @@
 using Autofac;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SimpleApp.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SimpleApp.Web.FluentValidation;
 
 namespace SimpleApp.Web
 {
@@ -27,8 +24,14 @@ namespace SimpleApp.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), y => y.MigrationsAssembly("SimpleApp.Infrastructure")));
-
             services.AddControllersWithViews();
+            services
+            .AddMvc()
+                 .AddFluentValidation(fv => {
+                  fv.RegisterValidatorsFromAssemblyContaining<ProductValidation>();
+                  fv.RegisterValidatorsFromAssemblyContaining<CategoryValidation>();
+                  
+                });
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {
