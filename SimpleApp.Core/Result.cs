@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FluentValidation.Results;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SimpleApp.Core
@@ -58,6 +60,20 @@ namespace SimpleApp.Core
                 Errors = errorsList
             };
 
+            return result;
+        }
+
+        public static Result<T> Failure<T>(IEnumerable<ValidationFailure> validationFailures)
+        {
+            var result = new Result<T>
+            {
+                Success = false,
+                Errors = validationFailures.Select(t => new ErrorMessage()
+                {
+                    PropertyName = t.PropertyName,
+                    Message = t.ErrorMessage
+                })
+            };
             return result;
         }
     }
