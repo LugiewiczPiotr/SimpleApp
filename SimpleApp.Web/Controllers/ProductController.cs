@@ -76,6 +76,7 @@ namespace SimpleApp.Web.Controllers
             var getResultCategory = _categoryLogic.GetById(productViewModel.Category);
             if (getResultCategory.Success == false)
             {
+                
                 return NotFound();
             }
 
@@ -85,6 +86,7 @@ namespace SimpleApp.Web.Controllers
             var addProduct =_productLogic.Add(product);
             if (addProduct.Success == false)
             {
+                addProduct.AddErrorToModelState(ModelState);
                 return View(productViewModel);
             }
 
