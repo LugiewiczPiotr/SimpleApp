@@ -1,4 +1,6 @@
-﻿using SimpleApp.Core.Interfaces.Logics;
+﻿using FluentValidation;
+using SimpleApp.Core.FluentValidation;
+using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models;
 using System;
@@ -10,10 +12,12 @@ namespace SimpleApp.Core.Logics
     public class ProductLogic : IProductLogic
     {
         private readonly IProductRepository _productRepository;
+        private readonly IValidator<Product> _validator;
 
-        public ProductLogic(IProductRepository productRepository)
+        public ProductLogic(IProductRepository productRepository, IValidator<Product> validator)
         {
             _productRepository = productRepository;
+            _validator = validator;
         }
 
         public Result<IEnumerable<Product>> GetAllActive()
@@ -41,6 +45,12 @@ namespace SimpleApp.Core.Logics
                 throw new ArgumentNullException(nameof(product));
             }
 
+            var validationResult = _validator.Validate(product);
+            if (validationResult.IsValid == false)
+            {
+                return Result.Failure<Product>(validationResult.Errors);
+            }
+
             _productRepository.Add(product);
             _productRepository.SaveChanges();
 
@@ -52,6 +62,12 @@ namespace SimpleApp.Core.Logics
             if (product == null)
             {
                 throw new ArgumentNullException(nameof(product));
+            }
+
+            var validationResult = _validator.Validate(product);
+            if (validationResult.IsValid == false)
+            {
+                return Result.Failure<Product>(validationResult.Errors);
             }
 
             _productRepository.SaveChanges();

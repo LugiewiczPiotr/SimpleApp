@@ -1,4 +1,5 @@
-﻿using SimpleApp.Core.Interfaces.Logics;
+﻿using FluentValidation;
+using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models;
 using System;
@@ -11,11 +12,12 @@ namespace SimpleApp.Core.Logics
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
-
-        public CategoryLogic(ICategoryRepository categoryRepository, IProductRepository productRepository)
+        private readonly IValidator<Category> _validator;
+       public CategoryLogic(ICategoryRepository categoryRepository, IProductRepository productRepository,IValidator<Category> validator)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
+            _validator = validator;
         }
         
 
@@ -44,6 +46,12 @@ namespace SimpleApp.Core.Logics
                 throw new ArgumentNullException(nameof(category));
             }
 
+            var validationResult = _validator.Validate(category);
+            if(validationResult.IsValid == false)
+            {
+                return Result.Failure<Category>(validationResult.Errors);
+            }
+
             _categoryRepository.Add(category);
             _categoryRepository.SaveChanges();
 
@@ -55,6 +63,12 @@ namespace SimpleApp.Core.Logics
             if (category == null)
             {
                 throw new ArgumentNullException(nameof(category));
+            }
+
+            var validationResult = _validator.Validate(category);
+            if (validationResult.IsValid == false)
+            {
+                return Result.Failure<Category>(validationResult.Errors);
             }
 
             _categoryRepository.SaveChanges();
