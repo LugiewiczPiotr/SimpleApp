@@ -122,6 +122,7 @@ namespace SimpleApp.Web.Controllers
 
             if(result.Success == false)
             {
+                result.AddErrorToModelState(ModelState);
                 return View(categoryViewModel);
             }
             return RedirectToAction("Index");

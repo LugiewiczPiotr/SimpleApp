@@ -73,12 +73,7 @@ namespace SimpleApp.Web.Controllers
                 Supply(productViewModel);
                 return View(productViewModel);
             }
-            var getResultCategory = _categoryLogic.GetById(productViewModel.Category);
-            if (getResultCategory.Success == false)
-            {
-                
-                return NotFound();
-            }
+            
 
 
             var product = _mapper.Map<Product>(productViewModel);
@@ -86,6 +81,7 @@ namespace SimpleApp.Web.Controllers
             var addProduct =_productLogic.Add(product);
             if (addProduct.Success == false)
             {
+                Supply(productViewModel);
                 addProduct.AddErrorToModelState(ModelState);
                 return View(productViewModel);
             }
@@ -131,18 +127,16 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            var getResultCategory = _categoryLogic.GetById(productViewModel.Category);
-            if (getResultCategory.Success == false)
-            {
-                return NotFound();
-            }
+            
             
             _mapper.Map(productViewModel, getResult.Value);
 
             var updateResult = _productLogic.Update(getResult.Value);
             if(updateResult.Success == false)
             {
-                return BadRequest();
+                updateResult.AddErrorToModelState(ModelState);
+                Supply(productViewModel);
+                return View(productViewModel);
             }
             
             return RedirectToAction("Index");
