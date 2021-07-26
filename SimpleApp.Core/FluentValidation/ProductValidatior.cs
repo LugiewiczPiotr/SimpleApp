@@ -14,6 +14,7 @@ namespace SimpleApp.Core.FluentValidation
                 .MinimumLength(5).WithMessage("Minimum length of 5 char allowed")
                 .MaximumLength(20).WithMessage("Maximum legth of 50 char is allowed");
             RuleFor(x => x.Price).NotEmpty().WithMessage("This field cannot be empty");
+            RuleFor(x => x.Category).NotNull();
             
             
 
