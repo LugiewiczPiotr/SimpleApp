@@ -75,6 +75,7 @@ namespace SimpleApp.Web.Controllers
 
             if (addResult.Success == false)
             {
+                addResult.AddErrorToModelState(ModelState);
                 return View(categoryViewModel);
             }
             return RedirectToAction("Index");
@@ -90,6 +91,7 @@ namespace SimpleApp.Web.Controllers
 
             if (getResult.Success == false)
             {
+                
                 return NotFound();
             }
             var categoryViewModel = _mapper.Map<CategoryViewModel>(getResult.Value);
@@ -110,14 +112,17 @@ namespace SimpleApp.Web.Controllers
 
             if (getResult.Success == false)
             {
+                getResult.AddErrorToModelState(ModelState);
                 return NotFound();
             }
+
             _mapper.Map(categoryViewModel, getResult.Value);
            
             var result = _categoryLogic.Update(getResult.Value);
 
             if(result.Success == false)
             {
+                result.AddErrorToModelState(ModelState);
                 return View(categoryViewModel);
             }
             return RedirectToAction("Index");
