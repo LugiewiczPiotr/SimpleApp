@@ -8,13 +8,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using SimpleApp.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SimpleAppWebApi
+namespace SimpleApp.WebApi
 {
     public class Startup
     {
@@ -28,7 +29,12 @@ namespace SimpleAppWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), y => y.MigrationsAssembly("SimpleApp.Infrastructure")));
             services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SimpleApp", Version = "v1" });
+            });
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {
@@ -47,11 +53,17 @@ namespace SimpleAppWebApi
 
             app.UseRouting();
 
+            app.UseSwagger();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("v1/swagger.json", "SimpleApp");
             });
         }
     }
