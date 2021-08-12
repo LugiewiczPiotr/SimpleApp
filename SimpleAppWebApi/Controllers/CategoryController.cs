@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core.Interfaces.Logics;
+using SimpleApp.Core.Models;
 using SimpleAppWebApi.DTO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,32 +26,91 @@ namespace SimpleAppWebApi.Controllers
         public IEnumerable<CategoryDto> Get()
         {
             var categories = _categoryLogic.GetAllActive();
-            return _mapper.Map<IList<CategoryDto>>(categories);
+            return _mapper.Map<IList<CategoryDto>>(categories.Value);
         }
 
         // GET api/<CategoryController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult Get(Guid id)
         {
-            return "value";
+            if (id == Guid.Empty)
+            {
+                return NotFound();
+            }
+            var getResult = _categoryLogic.GetById(id);
+            if (getResult.Success == false)
+            {
+                return NotFound();
+            }
+            return Ok(getResult); 
         }
 
         // POST api/<CategoryController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] CategoryDto categoryDto)
         {
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest();
+            }
+            var category = _mapper.Map<Category>(categoryDto);
+            var addResult = _categoryLogic.Add(category);
+            if (addResult.Success == false)
+            {
+                addResult.AddErrorToModelState(ModelState);
+                return BadRequest();
+            }
+            return Ok(addResult);
         }
 
         // PUT api/<CategoryController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(Guid id, [FromBody] CategoryDto categoryDto)
         {
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest();
+            }
+
+            var getResult = _categoryLogic.GetById(categoryDto.Id);
+
+            if (getResult.Success == false)
+            {
+                getResult.AddErrorToModelState(ModelState);
+                return NotFound();
+            }
+
+            _mapper.Map(categoryDto, getResult.Value);
+
+            var resultUpdate = _categoryLogic.Update(getResult.Value);
+
+            if (resultUpdate.Success == false)
+            {
+                resultUpdate.AddErrorToModelState(ModelState);
+                return BadRequest();
+            }
+            return Ok(resultUpdate);
         }
 
         // DELETE api/<CategoryController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(Guid id)
         {
+            var getResult = _categoryLogic.GetById(id);
+
+            if (getResult.Success == false)
+            {
+                return NotFound();
+            }
+
+            var deleteResult = _categoryLogic.Delete(getResult.Value);
+
+            if (deleteResult.Success == false)
+            {
+                return BadRequest();
+            }
+            
+            return Ok(deleteResult);
         }
     }
 }

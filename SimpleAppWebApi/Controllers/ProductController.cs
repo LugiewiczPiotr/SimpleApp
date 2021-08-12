@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using SimpleApp.Core.Interfaces.Logics;
+using SimpleApp.Core.Models;
+using SimpleAppWebApi.DTO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,36 +14,103 @@ namespace SimpleAppWebApi.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        // GET: api/<ProductController>
+        private readonly IProductLogic _productLogic;
+        private readonly IMapper _mapper;
+        public ProductController(IProductLogic productLogic, IMapper mapper)
+        {
+            _productLogic = productLogic;
+            _mapper = mapper;
+        }
+        // GET: api/<CategoryController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<ProductDto> Get()
         {
-            return new string[] { "value1", "value2" };
+            var products = _productLogic.GetAllActive();
+            return _mapper.Map<IList<ProductDto>>(products.Value);
         }
 
-        // GET api/<ProductController>/5
+        // GET api/<CategoryController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult Get(Guid id)
         {
-            return "value";
+            if (id == Guid.Empty)
+            {
+                return NotFound();
+            }
+            var getResult = _productLogic.GetById(id);
+            if (getResult.Success == false)
+            {
+                return NotFound();
+            }
+            return Ok(getResult);
         }
 
-        // POST api/<ProductController>
+        // POST api/<CategoryController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] ProductDto productDto)
         {
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest();
+            }
+            var product = _mapper.Map<Product>(productDto);
+            var addResult = _productLogic.Add(product);
+            if (addResult.Success == false)
+            {
+                addResult.AddErrorToModelState(ModelState);
+                return BadRequest();
+            }
+            return Ok(addResult);
         }
 
-        // PUT api/<ProductController>/5
+        // PUT api/<CategoryController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(Guid id, [FromBody] ProductDto productDto)
         {
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest();
+            }
+
+            var getResult = _productLogic.GetById(id);
+
+            if (getResult.Success == false)
+            {
+                getResult.AddErrorToModelState(ModelState);
+                return NotFound();
+            }
+
+            _mapper.Map(productDto, getResult.Value);
+
+            var resultUpdate = _productLogic.Update(getResult.Value);
+
+            if (resultUpdate.Success == false)
+            {
+                resultUpdate.AddErrorToModelState(ModelState);
+                return BadRequest();
+            }
+            return Ok(resultUpdate);
         }
 
-        // DELETE api/<ProductController>/5
+        // DELETE api/<CategoryController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(Guid id)
         {
+            var getResult = _productLogic.GetById(id);
+
+            if (getResult.Success == false)
+            {
+                return NotFound();
+            }
+
+            var deleteResult = _productLogic.Delete(getResult.Value);
+
+            if (deleteResult.Success == false)
+            {
+                return BadRequest();
+            }
+
+            return Ok(deleteResult);
         }
     }
 }
