@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.Core", "SimpleApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.Infrastructure", "SimpleApp.Infrastructure\SimpleApp.Infrastructure.csproj", "{87177A4E-A20E-4400-8154-3AD3212E6A27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAppWebApi", "SimpleAppWebApi\SimpleAppWebApi.csproj", "{EA61DE78-4AAB-4C38-A660-30EA741F36EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.WebApi", "SimpleAppWebApi\SimpleApp.WebApi.csproj", "{EA61DE78-4AAB-4C38-A660-30EA741F36EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
