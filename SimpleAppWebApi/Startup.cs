@@ -1,19 +1,13 @@
 using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SimpleApp.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace SimpleApp.WebApi
 {
@@ -33,8 +27,14 @@ namespace SimpleApp.WebApi
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SimpleApp", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "SimpleApp", 
+                    Version = "v1" 
+                });
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "SimpleApp.WebApi.xml");
+                c.IncludeXmlComments(filePath);
             });
+
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {

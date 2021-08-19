@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SimpleApp.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:SimpleApp.WebApi.Controllers.CategoryController.Get">
+            <summary>
+            Get all category.
+            </summary>
+        </member>
+        <member name="M:SimpleApp.WebApi.Controllers.CategoryController.Get(System.Guid)">
+            <summary>
+            Get id category.
+            </summary>
+        </member>
+        <member name="M:SimpleApp.WebApi.Controllers.CategoryController.Post(SimpleApp.WebApi.DTO.CategoryDto)">
+            <summary>
+            Create category.
+            </summary>
+        </member>
+        <member name="M:SimpleApp.WebApi.Controllers.CategoryController.Put(System.Guid,SimpleApp.WebApi.DTO.CategoryDto)">
+            <summary>
+            Update category.
+            </summary>
+        </member>
+        <member name="M:SimpleApp.WebApi.Controllers.CategoryController.Delete(System.Guid)">
+            <summary>
+            Delete  category.
+            </summary>
+        </member>
+        <member name="M:SimpleApp.WebApi.Controllers.ProductController.Get">
+            <summary>
+            Get all products.
+            </summary>
+        </member>
+        <member name="M:SimpleApp.WebApi.Controllers.ProductController.Get(System.Guid)">
+            <summary>
+            Get id product.
+            </summary>
+        </member>
+        <member name="M:SimpleApp.WebApi.Controllers.ProductController.Post(SimpleApp.WebApi.DTO.ProductDto)">
+            <summary>
+            Create product.
+            </summary>
+        </member>
+        <member name="M:SimpleApp.WebApi.Controllers.ProductController.Put(System.Guid,SimpleApp.WebApi.DTO.ProductDto)">
+            <summary>
+            Update product.
+            </summary>
+        </member>
+        <member name="M:SimpleApp.WebApi.Controllers.ProductController.Delete(System.Guid)">
+            <summary>
+            Delete  product.
+            </summary>
+        </member>
+    </members>
+</doc>
