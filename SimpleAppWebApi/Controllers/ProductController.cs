@@ -1,17 +1,20 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Models;
-using SimpleAppWebApi.DTO;
+using SimpleApp.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace SimpleAppWebApi.Controllers
+namespace SimpleApp.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
     public class ProductController : ControllerBase
     {
         private readonly IProductLogic _productLogic;
@@ -21,16 +24,30 @@ namespace SimpleAppWebApi.Controllers
             _productLogic = productLogic;
             _mapper = mapper;
         }
-        // GET: api/<CategoryController>
+
+        /// <summary>
+        /// Get all products.
+        /// </summary>
         [HttpGet]
-        public IEnumerable<ProductDto> Get()
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
+        public ActionResult<IEnumerable<ProductDto>> Get()
         {
-            var products = _productLogic.GetAllActive();
-            return _mapper.Map<IList<ProductDto>>(products.Value);
+            var result = _productLogic.GetAllActive();
+            if(result.Success == false)
+            {
+                return NotFound();
+            }
+            var products =_mapper.Map<IList<ProductDto>>(result.Value);
+            return Ok(products);
         }
 
-        // GET api/<CategoryController>/5
+        /// <summary>
+        /// Get id product.
+        /// </summary>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
         public ActionResult Get(Guid id)
         {
             if (id == Guid.Empty)
@@ -42,36 +59,40 @@ namespace SimpleAppWebApi.Controllers
             {
                 return NotFound();
             }
-            return Ok(getResult);
+            var product = _mapper.Map<ProductDto>(getResult.Value);
+            return Ok(product);
         }
 
-        // POST api/<CategoryController>
+        /// <summary>
+        /// Create product.
+        /// </summary>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Product))]
         public ActionResult Post([FromBody] ProductDto productDto)
         {
-            if (ModelState.IsValid == false)
-            {
-                return BadRequest();
-            }
             var product = _mapper.Map<Product>(productDto);
             var addResult = _productLogic.Add(product);
             if (addResult.Success == false)
             {
                 addResult.AddErrorToModelState(ModelState);
-                return BadRequest();
+                return BadRequest(addResult);
             }
-            return Ok(addResult);
+            var productResult = _mapper.Map<ProductDto>(addResult.Value);
+            return CreatedAtAction(nameof(Get),
+                new { id = addResult.Value.Id },
+                addResult); 
         }
 
-        // PUT api/<CategoryController>/5
+        /// <summary>
+        /// Update product.
+        /// </summary>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
         public ActionResult Put(Guid id, [FromBody] ProductDto productDto)
         {
-            if (ModelState.IsValid == false)
-            {
-                return BadRequest();
-            }
-
             var getResult = _productLogic.GetById(id);
 
             if (getResult.Success == false)
@@ -87,13 +108,18 @@ namespace SimpleAppWebApi.Controllers
             if (resultUpdate.Success == false)
             {
                 resultUpdate.AddErrorToModelState(ModelState);
-                return BadRequest();
+                return BadRequest(resultUpdate);
             }
             return Ok(resultUpdate);
         }
 
-        // DELETE api/<CategoryController>/5
+        /// <summary>
+        /// Delete  product.
+        /// </summary>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Category))]
         public ActionResult Delete(Guid id)
         {
             var getResult = _productLogic.GetById(id);
@@ -107,7 +133,7 @@ namespace SimpleAppWebApi.Controllers
 
             if (deleteResult.Success == false)
             {
-                return BadRequest();
+                return BadRequest(deleteResult);
             }
 
             return Ok(deleteResult);
