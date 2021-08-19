@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using SimpleApp.Infrastructure.Repositories;
 
-namespace SimpleAppWebApi.Infrastructure.AutoFac.Modules
+namespace SimpleApp.WebApi.Infrastructure.AutoFac.Modules
 {
     public class DataAccessModule : Module
     {

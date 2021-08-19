@@ -2,7 +2,7 @@
 using AutoMapper;
 using System.Collections.Generic;
 
-namespace SimpleAppWebApi.Infrastructure.AutoFac.Modules
+namespace SimpleApp.WebApi.Infrastructure.AutoFac.Modules
 {
     public class AutoMapperModule : Module
     {

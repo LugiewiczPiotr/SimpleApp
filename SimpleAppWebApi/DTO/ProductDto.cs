@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SimpleAppWebApi.DTO
+namespace SimpleApp.WebApi.DTO
 {
     public class ProductDto
     {

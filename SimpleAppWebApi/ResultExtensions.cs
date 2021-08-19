@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SimpleAppWebApi
+namespace SimpleApp.WebApi
 {
     public static class ResultExtensions
     {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SimpleAppWebApi.Infrastructure.AutoFac.Modules
+namespace SimpleApp.WebApi.Infrastructure.AutoFac.Modules
 {
     public class LogicModule : Module
     {

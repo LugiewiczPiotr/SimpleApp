@@ -2,9 +2,9 @@
 using AutoMapper;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Models;
-using SimpleAppWebApi.DTO;
+using SimpleApp.WebApi.DTO;
 
-namespace SimpleApp.Web.AutoMapperProfiles
+namespace SimpleApp.WebApi.AutoMapperProfiles
 {
     public class CategoryProfile : Profile
     {
@@ -18,7 +18,7 @@ namespace SimpleApp.Web.AutoMapperProfiles
             CreateMap<Category, Guid>().ConvertUsing<CategoryToGuidConverter>();
         }
 
-       
+
 
         public class GuidToCategoryConverter : ITypeConverter<Guid, Category>
         {

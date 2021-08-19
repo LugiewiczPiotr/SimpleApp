@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using SimpleApp.Core.Models;
-using SimpleAppWebApi.DTO;
+using SimpleApp.WebApi.DTO;
 
-namespace SimpleApp.Web.AutoMapperProfiles
+namespace SimpleApp.WebApi.AutoMapperProfiles
 {
     public class ProductProfile : Profile
     {
@@ -12,7 +12,7 @@ namespace SimpleApp.Web.AutoMapperProfiles
                 .ReverseMap()
                 .ForMember(p => p.Id, opt => opt.Ignore());
 
-            
+
         }
     }
 }

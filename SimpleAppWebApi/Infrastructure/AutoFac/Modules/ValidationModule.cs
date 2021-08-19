@@ -2,7 +2,7 @@
 using FluentValidation;
 using SimpleApp.Core.Interfaces.Logics;
 
-namespace SimpleAppWebApi.Infrastructure.AutoFac.Modules
+namespace SimpleApp.WebApi.Infrastructure.AutoFac.Modules
 {
     public class ValidationModule : Module
     {
