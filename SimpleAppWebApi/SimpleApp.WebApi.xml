@@ -11,7 +11,7 @@
         </member>
         <member name="M:SimpleApp.WebApi.Controllers.CategoryController.Get(System.Guid)">
             <summary>
-            Get id category.
+            "Get category by id."
             </summary>
         </member>
         <member name="M:SimpleApp.WebApi.Controllers.CategoryController.Post(SimpleApp.WebApi.DTO.CategoryDto)">
@@ -36,7 +36,7 @@
         </member>
         <member name="M:SimpleApp.WebApi.Controllers.ProductController.Get(System.Guid)">
             <summary>
-            Get id product.
+            "Get product by id."
             </summary>
         </member>
         <member name="M:SimpleApp.WebApi.Controllers.ProductController.Post(SimpleApp.WebApi.DTO.ProductDto)">

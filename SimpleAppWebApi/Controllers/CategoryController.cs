@@ -28,25 +28,25 @@ namespace SimpleApp.WebApi.Controllers
         /// Get all category.
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Category))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<IEnumerable<CategoryDto>>))]
         public ActionResult<IEnumerable<CategoryDto>> Get()
         {
             var result = _categoryLogic.GetAllActive();
             if (result.Success == false)
             {
-                return NotFound();
+                return BadRequest(result);
             }
             var categories = _mapper.Map<IList<CategoryDto>>(result.Value);
-            return Ok(categories);
+            return Ok(Result.Ok(categories));
         }
 
         /// <summary>
-        /// Get id category.
+        /// "Get product by id."
         /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Category))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<IEnumerable<CategoryDto>>))]
         public ActionResult Get(Guid id)
         {
             if (id == Guid.Empty)
@@ -59,14 +59,14 @@ namespace SimpleApp.WebApi.Controllers
                 return NotFound();
             }
             var category = _mapper.Map<CategoryDto>(getResult.Value);
-            return Ok(category);
+            return Ok(Result.Ok(category));
         }
         /// <summary>
         /// Create category.
         /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Category))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<IEnumerable<CategoryDto>>))]
         public ActionResult Post([FromBody] CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
@@ -79,7 +79,7 @@ namespace SimpleApp.WebApi.Controllers
             var categoryResult = _mapper.Map<CategoryDto>(addResult.Value);
             return CreatedAtAction(nameof(Get),
                 new { id = addResult.Value.Id },
-                addResult);
+                Result.Ok(categoryResult));
         }
 
         /// <summary>
@@ -88,11 +88,11 @@ namespace SimpleApp.WebApi.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Category))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<IEnumerable<CategoryDto>>))]
         public ActionResult Put(Guid id, [FromBody] CategoryDto categoryDto)
         {
-          
-            var getResult = _categoryLogic.GetById(categoryDto.Id);
+
+            var getResult = _categoryLogic.GetById(id);
 
             if (getResult.Success == false)
             {
@@ -109,7 +109,7 @@ namespace SimpleApp.WebApi.Controllers
                 resultUpdate.AddErrorToModelState(ModelState);
                 return BadRequest(resultUpdate);
             }
-            return Ok(resultUpdate);
+            return Ok(Result.Ok(resultUpdate));
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Category))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<IEnumerable<CategoryDto>>))]
         public ActionResult Delete(Guid id)
         {
             var getResult = _categoryLogic.GetById(id);
@@ -135,7 +135,7 @@ namespace SimpleApp.WebApi.Controllers
                 return BadRequest(deleteResult);
             }
 
-            return Ok(deleteResult);
+            return Ok(Result.Ok(deleteResult));
         }
     }
 }
