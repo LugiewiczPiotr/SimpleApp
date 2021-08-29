@@ -109,7 +109,8 @@ namespace SimpleApp.WebApi.Controllers
                 resultUpdate.AddErrorToModelState(ModelState);
                 return BadRequest(resultUpdate);
             }
-            return Ok(Result.Ok(resultUpdate));
+            var categoryResult = _mapper.Map<CategoryDto>(resultUpdate.Value);
+            return Ok(Result.Ok(categoryResult));
         }
 
         /// <summary>
