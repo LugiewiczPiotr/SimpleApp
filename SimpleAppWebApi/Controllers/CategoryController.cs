@@ -13,6 +13,7 @@ using System.Collections.Generic;
 namespace SimpleApp.WebApi.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("aplication/json")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -29,7 +30,7 @@ namespace SimpleApp.WebApi.Controllers
         /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<IEnumerable<CategoryDto>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<CategoryDto>))]
         public ActionResult<IEnumerable<CategoryDto>> Get()
         {
             var result = _categoryLogic.GetAllActive();
@@ -46,7 +47,7 @@ namespace SimpleApp.WebApi.Controllers
         /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<IEnumerable<CategoryDto>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<CategoryDto>))]
         public ActionResult Get(Guid id)
         {
             if (id == Guid.Empty)
@@ -56,7 +57,7 @@ namespace SimpleApp.WebApi.Controllers
             var getResult = _categoryLogic.GetById(id);
             if (getResult.Success == false)
             {
-                return NotFound();
+                return NotFound(getResult);
             }
             var category = _mapper.Map<CategoryDto>(getResult.Value);
             return Ok(Result.Ok(category));
@@ -66,7 +67,7 @@ namespace SimpleApp.WebApi.Controllers
         /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<IEnumerable<CategoryDto>>))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<CategoryDto>))]
         public ActionResult Post([FromBody] CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
@@ -88,7 +89,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<IEnumerable<CategoryDto>>))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<CategoryDto>))]
         public ActionResult Put(Guid id, [FromBody] CategoryDto categoryDto)
         {
 
@@ -97,7 +98,7 @@ namespace SimpleApp.WebApi.Controllers
             if (getResult.Success == false)
             {
                 getResult.AddErrorToModelState(ModelState);
-                return NotFound();
+                return NotFound(getResult);
             }
 
             _mapper.Map(categoryDto, getResult.Value);
@@ -119,14 +120,14 @@ namespace SimpleApp.WebApi.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<IEnumerable<CategoryDto>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<CategoryDto>))]
         public ActionResult Delete(Guid id)
         {
             var getResult = _categoryLogic.GetById(id);
 
             if (getResult.Success == false)
             {
-                return NotFound();
+                return NotFound(getResult);
             }
 
             var deleteResult = _categoryLogic.Delete(getResult.Value);
@@ -136,7 +137,7 @@ namespace SimpleApp.WebApi.Controllers
                 return BadRequest(deleteResult);
             }
 
-            return Ok(Result.Ok(deleteResult));
+            return NoContent();
         }
     }
 }
