@@ -13,64 +13,75 @@ using Xunit;
 
 namespace Tests.Logic.Products
 {
-    public class Update
+    public class Update : BaseTest
     {
-        protected Mock<IProductRepository> ProductRespositoryMock { get; private set; }
-        protected Mock<IValidator<Product>> ValidatorMock { get; private set; }
-
-        protected ProductLogic Create()
-        {
-            ProductRespositoryMock = new Mock<IProductRepository>();
-            ValidatorMock = new Mock<IValidator<Product>>();
-            return new ProductLogic(
-                ProductRespositoryMock.Object,
-                ValidatorMock.Object);
-        }
-
         [Fact]
-        public void Return_Succes_When_Product_Is_Valid()
+        public void Throw_ArgumentNullException_When_Argument_Is_Null()
         {
+            //Arrange
             var logic = Create();
-            var product = Builder<Product>.CreateNew().Build();
 
-            ValidatorMock.SetValidationSuccess();
-            var result = logic.Update(product);
+            //Act
+            Action result = () => logic.Update(null);
 
+            //Assert
+            result.Should().Throw<ArgumentNullException>();
+            ValidatorMock.Verify(
+                x => x.Validate(null), Times.Never());
 
-            result.Should().NotBeNull();
-            result.Success.Should().BeTrue();
-            result.Value.Should().BeEquivalentTo(product);
-            result.Errors.Should().NotBeNull();
-            result.Errors.Count().Should().Be(0);
+            ProductRespositoryMock.Verify(
+                x => x.SaveChanges(), Times.Never());
         }
 
         [Fact]
         public void Return_Succes_When_Prodcut_Is_Not_Valid()
         {
+            //Arrange
             var logic = Create();
             var product = Builder<Product>.CreateNew().Build();
             ValidatorMock.SetValidationFailure(product.Name, "Validation fail");
 
+            //Act
             var result = logic.Update(product);
 
+            //Assert
             result.Should().NotBeNull();
             result.Success.Should().BeFalse();
             result.Errors.Should().NotBeNull();
             result.Errors.Count().Should().Be(1);
+            ValidatorMock.Verify(
+                x => x.Validate(product), Times.Once());
 
+            ProductRespositoryMock.Verify(
+                x => x.SaveChanges(), Times.Never());
         }
 
         [Fact]
-        public void Return_Error_When_Product_Is_Null()
+        public void Return_Succes_When_Product_Is_Valid()
         {
-
+            //Arrange
             var logic = Create();
+            var product = Builder<Product>.CreateNew().Build();
+            ValidatorMock.SetValidationSuccess();
 
+            //Act
+            var result = logic.Update(product);
 
-            Action result = () => logic.Update(null);
+            //Assert
+            result.Should().NotBeNull();
+            result.Success.Should().BeTrue();
+            result.Value.Should().BeEquivalentTo(product);
+            result.Errors.Should().NotBeNull();
+            result.Errors.Count().Should().Be(0);
+            ValidatorMock.Verify(
+                x => x.Validate(product), Times.Once());
 
-            result.Should().Throw<ArgumentNullException>();
-
+            ProductRespositoryMock.Verify(
+                x => x.SaveChanges(), Times.Once());
         }
+
+       
+
+       
     }
 }
