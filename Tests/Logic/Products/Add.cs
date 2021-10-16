@@ -2,8 +2,8 @@
 using FluentAssertions;
 using Moq;
 using SimpleApp.Core.Models;
+using SimpleApp.Core.UnitTests.Logic;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace Tests.Logic.Products
@@ -43,10 +43,7 @@ namespace Tests.Logic.Products
             var result = logic.Add(product);
 
             //Assert
-            result.Should().NotBeNull();
-            result.Success.Should().BeFalse();
-            result.Errors.Should().NotBeNull();
-            result.Errors.Count().Should().Be(1);
+            result.Should().BeFailure("Product is not valid");
             ValidatorMock.Verify(
                x => x.Validate(product), Times.Once());
 
@@ -69,10 +66,7 @@ namespace Tests.Logic.Products
             var result = logic.Add(product);
 
             //Assert
-            result.Should().NotBeNull();
-            result.Success.Should().BeTrue();
-            result.Errors.Should().NotBeNull();
-            result.Errors.Count().Should().Be(0);
+            result.Should().BeSuccess(product);
             ValidatorMock.Verify(
               x => x.Validate(product), Times.Once());
 

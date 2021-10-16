@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Moq;
 using SimpleApp.Core.Models;
+using SimpleApp.Core.UnitTests.Logic;
 using System;
 using System.Linq;
 using Xunit;
@@ -44,10 +45,7 @@ namespace Tests.Logic.Categories
             var result = logic.Add(category);
 
             //Assert
-            result.Should().NotBeNull();
-            result.Success.Should().BeFalse();
-            result.Errors.Should().NotBeNull();
-            result.Errors.Count().Should().Be(1);
+            result.Should().BeFailure("Category is not valid");
             ValidatorMock.Verify(
                 x => x.Validate(category), Times.Once());
 
@@ -70,10 +68,7 @@ namespace Tests.Logic.Categories
             var result = logic.Add(category);
 
             //Assert
-            result.Should().NotBeNull();
-            result.Success.Should().BeTrue();
-            result.Errors.Should().NotBeNull();
-            result.Errors.Count().Should().Be(0);
+            result.Should().BeSuccess(category);
             ValidatorMock.Verify(
                x => x.Validate(category), Times.Once);
 
