@@ -24,6 +24,7 @@ namespace Tests.Logic.Products
             var result = logic.GetById(guid);
 
             //Assert
+            result.Should().BeFailure("Product not exist");
             ProductRespositoryMock.Verify(
                 x => x.GetById(guid), Times.Once());
         }

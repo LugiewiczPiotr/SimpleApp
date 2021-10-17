@@ -3,6 +3,7 @@ using FluentAssertions;
 using Moq;
 using SimpleApp.Core.Models;
 using Xunit;
+using SimpleApp.Core;
 
 namespace Tests.Logic.Products
 {
@@ -20,8 +21,7 @@ namespace Tests.Logic.Products
             var result = logic.GetAllActive();
 
             //Assert
-            result.Success.Should().BeTrue();
-            result.Errors.Should().NotBeNull();
+            result.Should().BeSuccess(products);
             ProductRespositoryMock.Verify(
                 x => x.GetAllActive(), Times.Once());
         }
