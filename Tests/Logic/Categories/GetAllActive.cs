@@ -3,6 +3,7 @@ using FluentAssertions;
 using Moq;
 using SimpleApp.Core.Models;
 using Xunit;
+using SimpleApp.Core;
 
 namespace Tests.Logic.Categories
 {
@@ -20,8 +21,7 @@ namespace Tests.Logic.Categories
             var result = logic.GetAllActive();
 
             //Assert
-            result.Success.Should().BeTrue();
-            result.Errors.Should().NotBeNull();
+            result.Should().BeSuccess(categories);
             CategoryRepositoryMock.Verify(
                 x => x.GetAllActive(), Times.Once());
         }
