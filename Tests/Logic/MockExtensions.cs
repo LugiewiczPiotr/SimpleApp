@@ -1,9 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using Moq;
 
-
-namespace Tests.Logic
+namespace Moq
 {
     public static class MockExtensions
     {
