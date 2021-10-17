@@ -3,8 +3,8 @@ using FluentAssertions;
 using Moq;
 using SimpleApp.Core.Models;
 using System;
-using System.Linq;
 using Xunit;
+using SimpleApp.Core;
 
 namespace Tests.Logic.Categories
 {
@@ -22,13 +22,13 @@ namespace Tests.Logic.Categories
             //Assert
             result.Should().Throw<ArgumentNullException>();
             ValidatorMock.Verify(
-                x => x.Validate(null), Times.Never());
+                x => x.Validate(It.IsAny<Category>()), Times.Never());
 
             CategoryRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Never());
         }
         [Fact]
-        public void Return_Succes_When_Category_Is_Not_Valid()
+        public void Return_Failure_When_Category_Is_Not_Valid()
         {
             //Arrange
             var logic = Create();
@@ -39,10 +39,7 @@ namespace Tests.Logic.Categories
             var result = logic.Update(category);
 
             //Assert
-            result.Should().NotBeNull();
-            result.Success.Should().BeFalse();
-            result.Errors.Should().NotBeNull();
-            result.Errors.Count().Should().Be(1);
+            result.Should().BeFailure("Category is not valid");
             ValidatorMock.Verify(
                 x => x.Validate(category), Times.Once());
 
@@ -62,11 +59,7 @@ namespace Tests.Logic.Categories
             var result = logic.Update(category);
 
             //Assert
-            result.Should().NotBeNull();
-            result.Success.Should().BeTrue();
-            result.Value.Should().BeEquivalentTo(category);
-            result.Errors.Should().NotBeNull();
-            result.Errors.Count().Should().Be(0);
+            result.Should().BeSuccess(category);
             ValidatorMock.Verify(
                 x => x.Validate(category), Times.Once());
 

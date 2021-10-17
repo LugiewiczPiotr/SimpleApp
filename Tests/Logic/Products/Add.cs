@@ -2,9 +2,9 @@
 using FluentAssertions;
 using Moq;
 using SimpleApp.Core.Models;
-using SimpleApp.Core.UnitTests.Logic;
 using System;
 using Xunit;
+using SimpleApp.Core;
 
 namespace Tests.Logic.Products
 {
@@ -22,7 +22,7 @@ namespace Tests.Logic.Products
             //Assert
             result.Should().Throw<ArgumentNullException>();
             ValidatorMock.Verify(
-                x => x.Validate(null), Times.Never());
+                x => x.Validate(It.IsAny<Product>()), Times.Never());
 
             ProductRespositoryMock.Verify(
                x => x.Add(It.IsAny<Product>()), Times.Never());

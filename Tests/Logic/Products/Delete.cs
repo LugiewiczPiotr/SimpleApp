@@ -21,7 +21,7 @@ namespace Tests.Logic.Products
             //Assert
             result.Should().Throw<ArgumentNullException>();
             ProductRespositoryMock.Verify(
-                x => x.Delete(null), Times.Never());
+                x => x.Delete(It.IsAny<Product>()), Times.Never());
 
             ProductRespositoryMock.Verify(
                 x => x.SaveChanges(), Times.Never());

@@ -1,15 +1,11 @@
 ﻿using FizzWare.NBuilder;
 using FluentAssertions;
-using FluentValidation;
 using Moq;
-using SimpleApp.Core.Interfaces.Repositories;
-using SimpleApp.Core.Logics;
 using SimpleApp.Core.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
+using SimpleApp.Core;
 
 namespace Tests.Logic.Products
 {
@@ -27,7 +23,7 @@ namespace Tests.Logic.Products
             //Assert
             result.Should().Throw<ArgumentNullException>();
             ValidatorMock.Verify(
-                x => x.Validate(null), Times.Never());
+                x => x.Validate(It.IsAny<Product>()), Times.Never());
 
             ProductRespositoryMock.Verify(
                 x => x.SaveChanges(), Times.Never());
@@ -45,10 +41,7 @@ namespace Tests.Logic.Products
             var result = logic.Update(product);
 
             //Assert
-            result.Should().NotBeNull();
-            result.Success.Should().BeFalse();
-            result.Errors.Should().NotBeNull();
-            result.Errors.Count().Should().Be(1);
+            result.Should().BeFailure("Product is not valid");
             ValidatorMock.Verify(
                 x => x.Validate(product), Times.Once());
 
@@ -68,11 +61,7 @@ namespace Tests.Logic.Products
             var result = logic.Update(product);
 
             //Assert
-            result.Should().NotBeNull();
-            result.Success.Should().BeTrue();
-            result.Value.Should().BeEquivalentTo(product);
-            result.Errors.Should().NotBeNull();
-            result.Errors.Count().Should().Be(0);
+            result.Should().BeSuccess(product);
             ValidatorMock.Verify(
                 x => x.Validate(product), Times.Once());
 
