@@ -21,7 +21,7 @@ namespace Tests.Logic.Categories
             //Assert
             result.Should().Throw<ArgumentNullException>();
             CategoryRepositoryMock.Verify(
-                x => x.Delete(null), Times.Never());
+                x => x.Delete(It.IsAny<Category>()), Times.Never());
 
             CategoryRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Never());
@@ -43,11 +43,11 @@ namespace Tests.Logic.Categories
 
             //Assert
             result.Success.Should().BeTrue();
+            ProductRespositoryMock.Verify(
+               x => x.DeleteByCategoryId(category.Id), Times.Once());
+
             CategoryRepositoryMock.Verify(
                 x => x.Delete(category), Times.Once());
-
-            ProductRespositoryMock.Verify(
-                x => x.DeleteByCategoryId(category.Id), Times.Once());
 
             CategoryRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Once());

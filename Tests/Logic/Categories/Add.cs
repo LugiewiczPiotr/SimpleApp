@@ -2,10 +2,10 @@
 using FluentAssertions;
 using Moq;
 using SimpleApp.Core.Models;
-using SimpleApp.Core.UnitTests.Logic;
 using System;
-using System.Linq;
 using Xunit;
+using SimpleApp.Core;
+using System.Linq;
 
 namespace Tests.Logic.Categories
 {
@@ -23,7 +23,7 @@ namespace Tests.Logic.Categories
             //Assert
             result.Should().Throw<ArgumentNullException>();
             ValidatorMock.Verify(
-               x => x.Validate(null), Times.Never());
+               x => x.Validate(It.IsAny<Category>()), Times.Never());
 
             CategoryRepositoryMock.Verify(
                x => x.Add(It.IsAny<Category>()), Times.Never());
@@ -38,14 +38,14 @@ namespace Tests.Logic.Categories
             //Arrange
             var logic = Create();
             var category = Builder<Category>.CreateNew().Build();
-            ValidatorMock.SetValidationFailure(category.Name, "Validation fail");
+            ValidatorMock.SetValidationFailure(category.Name, "validation fail");
             
 
             //Act
             var result = logic.Add(category);
 
             //Assert
-            result.Should().BeFailure("Category is not valid");
+            result.Should().BeFailure("validation fail");
             ValidatorMock.Verify(
                 x => x.Validate(category), Times.Once());
 
@@ -73,7 +73,7 @@ namespace Tests.Logic.Categories
                x => x.Validate(category), Times.Once);
 
             CategoryRepositoryMock.Verify(
-               x => x.Add(It.IsAny<Category>()), Times.Once());
+               x => x.Add(category), Times.Once());
 
             CategoryRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Once());
