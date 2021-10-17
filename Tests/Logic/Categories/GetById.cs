@@ -4,7 +4,7 @@ using SimpleApp.Core.Models;
 using System;
 using Xunit;
 using FluentAssertions;
-using System.Linq;
+using SimpleApp.Core;
 
 namespace Tests.Logic.Categories
 {
@@ -17,19 +17,16 @@ namespace Tests.Logic.Categories
             var logic = Create();
             CategoryRepositoryMock.Setup(r => r.GetById(It.IsAny<Guid>())).
                 Returns((Category)null);
-            
+            var guid = Guid.NewGuid();
+
 
             //Arrange
-            var result = logic.GetById(Guid.NewGuid());
+            var result = logic.GetById(guid);
 
             //Assert
-            result.Should().NotBeNull();
-            result.Success.Should().BeFalse();
-            result.Value.Should().BeNull();
-            result.Errors.Should().NotBeNull();
-            result.Errors.Count().Should().Be(1);
+            result.Should().BeFailure("Category not exist ");
             CategoryRepositoryMock.Verify(
-                x => x.GetById(Guid.NewGuid()), Times.Never()); 
+                x => x.GetById(guid), Times.Once()); 
         }
 
         [Fact]
@@ -45,11 +42,7 @@ namespace Tests.Logic.Categories
             var result = logic.GetById(category.Id);
 
             //Assert
-            result.Should().NotBeNull();
-            result.Success.Should().BeTrue();
-            result.Value.Should().BeEquivalentTo(category);
-            result.Errors.Should().NotBeNull();
-            result.Errors.Count().Should().Be(0);
+            result.Should().BeSuccess(category);
             CategoryRepositoryMock.Verify(
                 x => x.GetById(category.Id), Times.Once()); 
         }
