@@ -22,8 +22,8 @@ namespace SimpleApp.Core
             protected override string Identifier => "Result";
 
             public ResultAssertions(Result<T> result)
-                : base(result)
             {
+                Subject = result;
             }
 
             public ResultAssertions<T> BeSuccess(T value,
@@ -109,8 +109,8 @@ namespace SimpleApp.Core
         {
             protected override string Identifier => "Result";
             public ResultAssertions(Result result)
-                :base(result)
-            {   
+            {
+                Subject = result;
             }
 
             public ResultAssertions BeSuccess(string because = "",
