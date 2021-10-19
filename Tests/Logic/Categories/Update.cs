@@ -33,13 +33,13 @@ namespace Tests.Logic.Categories
             //Arrange
             var logic = Create();
             var category = Builder<Category>.CreateNew().Build();
-            ValidatorMock.SetValidationFailure(category.Name, "Validation fail");
+            ValidatorMock.SetValidationFailure(category.Name, "validation fail");
 
             //Act
             var result = logic.Update(category);
 
             //Assert
-            result.Should().BeFailure("Category is not valid");
+            result.Should().BeFailure(property:category.Name, message:"validation fail");
             ValidatorMock.Verify(
                 x => x.Validate(category), Times.Once());
 

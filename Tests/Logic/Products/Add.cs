@@ -32,18 +32,19 @@ namespace Tests.Logic.Products
         }
 
         [Fact]
-        public void Return_Error_When_Product_Is_Not_Valid()
+        public void Return_Failure_When_Product_Is_Not_Valid()
         {
             //Arrange
             var logic = Create();
             var product = Builder<Product>.CreateNew().Build();
-            ValidatorMock.SetValidationFailure(product.Name, "Validation fail");
+            ValidatorMock.SetValidationFailure(product.Name, "validation fail");
+            
 
             //Act
             var result = logic.Add(product);
 
             //Assert
-            result.Should().BeFailure("Product is not valid");
+            result.Should().BeFailure(property: product.Name, message: "validation fail");
             ValidatorMock.Verify(
                x => x.Validate(product), Times.Once());
 

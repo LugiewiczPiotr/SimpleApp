@@ -5,7 +5,6 @@ using SimpleApp.Core.Models;
 using System;
 using Xunit;
 using SimpleApp.Core;
-using System.Linq;
 
 namespace Tests.Logic.Categories
 {
@@ -33,19 +32,18 @@ namespace Tests.Logic.Categories
         }
 
         [Fact]
-        public void Return_Error_When_Category_Is_Not_Valid()
+        public void Return_Failure_When_Category_Is_Not_Valid()
         {
             //Arrange
             var logic = Create();
             var category = Builder<Category>.CreateNew().Build();
             ValidatorMock.SetValidationFailure(category.Name, "validation fail");
-            
 
             //Act
             var result = logic.Add(category);
 
             //Assert
-            result.Should().BeFailure("validation fail");
+            result.Should().BeFailure(property:category.Name, message:"validation fail");
             ValidatorMock.Verify(
                 x => x.Validate(category), Times.Once());
 
