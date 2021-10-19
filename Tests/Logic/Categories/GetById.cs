@@ -24,7 +24,7 @@ namespace Tests.Logic.Categories
             var result = logic.GetById(guid);
 
             //Assert
-            result.Should().BeFailure("Category not exist ");
+            result.Should().BeFailure($"Category with ID {guid} does not exist.");
             CategoryRepositoryMock.Verify(
                 x => x.GetById(guid), Times.Once()); 
         }

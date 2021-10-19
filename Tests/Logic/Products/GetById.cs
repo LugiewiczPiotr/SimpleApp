@@ -12,7 +12,7 @@ namespace Tests.Logic.Products
     public class GetById : BaseTest
     {
         [Fact]
-        public void Return_Error_When_Prodcut_Not_Exist()
+        public void Return_Error_When_Product_Not_Exist()
         {
             //Arrange
             var logic = Create();
@@ -24,7 +24,7 @@ namespace Tests.Logic.Products
             var result = logic.GetById(guid);
 
             //Assert
-            result.Should().BeFailure("Product not exist");
+            result.Should().BeFailure($"Product with ID {guid} does not exist.");
             ProductRespositoryMock.Verify(
                 x => x.GetById(guid), Times.Once());
         }
