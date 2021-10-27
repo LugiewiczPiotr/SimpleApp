@@ -13,7 +13,7 @@ using System.Collections.Generic;
 namespace SimpleApp.WebApi.Controllers
 {
     [Route("api/[controller]")]
-    [Produces("aplication/json")]
+    [Produces("application/json")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
