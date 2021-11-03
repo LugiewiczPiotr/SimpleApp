@@ -72,7 +72,7 @@ namespace Tests.Logic.Products
               x => x.Validate(product), Times.Once());
 
             ProductRespositoryMock.Verify(
-               x => x.Add(It.IsAny<Product>()), Times.Once());
+               x => x.Add(product), Times.Once());
 
             ProductRespositoryMock.Verify(
                 x => x.SaveChanges(), Times.Once());
