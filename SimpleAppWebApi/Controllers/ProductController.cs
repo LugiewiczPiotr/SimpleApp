@@ -121,7 +121,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(Result<ProductDto>))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult Delete(Guid id)
         {
             var getResult = _productLogic.GetById(id);
