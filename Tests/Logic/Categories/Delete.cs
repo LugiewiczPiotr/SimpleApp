@@ -23,8 +23,12 @@ namespace Tests.Logic.Categories
             CategoryRepositoryMock.Verify(
                 x => x.Delete(It.IsAny<Category>()), Times.Never());
 
+            ProductRespositoryMock.Verify(
+               x => x.DeleteByCategoryId(It.IsAny<Guid>()), Times.Never());
+
             CategoryRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Never());
+
         }
 
         [Fact]
