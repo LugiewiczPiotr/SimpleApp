@@ -15,7 +15,8 @@ namespace SimpleApp.Core.FluentValidation
                 .MaximumLength(50).WithMessage("Maximum length of {MaxLength} char is allowed");
             RuleFor(x => x.Price).NotEmpty().WithMessage("This field cannot be empty")
                 .ScalePrecision(2, 7).WithMessage(" Price must not be more than 7 digits in total,with allowance for 2 decimals.");
-            RuleFor(x => x.CategoryId).NotNull().WithMessage("Category cannot be null");
+            RuleFor(x => x.Category).NotNull().WithMessage("Category cannot be null");
+            RuleFor(x => x.Price).GreaterThan(0).WithMessage("value must be greater than 0");
         }
     }
 }
