@@ -34,13 +34,14 @@ namespace Tests.Logic.Products
             //Arrange
             var logic = Create();
             var product = Builder<Product>.CreateNew().Build();
-            ValidatorMock.SetValidationFailure(product.Name, "validation fail");
+            string errorMessage = "validation fail";
+            ValidatorMock.SetValidationFailure(product.Name, errorMessage);
 
             //Act
             var result = logic.Update(product);
 
             //Assert
-            result.Should().BeFailure(property:product.Name, message:"validation fail");
+            result.Should().BeFailure(property:product.Name, message: errorMessage);
             ValidatorMock.Verify(
                 x => x.Validate(product), Times.Once());
 
