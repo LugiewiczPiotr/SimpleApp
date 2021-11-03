@@ -997,7 +997,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"ddddd\",\n    \"description\": \"ddddd\",\n    \"price\": 200,\n    \"categoryId\": \"b601baa5-dfe8-4e88-a57c-0f922ea31eb5\"\n}",
+									"raw": "{\n    \"name\": \"ddddd\",\n    \"description\": \"ddddd\",\n    \"price\": 200,\n    \"category\": \"2e36f198-209a-461b-b120-f8b91363cfb5\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
