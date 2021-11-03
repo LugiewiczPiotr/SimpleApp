@@ -5,7 +5,6 @@ namespace Moq
 {
     public static class MockExtensions
     {
-
         public static void SetValidationSuccess<T>(this Mock<IValidator<T>> validator)
         {
             validator.Setup(r => r.Validate(It.IsAny<T>())).Returns(new ValidationResult());
@@ -17,9 +16,5 @@ namespace Moq
                 new ValidationFailure(validatedProperty, errorMessage),
             }));
         }
-
-
-
-
     }
 }
