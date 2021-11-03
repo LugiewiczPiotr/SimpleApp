@@ -1,0 +1,1110 @@
+{
+	"info": {
+		"_postman_id": "0081fa51-dbe9-437b-9c8d-4a5c5b30bdb2",
+		"name": "SimpleApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "\"Get category by id.\"",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Category/8864eff9-cd72-4c7f-839e-475833a182e4",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Category",
+												"8864eff9-cd72-4c7f-839e-475833a182e4"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Category/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Category",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"success\": true,\n \"errors\": [\n  {\n   \"propertyName\": \"labore\",\n   \"message\": \"mollit nulla tempor\"\n  },\n  {\n   \"propertyName\": \"eiusmod sunt consectetur reprehenderit\",\n   \"message\": \"id nisi\"\n  }\n ],\n \"value\": [\n  {\n   \"id\": \"d85a8296-6b35-6039-c563-9bf3fa114f12\",\n   \"name\": \"sint enim irure\"\n  },\n  {\n   \"id\": \"8f22a378-e9f9-1ebe-f0c5-d90ef3ec6c5c\",\n   \"name\": \"veniam incididunt consectetur\"\n  }\n ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Category/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Category",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Update category.",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"dolor do\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Category/8864eff9-cd72-4c7f-839e-475833a182e4",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Category",
+												"8864eff9-cd72-4c7f-839e-475833a182e4"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"fa9261de-da2e-b747-a715-52cb24e34bbb\",\n    \"name\": \"dolor do\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Category/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Category",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"success\": true,\n \"errors\": [\n  {\n   \"propertyName\": \"labore\",\n   \"message\": \"mollit nulla tempor\"\n  },\n  {\n   \"propertyName\": \"eiusmod sunt consectetur reprehenderit\",\n   \"message\": \"id nisi\"\n  }\n ],\n \"value\": [\n  {\n   \"id\": \"d85a8296-6b35-6039-c563-9bf3fa114f12\",\n   \"name\": \"sint enim irure\"\n  },\n  {\n   \"id\": \"8f22a378-e9f9-1ebe-f0c5-d90ef3ec6c5c\",\n   \"name\": \"veniam incididunt consectetur\"\n  }\n ]\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"fa9261de-da2e-b747-a715-52cb24e34bbb\",\n    \"name\": \"dolor do\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Category/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Category",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"fa9261de-da2e-b747-a715-52cb24e34bbb\",\n    \"name\": \"dolor do\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Category/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Category",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete  category.",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Category/8864eff9-cd72-4c7f-839e-475833a182e4",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Category",
+												"8864eff9-cd72-4c7f-839e-475833a182e4"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Category/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Category",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"success\": true,\n \"errors\": [\n  {\n   \"propertyName\": \"labore\",\n   \"message\": \"mollit nulla tempor\"\n  },\n  {\n   \"propertyName\": \"eiusmod sunt consectetur reprehenderit\",\n   \"message\": \"id nisi\"\n  }\n ],\n \"value\": [\n  {\n   \"id\": \"d85a8296-6b35-6039-c563-9bf3fa114f12\",\n   \"name\": \"sint enim irure\"\n  },\n  {\n   \"id\": \"8f22a378-e9f9-1ebe-f0c5-d90ef3ec6c5c\",\n   \"name\": \"veniam incididunt consectetur\"\n  }\n ]\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Category/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Category",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Category/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Category",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get all category.",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Category",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Category"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Category"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"success\": true,\n \"errors\": [\n  {\n   \"propertyName\": \"exer\",\n   \"message\": \"Excepteur voluptate sed minim\"\n  },\n  {\n   \"propertyName\": \"Lorem consequat nostrud incididunt conse\",\n   \"message\": \"incididunt culpa\"\n  }\n ],\n \"value\": [\n  {\n   \"id\": \"urn:uuid:73842978-da15-6212-8fde-24a9770396f1\",\n   \"name\": \"id enim Ut aliquip\"\n  },\n  {\n   \"id\": \"urn:uuid:153c8b1f-c20d-8c51-6bc3-806231717a1f\",\n   \"name\": \"adipisicing deserunt minim ad\"\n  }\n ]\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Category"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Create category.",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"dolor do\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Category",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Category"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"fa9261de-da2e-b747-a715-52cb24e34bbb\",\n    \"name\": \"dolor do\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Category"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"success\": true,\n \"errors\": [\n  {\n   \"propertyName\": \"labore\",\n   \"message\": \"mollit nulla tempor\"\n  },\n  {\n   \"propertyName\": \"eiusmod sunt consectetur reprehenderit\",\n   \"message\": \"id nisi\"\n  }\n ],\n \"value\": [\n  {\n   \"id\": \"d85a8296-6b35-6039-c563-9bf3fa114f12\",\n   \"name\": \"sint enim irure\"\n  },\n  {\n   \"id\": \"8f22a378-e9f9-1ebe-f0c5-d90ef3ec6c5c\",\n   \"name\": \"veniam incididunt consectetur\"\n  }\n ]\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"fa9261de-da2e-b747-a715-52cb24e34bbb\",\n    \"name\": \"dolor do\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Category"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "\"Get product by id.\"",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/bbb2bd5a-ba87-405c-be0e-5fc59395029b",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"bbb2bd5a-ba87-405c-be0e-5fc59395029b"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Product/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Product",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"success\": false,\n \"errors\": [\n  {\n   \"propertyName\": \"est laboris amet\",\n   \"message\": \"ipsum elit in aliquip Duis\"\n  },\n  {\n   \"propertyName\": \"anim aute cupidatat in\",\n   \"message\": \"sint cillum labore reprehenderit nisi\"\n  }\n ],\n \"value\": [\n  {\n   \"id\": \"urn:uuid:dc333a9f-e949-6730-3ce6-d4def89d5502\",\n   \"name\": \"pariatur in deserunt sint\",\n   \"description\": \"reprehenderit laboris\",\n   \"price\": -65969424.8959136,\n   \"categoryId\": \"4f5be2db-238c-4ccc-8d9a-2b16afa33820\"\n  },\n  {\n   \"id\": \"urn:uuid:01ce347e-8cfa-0da5-681c-12e48a7e4fb5\",\n   \"name\": \"off\",\n   \"description\": \"mollit ea irure\",\n   \"price\": 46781650.48887396,\n   \"categoryId\": \"urn:uuid:a4f3b872-e2df-6f49-5034-46b7a1aa068a\"\n  }\n ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Product/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Product",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Update product.",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Ut sunt tempor ut\",\n    \"description\": \"et id velit anim\",\n    \"price\": 20,\n    \"categoryId\": \"9c26f817-c6b4-48ff-b2bd-1dd2ec45cee5\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/bbb2bd5a-ba87-405c-be0e-5fc59395029b",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"bbb2bd5a-ba87-405c-be0e-5fc59395029b"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"urn:uuid:ea3c0f5f-3fad-39f1-5836-97cb36200b8f\",\n    \"name\": \"Ut sunt tempor ut\",\n    \"description\": \"et id velit anim\",\n    \"price\": -76596227.45471287,\n    \"categoryId\": \"4cdeb6d0-8cc6-e5a2-aeab-3f25042a5fbc\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Product/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Product",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"success\": false,\n \"errors\": [\n  {\n   \"propertyName\": \"est laboris amet\",\n   \"message\": \"ipsum elit in aliquip Duis\"\n  },\n  {\n   \"propertyName\": \"anim aute cupidatat in\",\n   \"message\": \"sint cillum labore reprehenderit nisi\"\n  }\n ],\n \"value\": [\n  {\n   \"id\": \"urn:uuid:dc333a9f-e949-6730-3ce6-d4def89d5502\",\n   \"name\": \"pariatur in deserunt sint\",\n   \"description\": \"reprehenderit laboris\",\n   \"price\": -65969424.8959136,\n   \"categoryId\": \"4f5be2db-238c-4ccc-8d9a-2b16afa33820\"\n  },\n  {\n   \"id\": \"urn:uuid:01ce347e-8cfa-0da5-681c-12e48a7e4fb5\",\n   \"name\": \"off\",\n   \"description\": \"mollit ea irure\",\n   \"price\": 46781650.48887396,\n   \"categoryId\": \"urn:uuid:a4f3b872-e2df-6f49-5034-46b7a1aa068a\"\n  }\n ]\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"urn:uuid:ea3c0f5f-3fad-39f1-5836-97cb36200b8f\",\n    \"name\": \"Ut sunt tempor ut\",\n    \"description\": \"et id velit anim\",\n    \"price\": -76596227.45471287,\n    \"categoryId\": \"4cdeb6d0-8cc6-e5a2-aeab-3f25042a5fbc\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Product/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Product",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"urn:uuid:ea3c0f5f-3fad-39f1-5836-97cb36200b8f\",\n    \"name\": \"Ut sunt tempor ut\",\n    \"description\": \"et id velit anim\",\n    \"price\": -76596227.45471287,\n    \"categoryId\": \"4cdeb6d0-8cc6-e5a2-aeab-3f25042a5fbc\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Product/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Product",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete  product.",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/b40d08f6-6e6e-4103-8e7f-522d0d04aa6c",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"b40d08f6-6e6e-4103-8e7f-522d0d04aa6c"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Product/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Product",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"success\": false,\n \"errors\": [\n  {\n   \"propertyName\": \"est laboris amet\",\n   \"message\": \"ipsum elit in aliquip Duis\"\n  },\n  {\n   \"propertyName\": \"anim aute cupidatat in\",\n   \"message\": \"sint cillum labore reprehenderit nisi\"\n  }\n ],\n \"value\": [\n  {\n   \"id\": \"urn:uuid:dc333a9f-e949-6730-3ce6-d4def89d5502\",\n   \"name\": \"pariatur in deserunt sint\",\n   \"description\": \"reprehenderit laboris\",\n   \"price\": -65969424.8959136,\n   \"categoryId\": \"4f5be2db-238c-4ccc-8d9a-2b16afa33820\"\n  },\n  {\n   \"id\": \"urn:uuid:01ce347e-8cfa-0da5-681c-12e48a7e4fb5\",\n   \"name\": \"off\",\n   \"description\": \"mollit ea irure\",\n   \"price\": 46781650.48887396,\n   \"categoryId\": \"urn:uuid:a4f3b872-e2df-6f49-5034-46b7a1aa068a\"\n  }\n ]\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Product/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Product",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Product/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Product",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get all products.",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Product",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Product"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Product",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"success\": true,\n \"errors\": [\n  {\n   \"propertyName\": \"aute ut\",\n   \"message\": \"irure aliquip dolor Duis laborum\"\n  },\n  {\n   \"propertyName\": \"voluptate irure\",\n   \"message\": \"dolor\"\n  }\n ],\n \"value\": [\n  {\n   \"id\": \"urn:uuid:3b9e68e9-a82e-4358-41e5-f4c12fbe7c16\",\n   \"name\": \"occaecat dolore et magna\",\n   \"description\": \"nisi Excepteur culpa magna irure\",\n   \"price\": -43088209.775542505,\n   \"categoryId\": \"75ffaf7c-fb23-7fc5-e3ca-ace7fae4dab8\"\n  },\n  {\n   \"id\": \"be9f257f-3943-b475-4adc-bacd29ac3e87\",\n   \"name\": \"esse ut do\",\n   \"description\": \"dolor qui in eiusmod\",\n   \"price\": -49064576.747308575,\n   \"categoryId\": \"ff871d07-a848-97f9-1479-eeaa26f8eff3\"\n  }\n ]\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Product",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Create product.",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"ddddd\",\n    \"description\": \"ddddd\",\n    \"price\": 200,\n    \"category\": \"2e36f198-209a-461b-b120-f8b91363cfb5\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Product",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Product"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"urn:uuid:ea3c0f5f-3fad-39f1-5836-97cb36200b8f\",\n    \"name\": \"Ut sunt tempor ut\",\n    \"description\": \"et id velit anim\",\n    \"price\": -76596227.45471287,\n    \"categoryId\": \"4cdeb6d0-8cc6-e5a2-aeab-3f25042a5fbc\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Product",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"success\": false,\n \"errors\": [\n  {\n   \"propertyName\": \"est laboris amet\",\n   \"message\": \"ipsum elit in aliquip Duis\"\n  },\n  {\n   \"propertyName\": \"anim aute cupidatat in\",\n   \"message\": \"sint cillum labore reprehenderit nisi\"\n  }\n ],\n \"value\": [\n  {\n   \"id\": \"urn:uuid:dc333a9f-e949-6730-3ce6-d4def89d5502\",\n   \"name\": \"pariatur in deserunt sint\",\n   \"description\": \"reprehenderit laboris\",\n   \"price\": -65969424.8959136,\n   \"categoryId\": \"4f5be2db-238c-4ccc-8d9a-2b16afa33820\"\n  },\n  {\n   \"id\": \"urn:uuid:01ce347e-8cfa-0da5-681c-12e48a7e4fb5\",\n   \"name\": \"off\",\n   \"description\": \"mollit ea irure\",\n   \"price\": 46781650.48887396,\n   \"categoryId\": \"urn:uuid:a4f3b872-e2df-6f49-5034-46b7a1aa068a\"\n  }\n ]\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"urn:uuid:ea3c0f5f-3fad-39f1-5836-97cb36200b8f\",\n    \"name\": \"Ut sunt tempor ut\",\n    \"description\": \"et id velit anim\",\n    \"price\": -76596227.45471287,\n    \"categoryId\": \"4cdeb6d0-8cc6-e5a2-aeab-3f25042a5fbc\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Product",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"dolore\",\n \"title\": \"reprehenderit Excepteur aliqua\",\n \"status\": 12529604,\n \"detail\": \"aliquip in off\",\n \"instance\": \"irure qui aliqua\"\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
