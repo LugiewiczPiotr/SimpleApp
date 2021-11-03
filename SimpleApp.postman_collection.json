@@ -15,10 +15,17 @@
 							"name": "{id}",
 							"item": [
 								{
-									"name": "\"Get product by id.\"",
+									"name": "\"Get category by id.\"",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
 									"request": {
 										"method": "GET",
 										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
 										"url": {
 											"raw": "{{baseUrl}}/api/Category/8864eff9-cd72-4c7f-839e-475833a182e4",
 											"host": [
@@ -28,13 +35,6 @@
 												"api",
 												"Category",
 												"8864eff9-cd72-4c7f-839e-475833a182e4"
-											],
-											"query": [
-												{
-													"key": null,
-													"value": "",
-													"disabled": true
-												}
 											]
 										}
 									},
@@ -121,7 +121,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"id\": \"8864eff9-cd72-4c7f-839e-475833a182e4\",\n    \"name\": \"dolor do\"\n}"
+											"raw": "{\n    \"name\": \"dolor do\"\n}"
 										},
 										"url": {
 											"raw": "{{baseUrl}}/api/Category/8864eff9-cd72-4c7f-839e-475833a182e4",
@@ -257,6 +257,10 @@
 									"request": {
 										"method": "DELETE",
 										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
 										"url": {
 											"raw": "{{baseUrl}}/api/Category/8864eff9-cd72-4c7f-839e-475833a182e4",
 											"host": [
@@ -463,7 +467,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": \"fa9261de-da2e-b747-a715-52cb24e34bbb\",\n    \"name\": \"dolor do\"\n}"
+									"raw": "{\n    \"name\": \"dolor do\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/api/Category",
@@ -651,7 +655,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"id\": \"bbb2bd5a-ba87-405c-be0e-5fc59395029b\",\n    \"name\": \"Ut sunt tempor ut\",\n    \"description\": \"et id velit anim\",\n    \"price\": 20,\n    \"categoryId\": \"9c26f817-c6b4-48ff-b2bd-1dd2ec45cee5\"\n}"
+											"raw": "{\n    \"name\": \"Ut sunt tempor ut\",\n    \"description\": \"et id velit anim\",\n    \"price\": 20,\n    \"categoryId\": \"9c26f817-c6b4-48ff-b2bd-1dd2ec45cee5\"\n}"
 										},
 										"url": {
 											"raw": "{{baseUrl}}/api/Product/bbb2bd5a-ba87-405c-be0e-5fc59395029b",
@@ -993,7 +997,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": \"ea3c0f5f-3fad-39f1-5836-97cb36200b8f\",\n    \"name\": \"ddddd\",\n    \"description\": \"ddddd\",\n    \"price\": 200,\n    \"categoryId\": \"b601baa5-dfe8-4e88-a57c-0f922ea31eb5\"\n}",
+									"raw": "{\n    \"name\": \"ddddd\",\n    \"description\": \"ddddd\",\n    \"price\": 200,\n    \"categoryId\": \"b601baa5-dfe8-4e88-a57c-0f922ea31eb5\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1083,11 +1087,24 @@
 			]
 		}
 	],
-	"variable": [
+	"event": [
 		{
-			"key": "baseUrl",
-			"value": "/",
-			"type": "string"
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
