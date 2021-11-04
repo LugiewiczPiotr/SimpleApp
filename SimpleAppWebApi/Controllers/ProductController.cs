@@ -13,6 +13,7 @@ using System.Collections.Generic;
 namespace SimpleApp.WebApi.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -29,7 +30,7 @@ namespace SimpleApp.WebApi.Controllers
         /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<IEnumerable<ProductDto>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<ProductDto>))]
         public ActionResult<IEnumerable<ProductDto>> Get()
         {
             var result = _productLogic.GetAllActive();
@@ -46,7 +47,7 @@ namespace SimpleApp.WebApi.Controllers
         /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<IEnumerable<ProductDto>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<ProductDto>))]
         public ActionResult Get(Guid id)
         {
             if (id == Guid.Empty)
@@ -56,7 +57,7 @@ namespace SimpleApp.WebApi.Controllers
             var getResult = _productLogic.GetById(id);
             if (getResult.Success == false)
             {
-                return NotFound();
+                return NotFound(getResult);
             }
             var products = _mapper.Map<ProductDto>(getResult.Value);
             return Ok(Result.Ok(products));
@@ -67,7 +68,7 @@ namespace SimpleApp.WebApi.Controllers
         /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<IEnumerable<ProductDto>>))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<ProductDto>))]
         public ActionResult Post([FromBody] ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
@@ -89,7 +90,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<IEnumerable<ProductDto>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<ProductDto>))]
         public ActionResult Put(Guid id, [FromBody] ProductDto productDto)
         {
             var getResult = _productLogic.GetById(id);
@@ -97,7 +98,7 @@ namespace SimpleApp.WebApi.Controllers
             if (getResult.Success == false)
             {
                 getResult.AddErrorToModelState(ModelState);
-                return NotFound();
+                return NotFound(getResult);
             }
 
             _mapper.Map(productDto, getResult.Value);
@@ -120,14 +121,14 @@ namespace SimpleApp.WebApi.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<IEnumerable<ProductDto>>))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult Delete(Guid id)
         {
             var getResult = _productLogic.GetById(id);
 
             if (getResult.Success == false)
             {
-                return NotFound();
+                return NotFound(getResult);
             }
 
             var deleteResult = _productLogic.Delete(getResult.Value);
@@ -136,8 +137,8 @@ namespace SimpleApp.WebApi.Controllers
             {
                 return BadRequest(deleteResult);
             }
-
-            return Ok(Result.Ok(deleteResult)); ;
+            
+            return NoContent();
         }
     }
 }
