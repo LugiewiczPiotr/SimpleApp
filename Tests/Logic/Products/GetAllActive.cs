@@ -5,7 +5,7 @@ using SimpleApp.Core.Models;
 using Xunit;
 using SimpleApp.Core;
 
-namespace Tests.Logic.Products
+namespace SimpleApp.Core.UnitTests.Logic.Products
 {
     public class GetAllActive : BaseTest
     {

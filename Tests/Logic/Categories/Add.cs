@@ -6,7 +6,7 @@ using System;
 using Xunit;
 using SimpleApp.Core;
 
-namespace Tests.Logic.Categories
+namespace SimpleApp.Core.UnitTests.Logic.Categories
 {
     public class Add : BaseTest
     {
