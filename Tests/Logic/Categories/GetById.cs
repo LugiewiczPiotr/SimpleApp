@@ -6,7 +6,7 @@ using Xunit;
 using FluentAssertions;
 using SimpleApp.Core;
 
-namespace Tests.Logic.Categories
+namespace SimpleApp.Core.UnitTests.Logic.Categories
 {
     public class GetById : BaseTest
     {

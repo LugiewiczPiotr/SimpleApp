@@ -5,7 +5,7 @@ using SimpleApp.Core.Models;
 using System;
 using Xunit;
 
-namespace Tests.Logic.Products
+namespace SimpleApp.Core.UnitTests.Logic.Products
 {
     public class Delete : BaseTest
     {

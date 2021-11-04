@@ -7,7 +7,7 @@ using FluentAssertions;
 using System.Linq;
 using SimpleApp.Core;
 
-namespace Tests.Logic.Products
+namespace SimpleApp.Core.UnitTests.Logic.Products
 {
     public class GetById : BaseTest
     {
