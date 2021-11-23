@@ -39,8 +39,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             var category = Builder<Category>.CreateNew().Build();
             var product = Builder<Product>.CreateNew().Build();
             category.Id = product.CategoryId;
-            CategoryRepositoryMock.Setup(x => x.Delete(category));
-            ProductRespositoryMock.Setup(r => r.DeleteByCategoryId(category.Id));
+            CategoryRepositoryMock.Setup
+                (x => x.Delete(category));
+            ProductRespositoryMock.Setup
+                (r => r.DeleteByCategoryId(category.Id));
 
             //Act
             var result = logic.Delete(category);

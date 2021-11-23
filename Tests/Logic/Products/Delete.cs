@@ -33,7 +33,8 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             //Arrange
             var logic = Create();
             var product = Builder<Product>.CreateNew().Build();
-            ProductRespositoryMock.Setup(r => r.Delete(product));
+            ProductRespositoryMock
+                .Setup(r => r.Delete(product));
 
             //Act
             var result = logic.Delete(product);

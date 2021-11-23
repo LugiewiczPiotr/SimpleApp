@@ -13,10 +13,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
         [Fact]
         public void Throw_ArgumentNullException_When_Argument_Is_Null()
         {
-            //Act
+            //Arrange
             var logic = Create();
 
-            //Arrange
+            //Act
             Action result = () => logic.Update(null);
 
             //Assert

@@ -1,9 +1,7 @@
 ﻿using FizzWare.NBuilder;
-using FluentAssertions;
 using Moq;
 using SimpleApp.Core.Models;
 using Xunit;
-using SimpleApp.Core;
 
 namespace SimpleApp.Core.UnitTests.Logic.Categories
 {
@@ -15,7 +13,9 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             //Arrange
             var logic = Create();
             var categories = Builder<Category>.CreateListOfSize(10).Build();
-            CategoryRepositoryMock.Setup(r => r.GetAllActive()).Returns(categories);
+            CategoryRepositoryMock
+                .Setup(r => r.GetAllActive())
+                .Returns(categories);
 
             //Act
             var result = logic.GetAllActive();
