@@ -89,7 +89,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<CategoryDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<CategoryDto>))]
         public ActionResult Put(Guid id, [FromBody] CategoryDto categoryDto)
         {
 
