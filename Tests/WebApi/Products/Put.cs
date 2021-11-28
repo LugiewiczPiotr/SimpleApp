@@ -52,7 +52,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
             //Assert
             result.Should().BeBadRequest<Product>(errorMessage);
             ProductLogicMock.Verify(
-                x => x.GetById(It.IsAny<Guid>()), Times.Once());
+                x => x.GetById(productDto.Id), Times.Once());
 
             ProductLogicMock.Verify(
                 x => x.Update(product), Times.Once());
@@ -86,7 +86,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
             //Assert
             result.Should().BeOk(productDto);
             ProductLogicMock.Verify(
-                x => x.GetById(It.IsAny<Guid>()), Times.Once());
+                x => x.GetById(productDto.Id), Times.Once());
 
             ProductLogicMock.Verify(
                 x => x.Update(product), Times.Once());

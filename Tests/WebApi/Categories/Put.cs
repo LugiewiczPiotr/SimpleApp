@@ -52,7 +52,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             //Assert
             result.Should().BeBadRequest<Category>(errorMessage);
             CategoryLogicMock.Verify(
-                x => x.GetById(category.Id), Times.Once());
+                x => x.GetById(categoryDto.Id), Times.Once());
 
             CategoryLogicMock.Verify(
                 x => x.Update(category), Times.Once());
@@ -86,7 +86,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             //Assert
             result.Should().BeOk(categoryDto);
             CategoryLogicMock.Verify(
-                x => x.GetById(category.Id), Times.Once());
+                x => x.GetById(categoryDto.Id), Times.Once());
 
             CategoryLogicMock.Verify(
                 x => x.Update(category), Times.Once());

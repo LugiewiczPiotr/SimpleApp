@@ -75,18 +75,16 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
         {
             //Arrange
             var logic = Create();
-            var product = Builder<Product>.CreateNew().Build();
-           
-
+            
             //Act
-            var result = logic.Delete(product.Id);
+            var result = logic.Delete(Product.Id);
 
             //Assert
             result.Should().BeOfType<NoContentResult>();
             ProductLogicMock
-                .Verify(x => x.GetById(product.Id), Times.Once());
+                .Verify(x => x.GetById(Product.Id), Times.Once());
             ProductLogicMock
-                .Verify(x => x.Delete(product), Times.Once());
+                .Verify(x => x.Delete(Product), Times.Once());
         }
     }
 }
