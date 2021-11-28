@@ -8,7 +8,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Categories
 {
-    public class Get : BaseTest
+    public class Get : BaseTests
     {
         [Fact]
         public void Return_All_Categories()

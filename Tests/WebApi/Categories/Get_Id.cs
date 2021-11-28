@@ -7,7 +7,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Categories
 {
-    public class Get_Id : BaseTest
+    public class Get_Id : BaseTests
     {
         [Fact]
         public void Return_NotFound_When_Category_Not_Exist()
@@ -26,7 +26,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             //Assert
             result.Should().BeNotFound<Category>(errorMessage);
             CategoryLogicMock.Verify(
-                x => x.GetById(It.IsAny<Guid>()), Times.Once());
+                x => x.GetById(guid), Times.Once());
         }
 
         [Fact]

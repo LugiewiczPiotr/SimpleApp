@@ -8,7 +8,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Products
 {
-    public class Get : BaseTest
+    public class Get : BaseTests
     {
         [Fact]
         public void Return_All_Products()
@@ -31,7 +31,6 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
             result.Should().BeOk(productsDto);
             ProductLogicMock.Verify(
                 x => x.GetAllActive(), Times.Once());
-
             MapperMock.Verify(
                 x => x.Map<IList<ProductDto>>(products.AsEnumerable()), Times.Once());
         }

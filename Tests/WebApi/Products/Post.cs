@@ -6,7 +6,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Products
 {
-    public class Post : BaseTest
+    public class Post : BaseTests
     {
         [Fact]
         public void Return_BeBadRequest_When_Product_Is_Not_Valid()

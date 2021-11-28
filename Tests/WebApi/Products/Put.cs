@@ -7,7 +7,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Products
 {
-    public class Put : BaseTest
+    public class Put : BaseTests
     {
         [Fact]
         public void Return_NotFound_When_Product_Not_Exist()
@@ -26,7 +26,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
             //Assert
             result.Should().BeNotFound<Product>(errorMessage);
             ProductLogicMock
-                .Verify(x => x.GetById(It.IsAny<Guid>()), Times.Once());
+                .Verify(x => x.GetById(guid), Times.Once());
         }
 
         [Fact]

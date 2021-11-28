@@ -7,7 +7,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Categories
 {
-    public class Put : BaseTest
+    public class Put : BaseTests
     {
         [Fact]
         public void Return_NotFound_When_Category_Not_Exist()
@@ -26,7 +26,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             //Assert
             result.Should().BeNotFound<Category>(errorMessage);
             CategoryLogicMock
-                .Verify( x => x.GetById(It.IsAny<Guid>()), Times.Once());
+                .Verify( x => x.GetById(guid), Times.Once());
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             //Assert
             result.Should().BeBadRequest<Category>(errorMessage);
             CategoryLogicMock.Verify(
-                x => x.GetById(It.IsAny<Guid>()), Times.Once());
+                x => x.GetById(category.Id), Times.Once());
 
             CategoryLogicMock.Verify(
                 x => x.Update(category), Times.Once());
@@ -86,7 +86,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             //Assert
             result.Should().BeOk(categoryDto);
             CategoryLogicMock.Verify(
-                x => x.GetById(It.IsAny<Guid>()), Times.Once());
+                x => x.GetById(category.Id), Times.Once());
 
             CategoryLogicMock.Verify(
                 x => x.Update(category), Times.Once());
