@@ -7,7 +7,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Categories
 {
-    public class Delete : BaseTest
+    public class Delete : BaseTests
     {
         [Fact]
         public void Throw_ArgumentNullException_When_Argument_Is_Null()

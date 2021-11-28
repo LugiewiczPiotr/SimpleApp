@@ -6,7 +6,7 @@ using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.UnitTests.Logic.Categories
 {
-    public class BaseTest
+    public class BaseTests
     {
         protected Mock<ICategoryRepository> CategoryRepositoryMock { get; private set; }
         protected Mock<IProductRepository> ProductRespositoryMock { get; private set; }

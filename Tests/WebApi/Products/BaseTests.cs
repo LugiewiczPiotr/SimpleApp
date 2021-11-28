@@ -5,11 +5,11 @@ using SimpleApp.WebApi.Controllers;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Products
 {
-    public class BaseTest
+    public class BaseTests
     {
         protected Mock<IProductLogic> ProductLogicMock { get; set; }
         protected Mock<IMapper> MapperMock { get; set; }
-        protected ProductController Create()
+        protected virtual ProductController Create()
         {
             ProductLogicMock = new Mock<IProductLogic>();
             MapperMock = new Mock<IMapper>();

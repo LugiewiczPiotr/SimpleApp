@@ -5,11 +5,11 @@ using SimpleApp.WebApi.Controllers;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Categories
 {
-    public class BaseTest
+    public class BaseTests
     {
         protected Mock<ICategoryLogic> CategoryLogicMock { get; set; }
         protected Mock<IMapper> MapperMock { get; set; }
-        protected CategoryController Create()
+        protected virtual CategoryController Create()
         {
             CategoryLogicMock = new Mock<ICategoryLogic>();
             MapperMock = new Mock<IMapper>();

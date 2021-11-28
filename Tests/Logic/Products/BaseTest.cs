@@ -6,7 +6,7 @@ using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.UnitTests.Logic.Products
 {
-    public class BaseTest
+    public class BaseTests
     {
         protected Mock<IProductRepository> ProductRespositoryMock { get; private set; }
         protected Mock<IValidator<Product>> ValidatorMock { get; private set; }

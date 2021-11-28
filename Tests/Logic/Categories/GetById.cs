@@ -6,7 +6,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Categories
 {
-    public class GetById : BaseTest
+    public class GetById : BaseTests
     {
         [Fact]
         public void Return_Error_When_Category_Not_Exist()
