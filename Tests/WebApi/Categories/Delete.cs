@@ -2,13 +2,31 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimpleApp.Core.Models;
+using SimpleApp.WebApi.Controllers;
 using System;
 using Xunit;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Categories
 {
-    public class Delete : BaseTest
+    public class Delete : BaseTests
     {
+        protected Category Category;
+        private void CorrectFlow()
+        {
+            Category = Builder<Category>.CreateNew().Build();
+            CategoryLogicMock
+                .Setup(r => r.GetById(It.IsAny<Guid>()))
+                .Returns(Result.Ok(Category));
+            CategoryLogicMock
+                .Setup(r => r.Delete(It.IsAny<Category>())).Returns(Result.Ok());
+        }
+        protected override CategoryController Create()
+        {
+            var controller = base.Create();
+            CorrectFlow();
+            return controller;
+        }
+
         [Fact]
         public void Return_NotFound_When_Category_Not_Exist()
         {
@@ -26,7 +44,9 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             //Assert
             result.Should().BeNotFound<Category>(errorMessage);
             CategoryLogicMock
-                .Verify(x => x.GetById(It.IsAny<Guid>()), Times.Once());
+                .Verify(x => x.GetById(guid), Times.Once());
+            CategoryLogicMock
+                .Verify(x => x.Delete(It.IsAny<Category>()), Times.Never());
         }
 
         [Fact]
@@ -34,24 +54,20 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
         {
             //Arrange
             var errorMessage ="BadRequest";
-            var logic = Create();
-            var category = Builder<Category>.CreateNew().Build();
-            CategoryLogicMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(category));
+            var logic = Create();           
             CategoryLogicMock
                 .Setup(r => r.Delete(It.IsAny<Category>()))
-                .Returns(Result.Failure<Category>(category.Name, errorMessage));
+                .Returns(Result.Failure<Category>(Category.Name, errorMessage));
 
             //Act
-            var result = logic.Delete(category.Id);
+            var result = logic.Delete(Category.Id);
 
             //Assert
             result.Should().BeBadRequest<Category>(errorMessage);
             CategoryLogicMock
-                .Verify(x => x.GetById(It.IsAny<Guid>()), Times.Once());
+                .Verify(x => x.GetById(Category.Id), Times.Once());
             CategoryLogicMock
-                .Verify(x => x.Delete(category), Times.Once());
+                .Verify(x => x.Delete(Category), Times.Once());
         }
 
         [Fact]
@@ -59,23 +75,16 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
         {
             //Arrange
             var logic = Create();
-            var category = Builder<Category>.CreateNew().Build();
-            CategoryLogicMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(category));
-            CategoryLogicMock
-                .Setup(r => r.Delete(category)).Returns(Result.Ok());
-                
-
+                        
             //Act
-            var result = logic.Delete(category.Id);
+            var result = logic.Delete(Category.Id);
 
             //Assert
             result.Should().BeOfType<NoContentResult>();
             CategoryLogicMock
-                .Verify(x => x.GetById(It.IsAny<Guid>()), Times.Once());
+                .Verify(x => x.GetById(Category.Id), Times.Once());
             CategoryLogicMock
-                .Verify(x => x.Delete(category), Times.Once());
+                .Verify(x => x.Delete(Category), Times.Once());
         }
     }
 }
