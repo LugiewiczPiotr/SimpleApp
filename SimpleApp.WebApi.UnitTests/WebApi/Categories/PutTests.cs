@@ -74,7 +74,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             MapperMock
                 .Setup(x => x.Map(It.IsAny<CategoryDto>(), It.IsAny<Category>()));
             CategoryLogicMock
-                .Setup(r => r.Update(category))
+                .Setup(r => r.Update(It.IsAny<Category>()))
                 .Returns(Result.Ok(category));
             MapperMock
                 .Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))

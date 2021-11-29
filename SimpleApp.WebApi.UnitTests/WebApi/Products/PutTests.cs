@@ -74,7 +74,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
             MapperMock
                 .Setup(x => x.Map(It.IsAny<ProductDto>(), It.IsAny<Product>()));
             ProductLogicMock
-                .Setup(r => r.Update(product))
+                .Setup(r => r.Update(It.IsAny<Product>()))
                 .Returns(Result.Ok(product));
             MapperMock
                 .Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
