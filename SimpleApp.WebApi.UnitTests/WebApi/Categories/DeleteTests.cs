@@ -8,7 +8,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Categories
 {
-    public class Delete : BaseTests
+    public class DeleteTests : BaseTests
     {
         protected Category Category;
         private void CorrectFlow()

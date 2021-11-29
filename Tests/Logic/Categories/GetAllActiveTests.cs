@@ -5,7 +5,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Categories
 {
-    public class GetAllActive : BaseTests
+    public class GetAllActiveTests : BaseTests
     {
         [Fact]
         public void Return_All_Categories_From_Repository()

@@ -7,7 +7,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Categories
 {
-    public class Put : BaseTests
+    public class PutTests : BaseTests
     {
         [Fact]
         public void Return_NotFound_When_Category_Not_Exist()

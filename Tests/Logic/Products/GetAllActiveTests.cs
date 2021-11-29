@@ -5,7 +5,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Products
 {
-    public class GetAllActive : BaseTests
+    public class GetAllActiveTests : BaseTests
     {
         [Fact]
         public void Return_All_Products_From_Repository()

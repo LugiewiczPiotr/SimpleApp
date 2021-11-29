@@ -6,7 +6,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Categories
 {
-    public class Post : BaseTests
+    public class PostTests : BaseTests
     {
         [Fact]
         public void Return_BeBadRequest_When_Category_Is_Not_Valid()

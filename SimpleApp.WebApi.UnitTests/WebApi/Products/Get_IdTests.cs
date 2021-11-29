@@ -7,7 +7,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Products
 {
-    public class Get_Id : BaseTests
+    public class Get_IdTests : BaseTests
     {
         [Fact]
         public void Return_NotFound_When_Product_Not_Exist()

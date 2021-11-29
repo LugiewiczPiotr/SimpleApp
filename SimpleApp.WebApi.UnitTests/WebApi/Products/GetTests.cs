@@ -8,7 +8,7 @@ using Xunit;
 
 namespace SimpleApp.Core.UnitTests.WebApi.Products
 {
-    public class Get : BaseTests
+    public class GetTests : BaseTests
     {
         [Fact]
         public void Return_All_Products()
