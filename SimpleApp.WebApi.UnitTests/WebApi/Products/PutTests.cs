@@ -15,13 +15,14 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
             //Arrange
             var logic = Create();
             var guid = Guid.NewGuid();
+            var productDto = Builder<ProductDto>.CreateNew().Build();
             var errorMessage = $"Product with ID {guid} does not exist.";
             ProductLogicMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
                 .Returns(Result.Failure<Product>(errorMessage));
 
             //Act
-            var result = logic.Get(guid);
+            var result = logic.Put(guid, productDto);
 
             //Assert
             result.Should().BeNotFound<Product>(errorMessage);
@@ -45,6 +46,8 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
             ProductLogicMock
                 .Setup(r => r.Update(It.IsAny<Product>()))
                 .Returns(Result.Failure<Product>(product.Name, errorMessage));
+            MapperMock
+               .Setup(x => x.Map<ProductDto>(product));
 
             //Act
             var result = logic.Put(productDto.Id, productDto);
@@ -59,6 +62,9 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
 
             MapperMock.Verify(
                 x => x.Map(It.IsAny<ProductDto>(), It.IsAny<Product>()), Times.Once());
+
+            MapperMock.Verify(
+                x => x.Map<Product>(productDto), Times.Once());
         }
 
         [Fact]

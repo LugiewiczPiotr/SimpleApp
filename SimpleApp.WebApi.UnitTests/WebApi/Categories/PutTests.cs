@@ -15,13 +15,14 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             //Arrange
             var logic = Create();
             var guid = Guid.NewGuid();
+            var categoryDto = Builder<CategoryDto>.CreateNew().Build();
             var errorMessage = $"Category with ID {guid} does not exist.";
             CategoryLogicMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
                 .Returns(Result.Failure<Category>(errorMessage));
 
             //Act
-            var result = logic.Get(guid);
+            var result = logic.Put(guid, categoryDto);
 
             //Assert
             result.Should().BeNotFound<Category>(errorMessage);
@@ -45,6 +46,8 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             CategoryLogicMock
                 .Setup(r => r.Update(It.IsAny<Category>()))
                 .Returns(Result.Failure<Category>(category.Name, errorMessage));
+            MapperMock
+                .Setup(x => x.Map<CategoryDto>(category));
 
             //Act
             var result = logic.Put(categoryDto.Id, categoryDto);
@@ -58,7 +61,10 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
                 x => x.Update(category), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map(It.IsAny<CategoryDto>(), It.IsAny<Category>()), Times.Once());  
+                x => x.Map(It.IsAny<CategoryDto>(), It.IsAny<Category>()), Times.Once());
+
+            MapperMock.Verify(
+                x => x.Map<Category>(categoryDto), Times.Once());
         }
 
         [Fact]
