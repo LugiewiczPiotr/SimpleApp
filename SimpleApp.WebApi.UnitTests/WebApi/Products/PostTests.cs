@@ -33,6 +33,9 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
 
             MapperMock.Verify(
                 x => x.Map<Product>(productDto), Times.Once());
+
+            MapperMock.Verify(
+               x => x.Map<ProductDto>(product), Times.Never());
         }
 
         [Fact]

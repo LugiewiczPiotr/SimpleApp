@@ -33,6 +33,9 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
 
             MapperMock.Verify(
                 x => x.Map<Category>(categoryDto), Times.Once());
+
+            MapperMock.Verify(
+              x => x.Map<CategoryDto>(category), Times.Never());
         }
 
         [Fact]
