@@ -54,11 +54,11 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
 
             //Assert
             result.Should().BeCreatedAtAction(productDto);
+            MapperMock.Verify(
+              x => x.Map<Product>(productDto), Times.Once());
+
             ProductLogicMock.Verify(
                x => x.Add(product), Times.Once());
-
-            MapperMock.Verify(
-               x => x.Map<Product>(productDto), Times.Once());
 
             MapperMock.Verify(
                x => x.Map<ProductDto>(product), Times.Once());

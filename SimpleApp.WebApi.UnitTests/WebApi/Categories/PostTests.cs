@@ -54,11 +54,11 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
 
             //Assert
             result.Should().BeCreatedAtAction(categoryDto);
-            CategoryLogicMock.Verify(
-               x => x.Add(category), Times.Once());
-
             MapperMock.Verify(
                x => x.Map<Category>(categoryDto), Times.Once());
+
+            CategoryLogicMock.Verify(
+               x => x.Add(category), Times.Once());
 
             MapperMock.Verify(
                x => x.Map<CategoryDto>(category), Times.Once());
