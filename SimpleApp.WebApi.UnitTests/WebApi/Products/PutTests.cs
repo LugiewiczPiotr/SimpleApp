@@ -101,7 +101,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
                 x => x.Map(It.IsAny<ProductDto>(), It.IsAny<Product>()), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Once());
+                x => x.Map<ProductDto>(product), Times.Once());
         }
     }
 }

@@ -47,7 +47,8 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
                 .Setup(r => r.Update(It.IsAny<Category>()))
                 .Returns(Result.Failure<Category>(category.Name, errorMessage));
             MapperMock
-                .Setup(x => x.Map<CategoryDto>(category));
+                .Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))
+                .Returns(categoryDto);
 
             //Act
             var result = logic.Put(categoryDto.Id, categoryDto);
@@ -101,7 +102,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
                 x => x.Map(It.IsAny<CategoryDto>(), It.IsAny<Category>()), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Once());
+                x => x.Map<CategoryDto>(category), Times.Once());
         }
     }
 }
