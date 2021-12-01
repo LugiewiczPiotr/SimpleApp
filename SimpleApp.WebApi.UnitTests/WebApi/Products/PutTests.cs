@@ -46,9 +46,6 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
             ProductLogicMock
                 .Setup(r => r.Update(It.IsAny<Product>()))
                 .Returns(Result.Failure<Product>(product.Name, errorMessage));
-            MapperMock
-               .Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
-               .Returns(productDto);
 
             //Act
             var result = logic.Put(productDto.Id, productDto);

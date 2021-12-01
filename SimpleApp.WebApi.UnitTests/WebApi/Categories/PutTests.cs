@@ -46,9 +46,6 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             CategoryLogicMock
                 .Setup(r => r.Update(It.IsAny<Category>()))
                 .Returns(Result.Failure<Category>(category.Name, errorMessage));
-            MapperMock
-                .Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))
-                .Returns(categoryDto);
 
             //Act
             var result = logic.Put(categoryDto.Id, categoryDto);
