@@ -10,7 +10,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
 {
     public class DeleteTests : BaseTests
     {
-        protected Category Category;
+        private Category Category;
         private void CorrectFlow()
         {
             Category = Builder<Category>.CreateNew().Build();
