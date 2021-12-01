@@ -47,7 +47,8 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
                 .Setup(r => r.Update(It.IsAny<Product>()))
                 .Returns(Result.Failure<Product>(product.Name, errorMessage));
             MapperMock
-               .Setup(x => x.Map<ProductDto>(product));
+               .Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
+               .Returns(productDto);
 
             //Act
             var result = logic.Put(productDto.Id, productDto);
@@ -64,7 +65,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
                 x => x.Map(It.IsAny<ProductDto>(), It.IsAny<Product>()), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map<Product>(productDto), Times.Once());
+                x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Never());
         }
 
         [Fact]
