@@ -17,10 +17,10 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
             var product = Builder<Product>.CreateNew().Build();
             var errorMessage = "validation fail";
             MapperMock
-                .Setup(x => x.Map<Product>(productDto))
+                .Setup(x => x.Map<Product>(It.IsAny<ProductDto>()))
                 .Returns(product);
             ProductLogicMock
-                .Setup(x => x.Add(product))
+                .Setup(x => x.Add(It.IsAny<Product>()))
                 .Returns(Result.Failure<Product>(product.Name, errorMessage));
 
             //Act
@@ -35,7 +35,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
                 x => x.Map<Product>(productDto), Times.Once());
 
             MapperMock.Verify(
-               x => x.Map<ProductDto>(product), Times.Never());
+               x => x.Map<ProductDto>(It.IsAny<Category>()), Times.Never());
         }
 
         [Fact]
@@ -45,11 +45,11 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
             var logic = Create();
             var productDto = Builder<ProductDto>.CreateNew().Build();
             var product = Builder<Product>.CreateNew().Build();
-            MapperMock.Setup(x => x.Map<Product>(productDto))
+            MapperMock.Setup(x => x.Map<Product>(It.IsAny<ProductDto>()))
                 .Returns(product);
-            ProductLogicMock.Setup(x => x.Add(product))
+            ProductLogicMock.Setup(x => x.Add(It.IsAny<Product>()))
                 .Returns(Result.Ok(product));
-            MapperMock.Setup(x => x.Map<ProductDto>(product))
+            MapperMock.Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
                 .Returns(productDto);
 
             //Act

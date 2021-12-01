@@ -17,10 +17,10 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             var category = Builder<Category>.CreateNew().Build();
             var errorMessage = "validation fail";
             MapperMock
-                .Setup(x => x.Map<Category>(categoryDto))
+                .Setup(x => x.Map<Category>(It.IsAny<CategoryDto>()))
                 .Returns(category);
             CategoryLogicMock
-                .Setup(x => x.Add(category))
+                .Setup(x => x.Add(It.IsAny<Category>()))
                 .Returns(Result.Failure<Category>(category.Name, errorMessage));
 
             //Act
@@ -35,7 +35,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
                 x => x.Map<Category>(categoryDto), Times.Once());
 
             MapperMock.Verify(
-              x => x.Map<CategoryDto>(category), Times.Never());
+              x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Never());
         }
 
         [Fact]
@@ -45,11 +45,11 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             var logic = Create();
             var categoryDto = Builder<CategoryDto>.CreateNew().Build();
             var category = Builder<Category>.CreateNew().Build();
-            MapperMock.Setup(x => x.Map<Category>(categoryDto))
+            MapperMock.Setup(x => x.Map<Category>(It.IsAny<CategoryDto>()))
                 .Returns(category);
-            CategoryLogicMock.Setup(x => x.Add(category))
+            CategoryLogicMock.Setup(x => x.Add(It.IsAny<Category>()))
                 .Returns(Result.Ok(category));
-            MapperMock.Setup(x => x.Map<CategoryDto>(category))
+            MapperMock.Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))
                 .Returns(categoryDto);
 
             //Act
