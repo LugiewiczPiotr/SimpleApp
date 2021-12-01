@@ -28,6 +28,15 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             result.Should().BeNotFound<Category>(errorMessage);
             CategoryLogicMock
                 .Verify( x => x.GetById(guid), Times.Once());
+
+            CategoryLogicMock.Verify(
+               x => x.Update(It.IsAny<Category>()), Times.Never());
+
+            MapperMock.Verify(
+                x => x.Map(It.IsAny<CategoryDto>(), It.IsAny<Category>()), Times.Never());
+
+            MapperMock.Verify(
+                x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Never());
         }
 
         [Fact]
