@@ -10,7 +10,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
 {
     public class DeleteTests : BaseTests
     {
-        protected Product Product;
+        private Product Product;
         private void CorrectFlow()
         {
             Product = Builder<Product>.CreateNew().Build();
