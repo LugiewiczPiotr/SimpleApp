@@ -39,7 +39,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
                 .Returns(Result.Failure<Category>(errorMessage));
 
             //Act
-            var result = logic.Get(guid);
+            var result = logic.Delete(guid);
 
             //Assert
             result.Should().BeNotFound<Category>(errorMessage);

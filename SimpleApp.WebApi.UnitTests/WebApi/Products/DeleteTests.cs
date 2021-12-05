@@ -39,7 +39,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
                 .Returns(Result.Failure<Product>(errorMessage));
 
             //Act
-            var result = logic.Get(guid);
+            var result = logic.Delete(guid);
 
             //Assert
             result.Should().BeNotFound<Product>(errorMessage);
