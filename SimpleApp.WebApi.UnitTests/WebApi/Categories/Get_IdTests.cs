@@ -38,7 +38,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
             var categoryDto = Builder<CategoryDto>.CreateNew().Build();
             CategoryLogicMock.Setup(r => r.GetById(It.IsAny<Guid>()))
                 .Returns(Result.Ok(category));
-            MapperMock.Setup(x => x.Map<CategoryDto>(category))
+            MapperMock.Setup(x => x.Map<CategoryDto>(It.IsAny<Product>()))
                 .Returns(categoryDto);
 
             //Act

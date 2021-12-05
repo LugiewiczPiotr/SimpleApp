@@ -38,7 +38,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
             var productDto = Builder<ProductDto>.CreateNew().Build();
             ProductLogicMock.Setup(r => r.GetById(It.IsAny<Guid>()))
                 .Returns(Result.Ok(product));
-            MapperMock.Setup(x => x.Map<ProductDto>(product))
+            MapperMock.Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
                 .Returns(productDto);
 
             //Act
