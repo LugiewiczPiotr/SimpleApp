@@ -13,7 +13,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
     public class GetTests : BaseTests
     {
         [Fact]
-        public void Return_BadRequest_When_Category_Is_Not_Valid()
+        public void Return_BadRequest_When_Categories_Is_Not_Valid()
         {
             //Arrange
             var controller = Create();
@@ -21,6 +21,17 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var categories = Builder<Category>.CreateListOfSize(1).Build().AsEnumerable();
             CategoryLogicMock.Setup(x => x.GetAllActive())
                 .Returns(Result.Failure<IEnumerable<Category>>(errorMessage));
+
+            //Act
+            var result = controller.Get();
+
+            //Assert
+            result.Should().BeBadRequest<Category>(errorMessage);
+            CategoryLogicMock.Verify(
+                x => x.GetAllActive(), Times.Once());
+
+            MapperMock.Verify(
+                x => x.Map<IList<CategoryDto>>(It.IsAny<Category>()), Times.Never());
         }
         [Fact]
         public void Return_All_Categories()
@@ -28,12 +39,12 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             //Arrange
             var controller = Create();
             var categories = Builder<Category>.CreateListOfSize(1).Build().AsEnumerable();
-            var categoryDtos = Builder<CategoryDto>.CreateListOfSize(1).Build().AsEnumerable();
+            var categoryDtos = Builder<CategoryDto>.CreateListOfSize(1).Build();
             CategoryLogicMock
                 .Setup(r => r.GetAllActive())
                 .Returns(Result.Ok(categories));
             MapperMock
-                .Setup(m => m.Map<IEnumerable<CategoryDto>>(categories))
+                .Setup(m => m.Map<IList<CategoryDto>>(It.IsAny<IEnumerable<Category>>()))
                 .Returns(categoryDtos);
 
             //Act

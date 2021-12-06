@@ -13,6 +13,28 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
     public class GetTests : BaseTests
     {
         [Fact]
+        public void Return_BadRequest_When_Products_Is_Not_Valid()
+        {
+            //Arrange
+            var controller = Create();
+            var errorMessage = "BadRequest";
+            var products = Builder<Product>.CreateListOfSize(1).Build().AsEnumerable();
+            ProductLogicMock.Setup(x => x.GetAllActive())
+                .Returns(Result.Failure<IEnumerable<Product>>(errorMessage));
+
+            //Act
+            var result = controller.Get();
+
+            //Assert
+            result.Should().BeBadRequest<Category>(errorMessage);
+            ProductLogicMock.Verify(
+                x => x.GetAllActive(), Times.Once());
+
+            MapperMock.Verify(
+                x => x.Map<IList<ProductDto>>(It.IsAny<Product>()), Times.Never());
+        }
+
+        [Fact]
         public void Return_All_Products()
         {
             //Arrange
@@ -23,7 +45,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Setup(r => r.GetAllActive())
                 .Returns(Result.Ok(products));
             MapperMock
-                .Setup(m => m.Map<IList<ProductDto>>(It.IsAny<Product>()))
+                .Setup(m => m.Map<IList<ProductDto>>(It.IsAny<IEnumerable<Product>>()))
                 .Returns(productsDto);
 
             //Act
