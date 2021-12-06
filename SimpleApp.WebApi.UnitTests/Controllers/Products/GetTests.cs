@@ -6,7 +6,7 @@ using SimpleApp.WebApi.DTO;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 {
