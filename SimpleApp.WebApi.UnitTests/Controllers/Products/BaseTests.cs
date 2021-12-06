@@ -3,7 +3,7 @@ using Moq;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.WebApi.Controllers;
 
-namespace SimpleApp.Core.UnitTests.WebApi.Products
+namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 {
     public class BaseTests
     {

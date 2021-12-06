@@ -1,12 +1,13 @@
 ﻿using FizzWare.NBuilder;
 using Moq;
+using SimpleApp.Core;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.Controllers;
 using SimpleApp.WebApi.DTO;
 using System;
 using Xunit;
 
-namespace SimpleApp.Core.UnitTests.WebApi.Categories
+namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
 {
     public class PutTests : BaseTests
     {
@@ -38,21 +39,20 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
         public void Return_NotFound_When_Category_Not_Exist()
         {
             //Arrange
-            var logic = Create();
+            var controller = Create();
             var guid = Guid.NewGuid();
-            var categoryDto = Builder<CategoryDto>.CreateNew().Build();
             var errorMessage = $"Category with ID {guid} does not exist.";
             CategoryLogicMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
                 .Returns(Result.Failure<Category>(errorMessage));
 
             //Act
-            var result = logic.Put(guid, categoryDto);
+            var result = controller.Put(guid, CategoryDto);
 
             //Assert
             result.Should().BeNotFound<Category>(errorMessage);
             CategoryLogicMock
-                .Verify( x => x.GetById(guid), Times.Once());
+                .Verify(x => x.GetById(guid), Times.Once());
 
             CategoryLogicMock.Verify(
                x => x.Update(It.IsAny<Category>()), Times.Never());
@@ -68,14 +68,14 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
         public void Return_BadRequest_When_Category_Is_Not_Valid()
         {
             //Arrange
-            var logic = Create();
+            var controller = Create();
             var errorMessage = "BadRequest";
             CategoryLogicMock
                 .Setup(r => r.Update(It.IsAny<Category>()))
                 .Returns(Result.Failure<Category>(Category.Name, errorMessage));
 
             //Act
-            var result = logic.Put(CategoryDto.Id, CategoryDto);
+            var result = controller.Put(CategoryDto.Id, CategoryDto);
 
             //Assert
             result.Should().BeBadRequest<Category>(errorMessage);
@@ -96,10 +96,10 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
         public void Return_Created_Category_When_Category_is_Valid()
         {
             //Arrange
-            var logic = Create();
-            
+            var controller = Create();
+
             //Act
-            var result = logic.Put(CategoryDto.Id, CategoryDto);
+            var result = controller.Put(CategoryDto.Id, CategoryDto);
 
             //Assert
             result.Should().BeOk(CategoryDto);

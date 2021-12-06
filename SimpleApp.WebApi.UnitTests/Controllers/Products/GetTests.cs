@@ -1,12 +1,13 @@
 ﻿using FizzWare.NBuilder;
 using Moq;
+using SimpleApp.Core;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.DTO;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace SimpleApp.Core.UnitTests.WebApi.Products
+namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 {
     public class GetTests : BaseTests
     {
@@ -15,24 +16,24 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
         {
             //Arrange
             var controller = Create();
-            var products = Builder<Product>.CreateListOfSize(10).Build();
-            var productsDto = Builder<ProductDto>.CreateListOfSize(10).Build();
+            var products = Builder<Product>.CreateListOfSize(1).Build().AsEnumerable();
+            var productsDto = Builder<ProductDto>.CreateListOfSize(1).Build();
             ProductLogicMock
                 .Setup(r => r.GetAllActive())
-                .Returns(Result.Ok(products.AsEnumerable()));
+                .Returns(Result.Ok(products));
             MapperMock
-                .Setup(m => m.Map<IList<ProductDto>>(products.AsEnumerable()))
+                .Setup(m => m.Map<IList<ProductDto>>(It.IsAny<Product>()))
                 .Returns(productsDto);
 
             //Act
-            var result = controller.Get().Result;
+            var result = controller.Get();
 
             //Assert
             result.Should().BeOk(productsDto);
             ProductLogicMock.Verify(
                 x => x.GetAllActive(), Times.Once());
             MapperMock.Verify(
-                x => x.Map<IList<ProductDto>>(products.AsEnumerable()), Times.Once());
+                x => x.Map<IList<ProductDto>>(products), Times.Once());
         }
     }
 }

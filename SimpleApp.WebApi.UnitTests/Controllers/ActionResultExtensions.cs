@@ -1,12 +1,10 @@
 ﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
-using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core;
-using SimpleApp.Core.UnitTests.WebApi;
 using System.Linq;
 
-namespace SimpleApp.Core.UnitTests.WebApi
+namespace Microsoft.AspNetCore.Mvc
 {
     public static class ActionResultExtensions
     {
@@ -15,7 +13,7 @@ namespace SimpleApp.Core.UnitTests.WebApi
             return new ActionResultAssertions(actionResult);
         }
 
-      
+
         public class ActionResultAssertions : ReferenceTypeAssertions<IActionResult, ActionResultAssertions>
         {
             protected override string Identifier => "actionResult";

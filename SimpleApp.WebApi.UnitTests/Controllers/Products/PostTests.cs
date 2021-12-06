@@ -1,11 +1,12 @@
 ﻿using FizzWare.NBuilder;
 using Moq;
+using SimpleApp.Core;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.Controllers;
 using SimpleApp.WebApi.DTO;
 using Xunit;
 
-namespace SimpleApp.Core.UnitTests.WebApi.Products
+namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 {
     public class PostTests : BaseTests
     {
@@ -33,14 +34,14 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
         public void Return_BeBadRequest_When_Product_Is_Not_Valid()
         {
             //Arrange
-            var logic = Create();
+            var controller = Create();
             var errorMessage = "validation fail";
             ProductLogicMock
                 .Setup(x => x.Add(It.IsAny<Product>()))
                 .Returns(Result.Failure<Product>(Product.Name, errorMessage));
 
             //Act
-            var result = logic.Post(ProductDto);
+            var result = controller.Post(ProductDto);
 
             //Assert
             result.Should().BeBadRequest<Product>(errorMessage);
@@ -58,10 +59,10 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
         public void Return_Created_When_Product_Is_Valid()
         {
             //Arrange
-            var logic = Create();
+            var controller = Create();
 
             //Act
-            var result = logic.Post(ProductDto);
+            var result = controller.Post(ProductDto);
 
             //Assert
             result.Should().BeCreatedAtAction(ProductDto);

@@ -1,11 +1,12 @@
 ﻿using FizzWare.NBuilder;
 using Moq;
+using SimpleApp.Core;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.Controllers;
 using SimpleApp.WebApi.DTO;
 using Xunit;
 
-namespace SimpleApp.Core.UnitTests.WebApi.Categories
+namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
 {
     public class PostTests : BaseTests
     {
@@ -33,14 +34,14 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
         public void Return_BeBadRequest_When_Category_Is_Not_Valid()
         {
             //Arrange
-            var logic = Create();
+            var controller = Create();
             var errorMessage = "validation fail";
             CategoryLogicMock
                 .Setup(x => x.Add(It.IsAny<Category>()))
                 .Returns(Result.Failure<Category>(Category.Name, errorMessage));
 
             //Act
-            var result = logic.Post(CategoryDto);
+            var result = controller.Post(CategoryDto);
             
             //Assert
             result.Should().BeBadRequest<Category>(errorMessage);
@@ -58,10 +59,10 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
         public void Return_Created_When_Category_Is_Valid()
         {
             //Arrange
-            var logic = Create();
+            var controller = Create();
            
             //Act
-            var result = logic.Post(CategoryDto);
+            var result = controller.Post(CategoryDto);
 
             //Assert
             result.Should().BeCreatedAtAction(CategoryDto);

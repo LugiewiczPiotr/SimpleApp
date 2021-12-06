@@ -1,12 +1,13 @@
 ﻿using FizzWare.NBuilder;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using SimpleApp.Core;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.Controllers;
 using System;
 using Xunit;
 
-namespace SimpleApp.Core.UnitTests.WebApi.Products
+namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 {
     public class DeleteTests : BaseTests
     {
@@ -31,7 +32,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
         public void Return_NotFound_When_Product_Not_Exist()
         {
             //Arrange
-            var logic = Create();
+            var controller = Create();
             var guid = Guid.NewGuid();
             var errorMessage = $"Product with ID {guid} does not exist.";
             ProductLogicMock
@@ -39,7 +40,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
                 .Returns(Result.Failure<Product>(errorMessage));
 
             //Act
-            var result = logic.Delete(guid);
+            var result = controller.Delete(guid);
 
             //Assert
             result.Should().BeNotFound<Product>(errorMessage);
@@ -54,13 +55,13 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
         {
             //Arrange
             var errorMessage = "BadRequest";
-            var logic = Create();
+            var controller = Create();
             ProductLogicMock
                 .Setup(r => r.Delete(It.IsAny<Product>()))
                 .Returns(Result.Failure<Category>(Product.Name, errorMessage));
 
             //Act
-            var result = logic.Delete(Product.Id);
+            var result = controller.Delete(Product.Id);
 
             //Assert
             result.Should().BeBadRequest<Category>(errorMessage);
@@ -75,7 +76,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
         {
             //Arrange
             var logic = Create();
-            
+
             //Act
             var result = logic.Delete(Product.Id);
 

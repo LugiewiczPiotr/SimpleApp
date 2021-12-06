@@ -1,12 +1,13 @@
 ﻿using FizzWare.NBuilder;
 using Moq;
+using SimpleApp.Core;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.Controllers;
 using SimpleApp.WebApi.DTO;
 using System;
 using Xunit;
 
-namespace SimpleApp.Core.UnitTests.WebApi.Products
+namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 {
     public class PutTests : BaseTests
     {
@@ -40,14 +41,13 @@ namespace SimpleApp.Core.UnitTests.WebApi.Products
             //Arrange
             var logic = Create();
             var guid = Guid.NewGuid();
-            var productDto = Builder<ProductDto>.CreateNew().Build();
             var errorMessage = $"Product with ID {guid} does not exist.";
             ProductLogicMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
                 .Returns(Result.Failure<Product>(errorMessage));
 
             //Act
-            var result = logic.Put(guid, productDto);
+            var result = logic.Put(guid, ProductDto);
 
             //Assert
             result.Should().BeNotFound<Product>(errorMessage);

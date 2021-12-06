@@ -3,7 +3,7 @@ using Moq;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.WebApi.Controllers;
 
-namespace SimpleApp.Core.UnitTests.WebApi.Categories
+namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
 {
     public class BaseTests
     {
@@ -13,7 +13,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
         {
             CategoryLogicMock = new Mock<ICategoryLogic>();
             MapperMock = new Mock<IMapper>();
-            return new CategoryController (
+            return new CategoryController(
                 CategoryLogicMock.Object,
                 MapperMock.Object
                 );

@@ -1,12 +1,13 @@
 ﻿using FizzWare.NBuilder;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using SimpleApp.Core;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.Controllers;
 using System;
 using Xunit;
 
-namespace SimpleApp.Core.UnitTests.WebApi.Categories
+namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
 {
     public class DeleteTests : BaseTests
     {
@@ -31,7 +32,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
         public void Return_NotFound_When_Category_Not_Exist()
         {
             //Arrange
-            var logic = Create();
+            var controller = Create();
             var guid = Guid.NewGuid();
             var errorMessage = $"Category with ID {guid} does not exist.";
             CategoryLogicMock
@@ -39,7 +40,7 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
                 .Returns(Result.Failure<Category>(errorMessage));
 
             //Act
-            var result = logic.Delete(guid);
+            var result = controller.Delete(guid);
 
             //Assert
             result.Should().BeNotFound<Category>(errorMessage);
@@ -53,14 +54,14 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
         public void Return_BeBadRequest_When_Category_Is_Not_Valid()
         {
             //Arrange
-            var errorMessage ="BadRequest";
-            var logic = Create();           
+            var errorMessage = "BadRequest";
+            var controller = Create();
             CategoryLogicMock
                 .Setup(r => r.Delete(It.IsAny<Category>()))
                 .Returns(Result.Failure<Category>(Category.Name, errorMessage));
 
             //Act
-            var result = logic.Delete(Category.Id);
+            var result = controller.Delete(Category.Id);
 
             //Assert
             result.Should().BeBadRequest<Category>(errorMessage);
@@ -74,10 +75,10 @@ namespace SimpleApp.Core.UnitTests.WebApi.Categories
         public void Return_NoContent_When_Category_Is_Deleted()
         {
             //Arrange
-            var logic = Create();
-                        
+            var controller = Create();
+
             //Act
-            var result = logic.Delete(Category.Id);
+            var result = controller.Delete(Category.Id);
 
             //Assert
             result.Should().BeOfType<NoContentResult>();
