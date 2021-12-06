@@ -4,7 +4,11 @@ using FluentAssertions.Primitives;
 using SimpleApp.Core;
 using System.Linq;
 
+<<<<<<< HEAD:SimpleApp.WebApi.UnitTests/WebApi/ActionResultExtensions.cs
+namespace AspNetCore.Mvc
+=======
 namespace Microsoft.AspNetCore.Mvc
+>>>>>>> c721584d37d6124b001fafc6c673264e0f0138c1:SimpleApp.WebApi.UnitTests/Controllers/ActionResultExtensions.cs
 {
     public static class ActionResultExtensions
     {

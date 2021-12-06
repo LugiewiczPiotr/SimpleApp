@@ -31,7 +31,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<CategoryDto>))]
-        public ActionResult<IEnumerable<CategoryDto>> Get()
+        public IActionResult Get()
         {
             var result = _categoryLogic.GetAllActive();
             if (result.Success == false)
