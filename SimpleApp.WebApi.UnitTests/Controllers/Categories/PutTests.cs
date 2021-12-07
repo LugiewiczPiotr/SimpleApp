@@ -87,7 +87,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
                 x => x.Update(Category), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map(It.IsAny<CategoryDto>(), It.IsAny<Category>()), Times.Once());
+                x => x.Map(CategoryDto, Category), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Never());
