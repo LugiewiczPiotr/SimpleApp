@@ -26,12 +26,12 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var result = controller.Get();
 
             //Assert
-            result.Should().BeBadRequest<Category>(errorMessage);
+            result.Should().BeBadRequest<IEnumerable<Category>>(errorMessage);
             CategoryLogicMock.Verify(
                 x => x.GetAllActive(), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map<IList<CategoryDto>>(It.IsAny<Category>()), Times.Never());
+                x => x.Map<IList<CategoryDto>>(It.IsAny<IEnumerable<Category>>()), Times.Never());
         }
         [Fact]
         public void Return_All_Categories()

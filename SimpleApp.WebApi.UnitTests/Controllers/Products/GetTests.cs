@@ -26,12 +26,12 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var result = controller.Get();
 
             //Assert
-            result.Should().BeBadRequest<Category>(errorMessage);
+            result.Should().BeBadRequest<IEnumerable<Product>>(errorMessage);
             ProductLogicMock.Verify(
                 x => x.GetAllActive(), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map<IList<ProductDto>>(It.IsAny<Product>()), Times.Never());
+                x => x.Map<IList<ProductDto>>(It.IsAny<IEnumerable<Product>>()), Times.Never());
         }
 
         [Fact]
