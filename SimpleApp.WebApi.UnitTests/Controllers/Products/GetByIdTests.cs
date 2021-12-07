@@ -9,7 +9,7 @@ using Xunit;
 
 namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 {
-    public class Get_IdTests : BaseTests
+    public class GetByIdTests : BaseTests
     {
         [Fact]
         public void Return_NotFound_When_Product_Not_Exist()
