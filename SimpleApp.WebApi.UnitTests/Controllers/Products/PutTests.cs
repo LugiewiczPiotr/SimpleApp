@@ -55,11 +55,11 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             ProductLogicMock
                 .Verify(x => x.GetById(guid), Times.Once());
 
-            ProductLogicMock.Verify(
-                x => x.Update(It.IsAny<Product>()), Times.Never());
-
             MapperMock.Verify(
                 x => x.Map(It.IsAny<ProductDto>(), It.IsAny<Product>()), Times.Never());
+
+            ProductLogicMock.Verify(
+                x => x.Update(It.IsAny<Product>()), Times.Never());
 
             MapperMock.Verify(
                 x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Never());

@@ -46,11 +46,11 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             
             //Assert
             result.Should().BeBadRequest<Category>(errorMessage);
+            MapperMock.Verify(
+               x => x.Map<Category>(CategoryDto), Times.Once());
+
             CategoryLogicMock.Verify(
                x => x.Add(Category), Times.Once());
-
-            MapperMock.Verify(
-                x => x.Map<Category>(CategoryDto), Times.Once());
 
             MapperMock.Verify(
               x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Never());

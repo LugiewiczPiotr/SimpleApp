@@ -55,11 +55,11 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             CategoryLogicMock
                 .Verify(x => x.GetById(guid), Times.Once());
 
-            CategoryLogicMock.Verify(
-               x => x.Update(It.IsAny<Category>()), Times.Never());
-
             MapperMock.Verify(
                 x => x.Map(It.IsAny<CategoryDto>(), It.IsAny<Category>()), Times.Never());
+
+            CategoryLogicMock.Verify(
+               x => x.Update(It.IsAny<Category>()), Times.Never());
 
             MapperMock.Verify(
                 x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Never());

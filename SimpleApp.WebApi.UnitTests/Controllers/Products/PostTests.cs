@@ -46,11 +46,11 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 
             //Assert
             result.Should().BeBadRequest<Product>(errorMessage);
-            ProductLogicMock.Verify(
-               x => x.Add(Product), Times.Once());
-
             MapperMock.Verify(
                 x => x.Map<Product>(ProductDto), Times.Once());
+
+            ProductLogicMock.Verify(
+               x => x.Add(Product), Times.Once());
 
             MapperMock.Verify(
                x => x.Map<ProductDto>(It.IsAny<Category>()), Times.Never());
