@@ -3,24 +3,23 @@ using Moq;
 using SimpleApp.Core.Models;
 using System;
 using Xunit;
-using FluentAssertions;
-using SimpleApp.Core;
 
 namespace SimpleApp.Core.UnitTests.Logic.Categories
 {
-    public class GetById : BaseTest
+    public class GetByIdTests : BaseTests
     {
         [Fact]
         public void Return_Error_When_Category_Not_Exist()
         {
-            //Act
+            //Arrange
             var logic = Create();
-            CategoryRepositoryMock.Setup(r => r.GetById(It.IsAny<Guid>())).
+            CategoryRepositoryMock
+                .Setup(r => r.GetById(It.IsAny<Guid>())).
                 Returns((Category)null);
             var guid = Guid.NewGuid();
 
 
-            //Arrange
+            //Act
             var result = logic.GetById(guid);
 
             //Assert
@@ -32,13 +31,14 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
         [Fact]
         public void Return_Category_From_Repository()
         {
-            //Act
+            //Arrange
             var logic = Create();
             var category = Builder<Category>.CreateNew().Build();
-            CategoryRepositoryMock.Setup(r => r.GetById(It.IsAny<Guid>())).
+            CategoryRepositoryMock
+                .Setup(r => r.GetById(It.IsAny<Guid>())).
                 Returns(category);
 
-            //Arrange
+            //Act
             var result = logic.GetById(category.Id);
 
             //Assert

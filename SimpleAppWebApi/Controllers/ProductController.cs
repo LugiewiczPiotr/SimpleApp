@@ -31,7 +31,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<ProductDto>))]
-        public ActionResult<IEnumerable<ProductDto>> Get()
+        public IActionResult Get()
         {
             var result = _productLogic.GetAllActive();
             if(result.Success == false)
@@ -48,7 +48,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<ProductDto>))]
-        public ActionResult Get(Guid id)
+        public IActionResult Get(Guid id)
         {
             if (id == Guid.Empty)
             {
@@ -69,7 +69,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<ProductDto>))]
-        public ActionResult Post([FromBody] ProductDto productDto)
+        public IActionResult Post([FromBody] ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
             var addResult = _productLogic.Add(product);
@@ -91,7 +91,7 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<ProductDto>))]
-        public ActionResult Put(Guid id, [FromBody] ProductDto productDto)
+        public IActionResult Put(Guid id, [FromBody] ProductDto productDto)
         {
             var getResult = _productLogic.GetById(id);
 
@@ -122,7 +122,7 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public ActionResult Delete(Guid id)
+        public IActionResult Delete(Guid id)
         {
             var getResult = _productLogic.GetById(id);
 

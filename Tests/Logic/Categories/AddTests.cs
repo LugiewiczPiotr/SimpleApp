@@ -8,7 +8,7 @@ using SimpleApp.Core;
 
 namespace SimpleApp.Core.UnitTests.Logic.Categories
 {
-    public class Add : BaseTest
+    public class AddTests : BaseTests
     {
         [Fact]
         public void Throw_ArgumentNullException_When_Argument_Is_Null()
