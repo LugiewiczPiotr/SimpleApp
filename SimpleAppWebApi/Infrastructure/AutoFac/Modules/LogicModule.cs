@@ -1,10 +1,8 @@
 ﻿using Autofac;
 using SimpleApp.Core;
 using SimpleApp.Core.Interfaces.Logics;
-using System;
-using System.Collections.Generic;
+using SimpleApp.Core.Logics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SimpleApp.WebApi.Infrastructure.AutoFac.Modules
 {
