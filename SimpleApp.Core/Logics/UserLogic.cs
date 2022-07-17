@@ -35,7 +35,7 @@ namespace SimpleApp.Core.Logics
             }
 
 
-            string key = "this is my test key";
+            string key = "this is my value key";
             
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(key);

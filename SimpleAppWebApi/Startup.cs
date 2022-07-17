@@ -28,7 +28,7 @@ namespace SimpleApp.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            string key = "this is my test key";
+            string key = "this is my value key";
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
