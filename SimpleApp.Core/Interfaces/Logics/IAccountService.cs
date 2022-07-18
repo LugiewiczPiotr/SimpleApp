@@ -1,7 +1,9 @@
-﻿namespace SimpleApp.Core.Interfaces.Logics
+﻿using SimpleApp.Core.Models;
+
+namespace SimpleApp.Core.Interfaces.Logics
 {
     public interface IAccountService : ILogic
     {
-        public string GenerateJwt(string login);
+        string GenerateJwt(UserLogin userLogin);
     }
 }
