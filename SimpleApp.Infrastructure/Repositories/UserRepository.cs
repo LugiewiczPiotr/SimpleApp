@@ -12,12 +12,12 @@ namespace SimpleApp.Infrastructure.Repositories
 
         }
 
-        public bool emailValidate(string email)
+        public bool IsEmailExists(string email)
         {
             return Context.Users.Any(u => u.Email == email);
         }
 
-        public bool passwordValidate(string password)
+        public bool IsPasswordExists(string password)
         {
             return Context.Users.Any(u => u.Password == password);
         }

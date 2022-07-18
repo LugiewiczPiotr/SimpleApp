@@ -22,8 +22,8 @@ namespace SimpleApp.Core.Logics
 
         public Result<string> Authenticate(string login, string password)
         {
-            var registeredUser = _userRepository.emailValidate(login);
-            var passwordValidate = _userRepository.passwordValidate(password);
+            var registeredUser = _userRepository.IsEmailExists(login);
+            var passwordValidate = _userRepository.IsPasswordExists(password);
 
             if (registeredUser == false || passwordValidate == false )
             {
