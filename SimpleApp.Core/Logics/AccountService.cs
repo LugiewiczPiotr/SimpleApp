@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using SimpleApp.Core.Interfaces.Logics;
+using SimpleApp.Core.Models;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,7 +10,7 @@ namespace SimpleApp.Core.Logics
 {
     public class AccountService : IAccountService
     {
-        public string GenerateJwt(string login)
+        public string GenerateJwt(UserLogin userLogin)
         {
             string key = "this is my value key";
 
@@ -19,7 +20,7 @@ namespace SimpleApp.Core.Logics
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, login)
+                    new Claim(ClaimTypes.Name, userLogin.Email)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials =
