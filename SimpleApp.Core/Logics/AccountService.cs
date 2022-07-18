@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using SimpleApp.Core.Interfaces.Logics;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace SimpleApp.Core.Logics
 {
-    public class AccountService
+    public class AccountService : IAccountService
     {
         public string GenerateJwt(string login)
         {

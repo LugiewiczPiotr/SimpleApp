@@ -14,10 +14,13 @@ namespace SimpleApp.Core.Logics
     {
         private readonly IUserRepository _userRepository;
         private readonly IValidator<User> _validator;
-        public UserLogic(IUserRepository userRepository, IValidator<User> validator)
+        private readonly IAccountService _accountService;
+        public UserLogic(IUserRepository userRepository, IValidator<User> validator,
+            IAccountService accountService)
         {
             _userRepository = userRepository;
             _validator = validator;
+            _accountService = accountService;
         }
 
         public Result<string> Authenticate(string login, string password)
@@ -33,9 +36,8 @@ namespace SimpleApp.Core.Logics
             {
                 return Result.Failure<string>($"Email or password is invalid");
             }
-            var accountService = new AccountService();
 
-            var token = accountService.GenerateJwt(login);
+            var token = _accountService.GenerateJwt(login);
             return Result.Ok(token);
         }
 
