@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core;
@@ -9,7 +8,7 @@ using SimpleApp.WebApi.DTO;
 
 namespace SimpleApp.WebApi.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
@@ -50,7 +49,7 @@ namespace SimpleApp.WebApi.Controllers
         /// </summary>
         [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(User))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
         public IActionResult Login([FromBody] LoginDto data)
         {
             var token =_userLogic.Authenticate(data.Email, data.Password);
