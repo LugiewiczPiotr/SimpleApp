@@ -1,43 +1,35 @@
 ﻿using FluentValidation;
-using Microsoft.IdentityModel.Tokens;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models;
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace SimpleApp.Core.Logics
 {
     public class UserLogic : IUserLogic 
     {
         private readonly IUserRepository _userRepository;
-        private readonly IValidator<User> _validator;
+        private readonly IValidator<User> _registerValidator;
+        private readonly IValidator<UserLogin> _loginValidator;
         private readonly IAccountService _accountService;
-        public UserLogic(IUserRepository userRepository, IValidator<User> validator,
-            IAccountService accountService)
+        public UserLogic(IUserRepository userRepository, IValidator<User> registerValidator,
+            IAccountService accountService,IValidator<UserLogin> loginValidator )
         {
             _userRepository = userRepository;
-            _validator = validator;
+            _registerValidator = registerValidator;
+            _loginValidator = loginValidator;
             _accountService = accountService;
         }
 
-        public Result<string> Authenticate(string login, string password)
+        public Result<string> Authenticate(UserLogin userLogin)
         {
-            var registeredUser = _userRepository.IsEmailExists(login);
-            var passwordValidate = _userRepository.IsPasswordExists(password);
-
-            if (registeredUser == false || passwordValidate == false )
+            
+            var validationResult = _loginValidator.Validate(userLogin);
+            if (validationResult.IsValid == false)
             {
-                return Result.Failure<string>($"Email or password is invalid");
+                return Result.Failure<string>(validationResult.Errors);
             }
-            if (registeredUser == false && passwordValidate == false)
-            {
-                return Result.Failure<string>($"Email or password is invalid");
-            }
-
-            var token = _accountService.GenerateJwt(login);
+            var token = _accountService.GenerateJwt(userLogin);
             return Result.Ok(token);
         }
 
@@ -49,7 +41,7 @@ namespace SimpleApp.Core.Logics
                 throw new ArgumentNullException(nameof(user));
             }
 
-            var validationResult = _validator.Validate(user);
+            var validationResult = _registerValidator.Validate(user);
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<User>(validationResult.Errors);
