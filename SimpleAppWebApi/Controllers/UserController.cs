@@ -54,13 +54,13 @@ namespace SimpleApp.WebApi.Controllers
         [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
-        public IActionResult Login([FromBody] LoginDto data)
+        public IActionResult Login([FromBody] UserLogin data)
         {
             if (data == null)
             {
                 return BadRequest(data);
             }
-            var token =_userLogic.Authenticate(data.Email, data.Password);
+            var token =_userLogic.Authenticate(data);
             if(token.Success == false)
             {
                 token.AddErrorToModelState(ModelState);
