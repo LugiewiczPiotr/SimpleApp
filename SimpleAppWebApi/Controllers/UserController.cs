@@ -31,6 +31,10 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(User))]
         public IActionResult Register([FromBody] RegisterDto data)
         {
+            if(data == null)
+            {
+                return BadRequest(data);
+            }
             var user = _mapper.Map<User>(data);
             var addResult = _userLogic.CreateAccount(user);
             if(addResult.Success == false)
@@ -52,6 +56,10 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
         public IActionResult Login([FromBody] LoginDto data)
         {
+            if (data == null)
+            {
+                return BadRequest(data);
+            }
             var token =_userLogic.Authenticate(data.Email, data.Password);
             if(token.Success == false)
             {
