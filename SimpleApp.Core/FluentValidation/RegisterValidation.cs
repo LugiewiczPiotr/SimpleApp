@@ -4,10 +4,10 @@ using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.FluentValidation
 {
-    public class UserValidator : AbstractValidator<User>
+    public class RegisterValidation : AbstractValidator<User>
     {
         private readonly IUserRepository _userRepository;
-        public UserValidator(IUserRepository userRepository)
+        public RegisterValidation(IUserRepository userRepository)
         {
             _userRepository = userRepository;
       
