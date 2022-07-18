@@ -19,7 +19,7 @@ namespace SimpleApp.Core.FluentValidation
             RuleFor(x => x.Email).
                 Custom((value, context) =>
                 {
-                    var emailInUse = _userRepository.emailValidate(value);
+                    var emailInUse = _userRepository.IsEmailExists(value);
                     if (emailInUse)
                     {
                         context.AddFailure("That email is taken");
