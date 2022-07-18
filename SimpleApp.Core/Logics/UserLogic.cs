@@ -10,7 +10,7 @@ using System.Text;
 
 namespace SimpleApp.Core.Logics
 {
-    public class UserLogic : IUserLogic
+    public class UserLogic : IUserLogic 
     {
         private readonly IUserRepository _userRepository;
         private readonly IValidator<User> _validator;
@@ -33,26 +33,10 @@ namespace SimpleApp.Core.Logics
             {
                 return Result.Failure<string>($"Email or password is invalid");
             }
+            var accountService = new AccountService();
 
-
-            string key = "this is my value key";
-            
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenKey = Encoding.ASCII.GetBytes(key);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, login)
-                }),
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials =
-                new SigningCredentials(
-                    new SymmetricSecurityKey(tokenKey),
-                    SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return Result.Ok(tokenHandler.WriteToken(token));
+            var token = accountService.GenerateJwt(login);
+            return Result.Ok(token);
         }
 
         public Result<User> CreateAccount(User user)
