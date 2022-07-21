@@ -36,7 +36,7 @@ namespace SimpleApp.WebApi.Controllers
                 return BadRequest(data);
             }
             var user = _mapper.Map<User>(data);
-            var addResult = _userLogic.CreateAccount(user);
+            var createResult = _userLogic.CreateAccount(user);
             if(addResult.Success == false)
             {
                 addResult.AddErrorToModelState(ModelState);
