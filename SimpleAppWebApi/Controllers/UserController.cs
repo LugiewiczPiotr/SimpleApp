@@ -37,14 +37,13 @@ namespace SimpleApp.WebApi.Controllers
             }
             var user = _mapper.Map<User>(data);
             var createResult = _userLogic.CreateAccount(user);
-            if(addResult.Success == false)
+            if(createResult.Success == false)
             {
-                addResult.AddErrorToModelState(ModelState);
+                createResult.AddErrorToModelState(ModelState);
                 return BadRequest(addResult);
             }
-            var userResult = _mapper.Map<RegisterDto>(addResult.Value);
 
-            return Ok(Result.Ok(userResult));
+            return StatusCode(201);
         }
 
 
