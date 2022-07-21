@@ -61,8 +61,7 @@ namespace SimpleApp.WebApi.Controllers
             }
             var token =_userLogic.Authenticate(data);
             if(token.Success == false)
-            {
-                token.AddErrorToModelState(ModelState);
+            { 
                 return BadRequest(token);
             }
 
