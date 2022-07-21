@@ -1,6 +1,6 @@
 ﻿namespace SimpleApp.Core.Models
 {
-    public class UserLogin
+    public class UserLoginAndPassword
     {
         public string Email { get; set; }
         public string Password { get; set; }

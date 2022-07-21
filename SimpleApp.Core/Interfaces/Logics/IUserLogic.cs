@@ -5,6 +5,6 @@ namespace SimpleApp.Core.Interfaces.Logics
     public interface IUserLogic : ILogic
     {
         Result<User> CreateAccount(User user);
-        Result<string> Authenticate(UserLogin userLogin);
+        Result<string> Authenticate(UserLoginAndPassword userLoginAndPassword);
     }
 }

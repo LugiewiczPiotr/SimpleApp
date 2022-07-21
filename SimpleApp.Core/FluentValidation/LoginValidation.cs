@@ -4,7 +4,7 @@ using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.FluentValidation
 {
-    public class LoginValidation : AbstractValidator<UserLogin>
+    public class LoginValidation : AbstractValidator<UserLoginAndPassword>
     {
         private readonly IUserRepository _userRepository;
 

@@ -10,7 +10,7 @@ namespace SimpleApp.Core.Logics
 {
     public class AccountService : IAccountService
     {
-        public string GenerateJwt(UserLogin userLogin)
+        public string GenerateJwt(UserLoginAndPassword userLoginAndPassword)
         {
             string key = "this is my value key";
 
@@ -20,7 +20,7 @@ namespace SimpleApp.Core.Logics
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, userLogin.Email)
+                    new Claim(ClaimTypes.Name, userLoginAndPassword.Email)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials =

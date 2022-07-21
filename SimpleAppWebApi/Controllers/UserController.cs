@@ -40,7 +40,7 @@ namespace SimpleApp.WebApi.Controllers
             if(createResult.Success == false)
             {
                 createResult.AddErrorToModelState(ModelState);
-                return BadRequest(addResult);
+                return BadRequest(createResult);
             }
 
             return StatusCode(201);
@@ -53,7 +53,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
-        public IActionResult Login([FromBody] UserLogin data)
+        public IActionResult Login([FromBody] UserLoginAndPassword data)
         {
             if (data == null)
             {

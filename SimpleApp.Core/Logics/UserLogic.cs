@@ -10,10 +10,10 @@ namespace SimpleApp.Core.Logics
     {
         private readonly IUserRepository _userRepository;
         private readonly IValidator<User> _registerValidator;
-        private readonly IValidator<UserLogin> _loginValidator;
+        private readonly IValidator<UserLoginAndPassword> _loginValidator;
         private readonly IAccountService _accountService;
         public UserLogic(IUserRepository userRepository, IValidator<User> registerValidator,
-            IAccountService accountService,IValidator<UserLogin> loginValidator )
+            IAccountService accountService,IValidator<UserLoginAndPassword> loginValidator )
         {
             _userRepository = userRepository;
             _registerValidator = registerValidator;
@@ -21,15 +21,15 @@ namespace SimpleApp.Core.Logics
             _accountService = accountService;
         }
 
-        public Result<string> Authenticate(UserLogin userLogin)
+        public Result<string> Authenticate(UserLoginAndPassword userLoginAndPassword)
         {
             
-            var validationResult = _loginValidator.Validate(userLogin);
+            var validationResult = _loginValidator.Validate(userLoginAndPassword);
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<string>(validationResult.Errors);
             }
-            var token = _accountService.GenerateJwt(userLogin);
+            var token = _accountService.GenerateJwt(userLoginAndPassword);
             return Result.Ok(token);
         }
 
