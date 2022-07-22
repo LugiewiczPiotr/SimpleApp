@@ -60,13 +60,13 @@ namespace SimpleApp.WebApi.Controllers
             {
                 return BadRequest(data);
             }
-            var token =_userLogic.Authenticate(data);
-            if(token.Success == false)
+            var getTokenResult = _userLogic.Authenticate(data);
+            if(getTokenResult.Success == false)
             { 
-                return Unauthorized(token);
+                return Unauthorized(getTokenResult);
             }
 
-            return Ok(Result.Ok(token));
+            return Ok(Result.Ok(getTokenResult));
         }
     }
 }
