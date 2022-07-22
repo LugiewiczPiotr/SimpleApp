@@ -23,6 +23,10 @@ namespace SimpleApp.Core.Logics
 
         public Result<string> Authenticate(UserLoginAndPassword userLoginAndPassword)
         {
+            if(userLoginAndPassword == null)
+            {
+                throw new ArgumentNullException(nameof(userLoginAndPassword));
+            }
             
             var validationResult = _loginValidator.Validate(userLoginAndPassword);
             if (validationResult.IsValid == false)
