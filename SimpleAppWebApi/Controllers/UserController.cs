@@ -52,6 +52,7 @@ namespace SimpleApp.WebApi.Controllers
         /// </summary>
         [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
         public IActionResult Login([FromBody] UserLoginAndPassword data)
         {
@@ -62,7 +63,7 @@ namespace SimpleApp.WebApi.Controllers
             var token =_userLogic.Authenticate(data);
             if(token.Success == false)
             { 
-                return BadRequest(token);
+                return Unauthorized(token);
             }
 
             return Ok(Result.Ok(token));
