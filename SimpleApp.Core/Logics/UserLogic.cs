@@ -33,7 +33,13 @@ namespace SimpleApp.Core.Logics
             {
                 return Result.Failure<string>(validationResult.Errors);
             }
+
             var token = _accountService.GenerateJwt(userLoginAndPassword);
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return Result.Failure<string>(token);
+            }
+
             return Result.Ok(token);
         }
 
