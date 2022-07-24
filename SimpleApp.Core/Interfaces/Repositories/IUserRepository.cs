@@ -6,6 +6,6 @@ namespace SimpleApp.Core.Interfaces.Repositories
     public interface IUserRepository : IRepository<User>
     {
         public bool IsEmailExists(string email);
-        public bool IsPasswordExists(string password);
-    }
+        public User GetAccesToDataUsers();
+    }   
 }
