@@ -17,9 +17,9 @@ namespace SimpleApp.Infrastructure.Repositories
             return Context.Users.Any(u => u.Email == email);
         }
 
-        public bool IsPasswordExists(string password)
-        {
-            return Context.Users.Any(u => u.Password == password);
+        public User GetAccesToDataUsers()
+        { 
+            return Context.Users.FirstOrDefault(); 
         }
     }
 }
