@@ -14,8 +14,8 @@ namespace SimpleApp.Core.FluentValidation
             RuleFor(x => x.Email).NotEmpty().WithMessage("This field cannot be empty")
                 .EmailAddress().WithMessage(" ‘Email’ is not a valid email address.");
             RuleFor(x => x.Password).NotEmpty().WithMessage("This field cannot be empty")
-                .MinimumLength(5).WithMessage("Minimum length of {MinLength} char allowed")
-                .MaximumLength(10).WithMessage("Maximum legth of {MaxLength} char is allowed");
+                .Length(8, 40)
+                .WithMessage("Password length should contain from {MinLength} up to {MaxLength} characters");
             RuleFor(x => x.Email).
                 Custom((value, context) =>
                 {
