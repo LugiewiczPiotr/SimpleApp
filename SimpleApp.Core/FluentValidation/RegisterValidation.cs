@@ -16,6 +16,7 @@ namespace SimpleApp.Core.FluentValidation
       
             RuleFor(x => x.Email).NotEmpty().WithMessage("This field cannot be empty")
                 .EmailAddress().WithMessage(" ‘Email’ is not a valid email address.");
+
             RuleFor(x => x.Email).Must(login => !_userRepository.IsEmailExists(login))
                 .WithMessage("That email is taken");
 
