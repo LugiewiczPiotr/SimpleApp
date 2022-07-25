@@ -38,7 +38,8 @@ namespace SimpleApp.Core.Logics
                 return Result.Failure<string>(validationResult.Errors);
             }
 
-            var token = _accountService.GenerateJwt(userLoginAndPassword);
+            var user = new User();
+            var token = _accountService.GenerateJwt(user);
             if (string.IsNullOrWhiteSpace(token))
             {
                 return Result.Failure<string>(token);
