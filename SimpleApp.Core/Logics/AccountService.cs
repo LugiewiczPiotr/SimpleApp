@@ -5,6 +5,8 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Configuration;
+
 
 namespace SimpleApp.Core.Logics
 {
@@ -12,8 +14,9 @@ namespace SimpleApp.Core.Logics
     {
         public string GenerateJwt(UserLoginAndPassword userLoginAndPassword)
         {
-            string key = "this is my value key";
-
+            var key = new ConfigurationBuilder().AddJsonFile("appsettings.json").
+                Build().GetSection("Authentication")["JwtKey"];
+            
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(key);
             var tokenDescriptor = new SecurityTokenDescriptor
