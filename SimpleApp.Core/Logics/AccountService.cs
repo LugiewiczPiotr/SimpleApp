@@ -6,13 +6,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-
+using System.Text.RegularExpressions;
 
 namespace SimpleApp.Core.Logics
 {
     public class AccountService : IAccountService
     {
-        public string GenerateJwt(UserLoginAndPassword userLoginAndPassword)
+        public string GenerateJwt(User user)
         {
             var key = new ConfigurationBuilder().AddJsonFile("appsettings.json").
                 Build().GetSection("Authentication")["JwtKey"];
@@ -23,7 +23,7 @@ namespace SimpleApp.Core.Logics
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, userLoginAndPassword.Email)
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials =
@@ -33,6 +33,12 @@ namespace SimpleApp.Core.Logics
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public bool ValidatePasswordStrenght(string password)
+        {
+            var regex = new Regex(("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])"));
+            return regex.IsMatch(password);
         }
     }
 }
