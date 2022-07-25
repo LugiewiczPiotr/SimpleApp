@@ -4,6 +4,7 @@ namespace SimpleApp.Core.Interfaces.Logics
 {
     public interface IAccountService : ILogic
     {
-        string GenerateJwt(UserLoginAndPassword userLoginAndPassword);
+        string GenerateJwt(User user);
+        bool ValidatePasswordStrenght(string password);
     }
 }
