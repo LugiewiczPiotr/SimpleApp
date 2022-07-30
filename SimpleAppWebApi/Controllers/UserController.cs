@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core;
@@ -27,6 +28,7 @@ namespace SimpleApp.WebApi.Controllers
         /// Register user
         /// </summary>
         [HttpPost("Register")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(User))]
         public IActionResult Register([FromBody] RegisterDto data)
@@ -51,6 +53,7 @@ namespace SimpleApp.WebApi.Controllers
         /// Login
         /// </summary>
         [HttpPost("Login")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
