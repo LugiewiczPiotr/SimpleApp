@@ -11,19 +11,21 @@ namespace SimpleApp.Core.FluentValidation
         {
 
             RuleFor(x => x.Email).NotEmpty().WithMessage("This field cannot be empty")
-                .EmailAddress().WithMessage(" ‘Email’ is not a valid email address.");
+                .EmailAddress().WithMessage(" ‘Email’ is not a valid email address.")
 
-            RuleFor(x => x.Email).Must(login => !userRepository.IsEmailExists(login))
+                .Must(login => !userRepository.CheckIfUserExists(login))
                 .WithMessage("That email is taken");
 
             RuleFor(x => x.Password).NotEmpty().WithMessage("This field cannot be empty")
                  .Length(8, 40).WithMessage
-                 ("Password length should contain from {MinLength} up to {MaxLength} characters");
+                 ("Password length should contain from {MinLength} up to {MaxLength} characters")
+                 .Must(password => accountService
 
-            RuleFor(x => x.Password).Must(password => accountService
-            .ValidatePasswordStrength(password))
-                .WithMessage("The password should contain one uppercase letter, one lower case letter and one number");
-            
+                 .ValidatePasswordStrength(password))
+                 .WithMessage("The password should contain one uppercase letter," +
+                 " one lower case letter and one number");
+
+
 
         }
     }
