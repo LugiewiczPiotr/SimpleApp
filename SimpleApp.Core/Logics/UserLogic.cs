@@ -38,7 +38,7 @@ namespace SimpleApp.Core.Logics
                 return Result.Failure<string>(validationResult.Errors);
             }
 
-            var user = _userRepository.GetAccesToDataUsers(userLoginAndPassword.Email);
+            var user = _userRepository.GetUserEmail(userLoginAndPassword.Email);
             var token = _accountService.GenerateJwt(user);
             if (string.IsNullOrWhiteSpace(token))
             {
