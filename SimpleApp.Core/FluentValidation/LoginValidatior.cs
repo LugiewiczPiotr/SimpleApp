@@ -5,9 +5,9 @@ using SimpleApp.Core.Interfaces.Logics;
 
 namespace SimpleApp.Core.FluentValidation
 {
-    public class LoginValidation : AbstractValidator<UserLoginAndPassword>
+    public class LoginValidatior : AbstractValidator<UserLoginAndPassword>
     {
-        public LoginValidation(IUserRepository userRepository, IAccountService accountService)
+        public LoginValidatior(IUserRepository userRepository, IAccountService accountService)
         {   
 
             RuleFor(x => x.Email).NotEmpty().WithMessage("This field cannot be empty")

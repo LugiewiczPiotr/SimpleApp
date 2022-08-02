@@ -5,9 +5,9 @@ using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.FluentValidation
 {
-    public class RegisterValidation : AbstractValidator<User>
+    public class RegisterValidatior : AbstractValidator<User>
     {
-        public RegisterValidation(IUserRepository userRepository, IAccountService accountService)
+        public RegisterValidatior(IUserRepository userRepository, IAccountService accountService)
         {
 
             RuleFor(x => x.Email).NotEmpty().WithMessage("This field cannot be empty")
