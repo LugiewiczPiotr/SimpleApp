@@ -17,9 +17,9 @@ namespace SimpleApp.Infrastructure.Repositories
             return Context.Users.Any(u => u.Email == email);
         }
 
-        public User GetAccesToDataUsers()
+        public User GetAccesToDataUsers(string email)
         { 
-            return Context.Users.FirstOrDefault(); 
+            return Context.Users.FirstOrDefault(x => x.Email == email); 
         }
     }
 }
