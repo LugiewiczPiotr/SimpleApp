@@ -12,12 +12,12 @@ namespace SimpleApp.Infrastructure.Repositories
 
         }
 
-        public bool IsEmailExists(string email)
+        public bool CheckIfUserExists(string email)
         {
             return Context.Users.Any(u => u.Email == email);
         }
 
-        public User GetAccesToDataUsers(string email)
+        public User GetUserEmail(string email)
         { 
             return Context.Users.FirstOrDefault(x => x.Email == email); 
         }

@@ -5,7 +5,7 @@ namespace SimpleApp.Core.Interfaces.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {
-        public bool IsEmailExists(string email);
-        public User GetAccesToDataUsers(string email);
+        public bool CheckIfUserExists(string email);
+        public User GetUserEmail(string email);
     }   
 }
