@@ -35,7 +35,7 @@ namespace SimpleApp.WebApi.Controllers
         {
             if(data == null)
             {
-                return BadRequest(data);
+                return BadRequest("Email or password is invalid");
             }
             var user = _mapper.Map<User>(data);
             var createResult = _userLogic.CreateAccount(user);
@@ -61,7 +61,7 @@ namespace SimpleApp.WebApi.Controllers
         {
             if (data == null)
             {
-                return BadRequest(data);
+                return BadRequest("Email or password is invalid");
             }
             var getTokenResult = _userLogic.Authenticate(data);
             if(getTokenResult.Success == false)
