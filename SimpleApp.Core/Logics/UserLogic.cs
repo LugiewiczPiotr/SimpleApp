@@ -42,7 +42,7 @@ namespace SimpleApp.Core.Logics
             var token = _accountService.GenerateJwt(user);
             if (string.IsNullOrWhiteSpace(token))
             {
-                return Result.Failure<string>(token);
+                return Result.Failure<string>("Something went wrong while generating the token");
             }
 
             return Result.Ok(token);
