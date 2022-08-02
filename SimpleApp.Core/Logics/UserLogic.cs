@@ -38,7 +38,7 @@ namespace SimpleApp.Core.Logics
                 return Result.Failure<string>(validationResult.Errors);
             }
 
-            var user = new User();
+            var user = _userRepository.GetAccesToDataUsers(userLoginAndPassword.Email);
             var token = _accountService.GenerateJwt(user);
             if (string.IsNullOrWhiteSpace(token))
             {
@@ -62,7 +62,8 @@ namespace SimpleApp.Core.Logics
                 return Result.Failure<User>(validationResult.Errors);
             }
 
-            _passwordHasher.HashPassword(user, user.Password);
+            var hashedPassword = _passwordHasher.HashPassword(user, user.Password);
+            user.Password = hashedPassword;
             _userRepository.Add(user);
             _userRepository.SaveChanges();
 
