@@ -7,11 +7,22 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.Text.RegularExpressions;
+using SimpleApp.Core.Interfaces.Repositories;
+using Microsoft.AspNetCore.Identity;
 
 namespace SimpleApp.Core.Logics
 {
     public class AccountService : IAccountService
     {
+        private readonly IUserRepository _userRepository;
+        private readonly IPasswordHasher<User> _passwordHasher;
+
+        public AccountService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
+        {
+            _userRepository = userRepository;
+            _passwordHasher = passwordHasher;
+        }
+
         public string GenerateJwt(User user)
         {
             var key = new ConfigurationBuilder().AddJsonFile("appsettings.json").
@@ -35,10 +46,27 @@ namespace SimpleApp.Core.Logics
             return tokenHandler.WriteToken(token);
         }
 
-        public bool ValidatePasswordStrenght(string password)
+        public bool ValidatePasswordStrength(string password)
         {
             var regex = new Regex(("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])"));
             return regex.IsMatch(password);
+        }
+
+        public bool VerifyPassword(UserLoginAndPassword userLoginAndPassword)
+        {
+            var user = _userRepository.GetAccesToDataUsers(userLoginAndPassword.Email);
+            if (user == null)
+            {
+                return false;
+            }
+            
+            var result = _passwordHasher.VerifyHashedPassword(user, user.Password,
+                userLoginAndPassword.Password);
+            if(result == PasswordVerificationResult.Failed)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
