@@ -28,10 +28,10 @@ namespace SimpleApp.Core.Logics
         }
 
         public string GenerateJwt(User user)
-        {;
+        {
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenKey = Encoding.ASCII.GetBytes(_jwtSettings.ToString());
+            var tokenKey = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
