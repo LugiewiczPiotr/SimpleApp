@@ -1,19 +1,18 @@
 ﻿using Autofac;
-using SimpleApp.Core;
+using Microsoft.AspNetCore.Identity;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Logics;
-using System.Linq;
+using SimpleApp.Core.Models;
 
 namespace SimpleApp.WebApi.Infrastructure.AutoFac.Modules
 {
-    public class LogicModule : Module
+    public class IdentityModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
-            builder.RegisterAssemblyTypes(typeof(Result).Assembly)
-                .Where(t => typeof(ILogic).IsAssignableFrom(t))
-                .AsImplementedInterfaces();
+            builder.RegisterType<PasswordHasher<User>>().As<IPasswordHasher<User>>();
+            builder.RegisterType<AccountService>().As<IAccountService>();
         }
     }
 }
