@@ -54,7 +54,7 @@ namespace SimpleApp.Core.Logics
 
         public bool VerifyPassword(UserLoginAndPassword userLoginAndPassword)
         {
-            var user = _userRepository.GetUserEmail(userLoginAndPassword.Email);
+            var user = _userRepository.GetUserByEmail(userLoginAndPassword.Email);
             if (user == null)
             {
                 return false;
