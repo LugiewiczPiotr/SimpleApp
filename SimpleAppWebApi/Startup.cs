@@ -27,8 +27,8 @@ namespace SimpleApp.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var key = new ConfigurationBuilder().AddJsonFile("appsettings.json").
-                Build().GetSection("Authentication")["JwtKey"];
+
+            services.Configure<JwtSettings>(Configuration.GetSection(JwtSettings.SectionName));
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -40,7 +40,7 @@ namespace SimpleApp.WebApi
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JwtSettings.SectionName)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
