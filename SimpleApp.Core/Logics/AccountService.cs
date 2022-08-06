@@ -17,22 +17,21 @@ namespace SimpleApp.Core.Logics
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly IOptionsSnapshot<JwtSettings> _optionsSnapshot;
+        private readonly JwtSettings _jwtSettings;
 
         public AccountService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher
             ,IOptionsSnapshot<JwtSettings> optionsSnapshot)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
-            _optionsSnapshot = optionsSnapshot;
+            _jwtSettings = optionsSnapshot.Value;
         }
 
         public string GenerateJwt(User user)
-        {
-            var key = _optionsSnapshot.Get(JwtSettings.SectionName);
-            
+        {;
+
             var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenKey = Encoding.ASCII.GetBytes(key.ToString());
+            var tokenKey = Encoding.ASCII.GetBytes(_jwtSettings.ToString());
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
