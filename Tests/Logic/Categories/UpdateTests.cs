@@ -1,10 +1,10 @@
-﻿using FizzWare.NBuilder;
+﻿using System;
+using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
-using SimpleApp.Core.Models;
-using System;
-using Xunit;
 using SimpleApp.Core;
+using SimpleApp.Core.Models;
+using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Categories
 {
@@ -13,13 +13,13 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
         [Fact]
         public void Throw_ArgumentNullException_When_Argument_Is_Null()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
 
-            //Act
+            // Act
             Action result = () => logic.Update(null);
 
-            //Assert
+            // Assert
             result.Should().Throw<ArgumentNullException>();
             ValidatorMock.Verify(
                 x => x.Validate(It.IsAny<Category>()), Times.Never());
@@ -27,20 +27,21 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             CategoryRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Never());
         }
+
         [Fact]
         public void Return_Failure_When_Category_Is_Not_Valid()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
             var category = Builder<Category>.CreateNew().Build();
             string errorMessage = "validation fail";
             ValidatorMock.SetValidationFailure(category.Name, errorMessage);
 
-            //Act
+            // Act
             var result = logic.Update(category);
 
-            //Assert
-            result.Should().BeFailure(property:category.Name, message: errorMessage);
+            // Assert
+            result.Should().BeFailure(property: category.Name, message: errorMessage);
             ValidatorMock.Verify(
                 x => x.Validate(category), Times.Once());
 
@@ -51,15 +52,15 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
         [Fact]
         public void Return_Succes_When_Category_Is_Valid()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
             var category = Builder<Category>.CreateNew().Build();
             ValidatorMock.SetValidationSuccess();
 
-            //Act
+            // Act
             var result = logic.Update(category);
 
-            //Assert
+            // Assert
             result.Should().BeSuccess(category);
             ValidatorMock.Verify(
                 x => x.Validate(category), Times.Once());
@@ -67,9 +68,5 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             CategoryRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Once());
         }
-
-       
-
-       
     }
 }

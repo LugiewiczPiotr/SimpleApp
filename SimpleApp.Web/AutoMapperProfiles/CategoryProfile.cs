@@ -4,7 +4,6 @@ using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Models;
 using SimpleApp.Web.ViewModels;
 using SimpleApp.Web.ViewModels.Categories;
-using SimpleApp.Web.ViewModels.Products;
 
 namespace SimpleApp.Web.AutoMapperProfiles
 {

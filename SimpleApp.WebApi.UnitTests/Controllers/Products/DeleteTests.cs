@@ -1,26 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using FizzWare.NBuilder;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimpleApp.Core;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.Controllers;
-using System;
 using Xunit;
 
 namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 {
     public class DeleteTests : BaseTests
     {
-        private Product Product;
+        private Product product;
         private void CorrectFlow()
         {
-            Product = Builder<Product>.CreateNew().Build();
+            product = Builder<Product>.CreateNew().Build();
             ProductLogicMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(Product));
+                .Returns(Result.Ok(product));
             ProductLogicMock
                 .Setup(r => r.Delete(It.IsAny<Product>())).Returns(Result.Ok());
         }
+
         protected override ProductController Create()
         {
             var controller = base.Create();
@@ -31,7 +32,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         [Fact]
         public void Return_NotFound_When_Product_Not_Exist()
         {
-            //Arrange
+            // Arrange
             var controller = Create();
             var guid = Guid.NewGuid();
             var errorMessage = $"Product with ID {guid} does not exist.";
@@ -39,10 +40,10 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
                 .Returns(Result.Failure<Product>(errorMessage));
 
-            //Act
+            // Act
             var result = controller.Delete(guid);
 
-            //Assert
+            // Assert
             result.Should().BeNotFound<Product>(errorMessage);
             ProductLogicMock
                 .Verify(x => x.GetById(guid), Times.Once());
@@ -53,39 +54,39 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         [Fact]
         public void Return_BeBadRequest_When_Product_Is_Not_Valid()
         {
-            //Arrange
+            // Arrange
             var errorMessage = "BadRequest";
             var controller = Create();
             ProductLogicMock
                 .Setup(r => r.Delete(It.IsAny<Product>()))
-                .Returns(Result.Failure<Category>(Product.Name, errorMessage));
+                .Returns(Result.Failure<Category>(product.Name, errorMessage));
 
-            //Act
-            var result = controller.Delete(Product.Id);
+            // Act
+            var result = controller.Delete(product.Id);
 
-            //Assert
+            // Assert
             result.Should().BeBadRequest<Category>(errorMessage);
             ProductLogicMock
-                .Verify(x => x.GetById(Product.Id), Times.Once());
+                .Verify(x => x.GetById(product.Id), Times.Once());
             ProductLogicMock
-                .Verify(x => x.Delete(Product), Times.Once());
+                .Verify(x => x.Delete(product), Times.Once());
         }
 
         [Fact]
         public void Return_NoContent_When_Product_Is_Deleted()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
 
-            //Act
-            var result = logic.Delete(Product.Id);
+            // Act
+            var result = logic.Delete(product.Id);
 
-            //Assert
+            // Assert
             result.Should().BeOfType<NoContentResult>();
             ProductLogicMock
-                .Verify(x => x.GetById(Product.Id), Times.Once());
+                .Verify(x => x.GetById(product.Id), Times.Once());
             ProductLogicMock
-                .Verify(x => x.Delete(Product), Times.Once());
+                .Verify(x => x.Delete(product), Times.Once());
         }
     }
 }

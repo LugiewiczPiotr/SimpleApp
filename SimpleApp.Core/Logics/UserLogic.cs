@@ -1,9 +1,9 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models;
-using System;
 
 namespace SimpleApp.Core.Logics
 {
@@ -15,7 +15,7 @@ namespace SimpleApp.Core.Logics
         private readonly IAccountService _accountService;
         private readonly IPasswordHasher<User> _passwordHasher;
         public UserLogic(IUserRepository userRepository, IValidator<User> registerValidator,
-            IAccountService accountService,IValidator<UserLoginAndPassword> loginValidator,
+            IAccountService accountService, IValidator<UserLoginAndPassword> loginValidator,
             IPasswordHasher<User> passwordHasher)
         {
             _userRepository = userRepository;
@@ -27,7 +27,7 @@ namespace SimpleApp.Core.Logics
 
         public Result<string> Authenticate(UserLoginAndPassword userLoginAndPassword)
         {
-            if(userLoginAndPassword == null)
+            if (userLoginAndPassword == null)
             {
                 throw new ArgumentNullException(nameof(userLoginAndPassword));
             }

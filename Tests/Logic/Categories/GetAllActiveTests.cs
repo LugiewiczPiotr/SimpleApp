@@ -10,17 +10,17 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
         [Fact]
         public void Return_All_Categories_From_Repository()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
             var categories = Builder<Category>.CreateListOfSize(10).Build();
             CategoryRepositoryMock
                 .Setup(r => r.GetAllActive())
                 .Returns(categories);
 
-            //Act
+            // Act
             var result = logic.GetAllActive();
 
-            //Assert
+            // Assert
             result.Should().BeSuccess(categories);
             CategoryRepositoryMock.Verify(
                 x => x.GetAllActive(), Times.Once());

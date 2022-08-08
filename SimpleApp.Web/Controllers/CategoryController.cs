@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SimpleApp.Core.Models;
-using System;
-using SimpleApp.Core.Interfaces.Logics;
-using AutoMapper;
-using SimpleApp.Web.ViewModels.Categories;
+﻿using System;
 using System.Collections.Generic;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using SimpleApp.Core.Interfaces.Logics;
+using SimpleApp.Core.Models;
+using SimpleApp.Web.ViewModels.Categories;
 
 namespace SimpleApp.Web.Controllers
 {
@@ -27,8 +27,6 @@ namespace SimpleApp.Web.Controllers
             {
                 Categories = _mapper.Map<IList<IndexItemViewModel>>(categories.Value)
             };
-            
-
 
             return View(indexViewModel);
         }
@@ -52,6 +50,7 @@ namespace SimpleApp.Web.Controllers
 
             return View(categoryViewModel);
         }
+
         // GET: CategoryController/Create
         public ActionResult Create()
         {
@@ -78,8 +77,10 @@ namespace SimpleApp.Web.Controllers
                 addResult.AddErrorToModelState(ModelState);
                 return View(categoryViewModel);
             }
+
             return RedirectToAction("Index");
         }
+
         // GET: CategoryController/Edit/5
         public ActionResult Edit(Guid id)
         {
@@ -87,6 +88,7 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
+
             var getResult = _categoryLogic.GetById(id);
 
             if (getResult.Success == false)
@@ -94,6 +96,7 @@ namespace SimpleApp.Web.Controllers
                 
                 return NotFound();
             }
+
             var categoryViewModel = _mapper.Map<CategoryViewModel>(getResult.Value);
             return View(categoryViewModel);
         }
@@ -120,13 +123,15 @@ namespace SimpleApp.Web.Controllers
            
             var result = _categoryLogic.Update(getResult.Value);
 
-            if(result.Success == false)
+            if (result.Success == false)
             {
                 result.AddErrorToModelState(ModelState);
                 return View(categoryViewModel);
             }
+
             return RedirectToAction("Index");
         }
+
         // GET: CategoryController/Delete/5
         [HttpGet]
         public ActionResult Delete(Guid id)
@@ -135,12 +140,14 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
+
             var getResult = _categoryLogic.GetById(id);
 
             if (getResult.Success == false)
             {
                 return NotFound();
             }
+
             var categoryViewModel = _mapper.Map<CategoryViewModel>(getResult.Value);
             return View(categoryViewModel);
         }
@@ -164,8 +171,8 @@ namespace SimpleApp.Web.Controllers
             {
                 return BadRequest();
             }
-            return RedirectToAction("Index");
 
+            return RedirectToAction("Index");
         }
     }
 }

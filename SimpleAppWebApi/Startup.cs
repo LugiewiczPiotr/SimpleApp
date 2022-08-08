@@ -1,3 +1,5 @@
+using System.IO;
+using System.Text;
 using Autofac;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -10,8 +12,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SimpleApp.Core.Models;
 using SimpleApp.Infrastructure.Data;
-using System.IO;
-using System.Text;
 
 namespace SimpleApp.WebApi
 {
@@ -49,15 +49,16 @@ namespace SimpleApp.WebApi
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { 
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
                     Title = "SimpleApp", 
                     Version = "v1" 
                 });
                 var filePath = Path.Combine(System.AppContext.BaseDirectory, "SimpleApp.WebApi.xml");
                 c.IncludeXmlComments(filePath);
             });
-
         }
+
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterAssemblyModules(typeof(Startup).Assembly);

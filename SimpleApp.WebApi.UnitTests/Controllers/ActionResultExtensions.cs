@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using SimpleApp.Core;
-using System.Linq;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -12,7 +12,6 @@ namespace Microsoft.AspNetCore.Mvc
         {
             return new ActionResultAssertions(actionResult);
         }
-
 
         public class ActionResultAssertions : ReferenceTypeAssertions<IActionResult, ActionResultAssertions>
         {
@@ -92,6 +91,7 @@ namespace Microsoft.AspNetCore.Mvc
 
                 return this;
             }
+
             public ActionResultAssertions BeBadRequest<T>(
                 string message,
                 string because = "",
@@ -127,6 +127,7 @@ namespace Microsoft.AspNetCore.Mvc
 
                 return this;
             }
+
             public ActionResultAssertions BeNotFound<T>(
                string message,
                string because = "",
@@ -158,9 +159,6 @@ namespace Microsoft.AspNetCore.Mvc
 
                 return this;
             }
-
         }
     }
-
 }
-

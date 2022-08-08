@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using FizzWare.NBuilder;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimpleApp.Core;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.DTO;
-using System;
 using Xunit;
 
 namespace SimpleApp.WebApi.UnitTests.Controllers.Products
@@ -14,7 +14,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         [Fact]
         public void Return_NotFound_When_Product_Not_Exist()
         {
-            //Arrange
+            // Arrange
             var controller = Create();
             var guid = Guid.NewGuid();
             var errorMessage = $"Product with ID {guid} does not exist.";
@@ -22,10 +22,10 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
                 .Returns(Result.Failure<Product>(errorMessage));
 
-            //Act
+            // Act
             var result = controller.Get(guid);
 
-            //Assert
+            // Assert
             result.Should().BeNotFound<Product>(errorMessage);
             ProductLogicMock.Verify(
                 x => x.GetById(guid), Times.Once());
@@ -37,7 +37,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         [Fact]
         public void Return_Ok_When_Product_is_Exist()
         {
-            //Arrange
+            // Arrange
             var controller = Create();
             var product = Builder<Product>.CreateNew().Build();
             var productDto = Builder<ProductDto>.CreateNew().Build();
@@ -46,10 +46,10 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             MapperMock.Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
                 .Returns(productDto);
 
-            //Act
+            // Act
             var result = controller.Get(product.Id);
 
-            //Assert
+            // Assert
             result.Should().BeOk(productDto);
             ProductLogicMock.Verify(
                 x => x.GetById(product.Id), Times.Once());

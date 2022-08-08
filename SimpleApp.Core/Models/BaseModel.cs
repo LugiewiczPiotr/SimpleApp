@@ -11,7 +11,6 @@ namespace SimpleApp.Core.Models
         {
             Id = Guid.NewGuid();
             IsActive = true;
-
         }
     }
 }

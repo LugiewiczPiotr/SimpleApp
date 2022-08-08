@@ -1,13 +1,12 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.DTO;
-using System;
-using System.Collections.Generic;
-
 
 namespace SimpleApp.WebApi.Controllers
 {
@@ -33,10 +32,11 @@ namespace SimpleApp.WebApi.Controllers
         public IActionResult Get()
         {
             var result = _productLogic.GetAllActive();
-            if(result.Success == false)
+            if (result.Success == false)
             {
                 return BadRequest(result);
             }
+
             var products =_mapper.Map<IList<ProductDto>>(result.Value);
             return Ok(Result.Ok(products)); 
         }
@@ -53,11 +53,13 @@ namespace SimpleApp.WebApi.Controllers
             {
                 return NotFound();
             }
+
             var getResult = _productLogic.GetById(id);
             if (getResult.Success == false)
             {
                 return NotFound(getResult);
             }
+
             var products = _mapper.Map<ProductDto>(getResult.Value);
             return Ok(Result.Ok(products));
         }
@@ -77,6 +79,7 @@ namespace SimpleApp.WebApi.Controllers
                 addResult.AddErrorToModelState(ModelState);
                 return BadRequest(addResult);
             }
+
             var productResult = _mapper.Map<ProductDto>(addResult.Value);
             return CreatedAtAction(nameof(Get),
                 new { id = addResult.Value.Id },
@@ -109,6 +112,7 @@ namespace SimpleApp.WebApi.Controllers
                 resultUpdate.AddErrorToModelState(ModelState);
                 return BadRequest(resultUpdate);
             }
+
             var productResult = _mapper.Map<ProductDto>(resultUpdate.Value);
 
             return Ok(Result.Ok(productResult));

@@ -1,5 +1,3 @@
-using System;
-
 namespace SimpleApp.Web.Models
 {
     public class ErrorViewModel

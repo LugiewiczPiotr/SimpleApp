@@ -1,45 +1,47 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using FizzWare.NBuilder;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimpleApp.Core;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.Controllers;
 using SimpleApp.WebApi.DTO;
-using System;
 using Xunit;
 
 namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
 {
     public class PutTests : BaseTests
     {
-        private Category Category;
-        private CategoryDto CategoryDto;
+        private Category category;
+        private CategoryDto categoryDto;
         private void CorrectFlow()
         {
-            CategoryDto = Builder<CategoryDto>.CreateNew().Build();
-            Category = Builder<Category>.CreateNew().Build();
+            categoryDto = Builder<CategoryDto>.CreateNew().Build();
+            category = Builder<Category>.CreateNew().Build();
             CategoryLogicMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(Category));
+                .Returns(Result.Ok(category));
             MapperMock
                 .Setup(x => x.Map(It.IsAny<CategoryDto>(), It.IsAny<Category>()));
             CategoryLogicMock
                 .Setup(r => r.Update(It.IsAny<Category>()))
-                .Returns(Result.Ok(Category));
+                .Returns(Result.Ok(category));
             MapperMock
                 .Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))
-                .Returns(CategoryDto);
+                .Returns(categoryDto);
         }
+
         protected override CategoryController Create()
         {
             var controller = base.Create();
             CorrectFlow();
             return controller;
         }
+
         [Fact]
         public void Return_NotFound_When_Category_Not_Exist()
         {
-            //Arrange
+            // Arrange
             var controller = Create();
             var guid = Guid.NewGuid();
             var errorMessage = $"Category with ID {guid} does not exist.";
@@ -47,10 +49,10 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
                 .Returns(Result.Failure<Category>(errorMessage));
 
-            //Act
-            var result = controller.Put(guid, CategoryDto);
+            // Act
+            var result = controller.Put(guid, categoryDto);
 
-            //Assert
+            // Assert
             result.Should().BeNotFound<Category>(errorMessage);
             CategoryLogicMock
                 .Verify(x => x.GetById(guid), Times.Once());
@@ -68,26 +70,26 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
         [Fact]
         public void Return_BadRequest_When_Category_Is_Not_Valid()
         {
-            //Arrange
+            // Arrange
             var controller = Create();
             var errorMessage = "BadRequest";
             CategoryLogicMock
                 .Setup(r => r.Update(It.IsAny<Category>()))
-                .Returns(Result.Failure<Category>(Category.Name, errorMessage));
+                .Returns(Result.Failure<Category>(category.Name, errorMessage));
 
-            //Act
-            var result = controller.Put(CategoryDto.Id, CategoryDto);
+            // Act
+            var result = controller.Put(categoryDto.Id, categoryDto);
 
-            //Assert
+            // Assert
             result.Should().BeBadRequest<Category>(errorMessage);
             CategoryLogicMock.Verify(
-                x => x.GetById(CategoryDto.Id), Times.Once());
+                x => x.GetById(categoryDto.Id), Times.Once());
 
             CategoryLogicMock.Verify(
-                x => x.Update(Category), Times.Once());
+                x => x.Update(category), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map(CategoryDto, Category), Times.Once());
+                x => x.Map(categoryDto, category), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Never());
@@ -96,25 +98,25 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
         [Fact]
         public void Return_Created_Category_When_Category_is_Valid()
         {
-            //Arrange
+            // Arrange
             var controller = Create();
 
-            //Act
-            var result = controller.Put(CategoryDto.Id, CategoryDto);
+            // Act
+            var result = controller.Put(categoryDto.Id, categoryDto);
 
-            //Assert
-            result.Should().BeOk(CategoryDto);
+            // Assert
+            result.Should().BeOk(categoryDto);
             CategoryLogicMock.Verify(
-                x => x.GetById(CategoryDto.Id), Times.Once());
+                x => x.GetById(categoryDto.Id), Times.Once());
 
             CategoryLogicMock.Verify(
-                x => x.Update(Category), Times.Once());
+                x => x.Update(category), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map(CategoryDto, Category), Times.Once());
+                x => x.Map(categoryDto, category), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map<CategoryDto>(Category), Times.Once());
+                x => x.Map<CategoryDto>(category), Times.Once());
         }
     }
 }

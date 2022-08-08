@@ -18,8 +18,6 @@ namespace SimpleApp.WebApi.AutoMapperProfiles
             CreateMap<Category, Guid>().ConvertUsing<CategoryToGuidConverter>();
         }
 
-
-
         public class GuidToCategoryConverter : ITypeConverter<Guid, Category>
         {
             private readonly ICategoryLogic _categoryLogic;

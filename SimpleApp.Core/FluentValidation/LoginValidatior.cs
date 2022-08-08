@@ -9,14 +9,12 @@ namespace SimpleApp.Core.FluentValidation
     {
         public LoginValidatior(IUserRepository userRepository, IAccountService accountService)
         {   
-
             RuleFor(x => x.Email).NotEmpty().WithMessage("This field cannot be empty")
             .Must(login => userRepository.CheckIfUserExists(login))
             .WithMessage("Email or password is invalid");
 
-          
             RuleFor(x => x.Password).NotEmpty().WithMessage("This field cannot be empty")
-            .Must((x,y) => accountService.VerifyPassword(x)).
+            .Must((x, y) => accountService.VerifyPassword(x)).
              WithMessage("Email or password is invalid"); 
         }
     }

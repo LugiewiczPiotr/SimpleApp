@@ -1,7 +1,7 @@
-﻿using SimpleApp.Core.Models;
+﻿using System.Linq;
 using SimpleApp.Core.Interfaces.Repositories;
+using SimpleApp.Core.Models;
 using SimpleApp.Infrastructure.Data;
-using System.Linq;
 
 namespace SimpleApp.Infrastructure.Repositories
 {
@@ -9,7 +9,6 @@ namespace SimpleApp.Infrastructure.Repositories
     {
         public UserRepository(AppDbContext dataContext) : base(dataContext)
         {
-
         }
 
         public bool CheckIfUserExists(string email)

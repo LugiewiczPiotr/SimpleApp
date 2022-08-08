@@ -1,7 +1,6 @@
-﻿using SimpleApp.Core.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.Interfaces.Logics
 {

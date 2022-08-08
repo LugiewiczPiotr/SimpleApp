@@ -1,6 +1,6 @@
-﻿using SimpleApp.Core.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.Interfaces.Logics
 {

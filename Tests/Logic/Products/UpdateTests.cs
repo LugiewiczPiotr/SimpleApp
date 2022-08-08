@@ -1,10 +1,10 @@
-﻿using FizzWare.NBuilder;
+﻿using System;
+using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
-using SimpleApp.Core.Models;
-using System;
-using Xunit;
 using SimpleApp.Core;
+using SimpleApp.Core.Models;
+using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Products
 {
@@ -13,13 +13,13 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
         [Fact]
         public void Throw_ArgumentNullException_When_Argument_Is_Null()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
 
-            //Act
+            // Act
             Action result = () => logic.Update(null);
 
-            //Assert
+            // Assert
             result.Should().Throw<ArgumentNullException>();
             ValidatorMock.Verify(
                 x => x.Validate(It.IsAny<Product>()), Times.Never());
@@ -31,17 +31,17 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
         [Fact]
         public void Return_Failure_When_Product_Is_Not_Valid()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
             var product = Builder<Product>.CreateNew().Build();
             string errorMessage = "validation fail";
             ValidatorMock.SetValidationFailure(product.Name, errorMessage);
 
-            //Act
+            // Act
             var result = logic.Update(product);
 
-            //Assert
-            result.Should().BeFailure(property:product.Name, message: errorMessage);
+            // Assert
+            result.Should().BeFailure(property: product.Name, message: errorMessage);
             ValidatorMock.Verify(
                 x => x.Validate(product), Times.Once());
 
@@ -52,15 +52,15 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
         [Fact]
         public void Return_Succes_When_Product_Is_Valid()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
             var product = Builder<Product>.CreateNew().Build();
             ValidatorMock.SetValidationSuccess();
 
-            //Act
+            // Act
             var result = logic.Update(product);
 
-            //Assert
+            // Assert
             result.Should().BeSuccess(product);
             ValidatorMock.Verify(
                 x => x.Validate(product), Times.Once());
@@ -68,9 +68,5 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             ProductRespositoryMock.Verify(
                 x => x.SaveChanges(), Times.Once());
         }
-
-       
-
-       
     }
 }
