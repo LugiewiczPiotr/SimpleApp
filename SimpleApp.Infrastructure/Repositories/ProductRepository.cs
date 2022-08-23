@@ -3,6 +3,7 @@ using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models;
 using SimpleApp.Infrastructure.Data;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Z.EntityFramework.Plus;
 
@@ -14,6 +15,13 @@ namespace SimpleApp.Infrastructure.Repositories
         public ProductRepository(AppDbContext db) : base(db)
         {
 
+        }
+
+        public override IEnumerable<Product> GetAllActive()
+        {
+           return Context.Products.Include(c => c.Category).
+                Where(p => p.IsActive)
+                .ToList();           
         }
 
         public override Product GetById(Guid id)
