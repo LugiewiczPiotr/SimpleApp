@@ -12,6 +12,6 @@ namespace SimpleApp.Web.ViewModels.Products
         public decimal Price { get; set; }
 
         public IEnumerable<SelectItemViewModel> AvailableCategories { get; set; }
-        public Guid Category { get; set; }
+        public Guid CategoryId { get; set; }
     }
 }
