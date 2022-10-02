@@ -7,5 +7,5 @@ namespace SimpleApp.Core.Interfaces.Repositories
     {
         public bool CheckIfUserExists(string email);
         public User GetUserByEmail(string email);
-    }   
+    }
 }

@@ -18,7 +18,9 @@ namespace SimpleApp.Core.Logics
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly JwtSettings _jwtSettings;
 
-        public AccountService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher,
+        public AccountService(
+            IUserRepository userRepository,
+            IPasswordHasher<User> passwordHasher,
             IOptionsSnapshot<JwtSettings> optionsSnapshot)
         {
             _userRepository = userRepository;
@@ -28,7 +30,6 @@ namespace SimpleApp.Core.Logics
 
         public string GenerateJwt(User user)
         {
-
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -60,8 +61,10 @@ namespace SimpleApp.Core.Logics
             {
                 return false;
             }
-            
-            var result = _passwordHasher.VerifyHashedPassword(user, user.Password,
+
+            var result = _passwordHasher.VerifyHashedPassword(
+                user,
+                user.Password,
                 userLoginAndPassword.Password);
             if (result == PasswordVerificationResult.Failed)
             {

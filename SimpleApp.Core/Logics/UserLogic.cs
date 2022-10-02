@@ -7,15 +7,18 @@ using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.Logics
 {
-    public class UserLogic : IUserLogic 
+    public class UserLogic : IUserLogic
     {
         private readonly IUserRepository _userRepository;
         private readonly IValidator<User> _registerValidator;
         private readonly IValidator<UserLoginAndPassword> _loginValidator;
         private readonly IAccountService _accountService;
         private readonly IPasswordHasher<User> _passwordHasher;
-        public UserLogic(IUserRepository userRepository, IValidator<User> registerValidator,
-            IAccountService accountService, IValidator<UserLoginAndPassword> loginValidator,
+        public UserLogic(
+            IUserRepository userRepository,
+            IValidator<User> registerValidator,
+            IAccountService accountService,
+            IValidator<UserLoginAndPassword> loginValidator,
             IPasswordHasher<User> passwordHasher)
         {
             _userRepository = userRepository;
@@ -31,7 +34,7 @@ namespace SimpleApp.Core.Logics
             {
                 throw new ArgumentNullException(nameof(userLoginAndPassword));
             }
-            
+
             var validationResult = _loginValidator.Validate(userLoginAndPassword);
             if (validationResult.IsValid == false)
             {
@@ -50,7 +53,6 @@ namespace SimpleApp.Core.Logics
 
         public Result<User> CreateAccount(User user)
         {
-
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
