@@ -76,7 +76,7 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(category);
         }
 
-        public Result Delete(Category category )
+        public Result Delete(Category category)
         {
             if (category == null)
             {
