@@ -34,7 +34,7 @@ namespace SimpleApp.Web.Controllers
             return View(indexViewModel);
         }
 
-        // GET: ProductController1/Details/5
+        
         public ActionResult Details(Guid id)
         {
             if (id == Guid.Empty)
@@ -53,7 +53,7 @@ namespace SimpleApp.Web.Controllers
             return View(productViewModel);
         }
 
-        // GET: ProductController1/Create
+        
         public ActionResult Create()
         {
             var productViewModel = new ProductViewModel();
@@ -61,7 +61,7 @@ namespace SimpleApp.Web.Controllers
             return View(productViewModel);
         }
 
-        // POST: ProductController1/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ProductViewModel productViewModel)
@@ -85,7 +85,7 @@ namespace SimpleApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: ProductController1/Edit/5
+        
         public ActionResult Edit(Guid id)
         {
             if (id == Guid.Empty)
@@ -107,7 +107,7 @@ namespace SimpleApp.Web.Controllers
             return View(productViewModel);
         }
 
-        // POST: ProductController1/Edit/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ProductViewModel productViewModel)
@@ -138,7 +138,7 @@ namespace SimpleApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: ProductController1/Delete/5
+        
         [HttpGet]
         public ActionResult Delete(Guid id)
         {
@@ -157,7 +157,7 @@ namespace SimpleApp.Web.Controllers
             return View(productViewModel);
         }
 
-        // POST: ProductController1/Delete/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]

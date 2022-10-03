@@ -31,7 +31,7 @@ namespace SimpleApp.Web.Controllers
             return View(indexViewModel);
         }
 
-        // GET: CategoryController/Details/5
+
         public IActionResult Details(Guid id)
         {
             if (id == Guid.Empty)
@@ -51,14 +51,14 @@ namespace SimpleApp.Web.Controllers
             return View(categoryViewModel);
         }
 
-        // GET: CategoryController/Create
+        
         public ActionResult Create()
         {
             var categoryViewModel = new CategoryViewModel();
             return View(categoryViewModel);
         }
 
-        // POST: CategoryController/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CategoryViewModel categoryViewModel)
@@ -81,7 +81,7 @@ namespace SimpleApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: CategoryController/Edit/5
+        
         public ActionResult Edit(Guid id)
         {
             if (id == Guid.Empty)
@@ -101,7 +101,7 @@ namespace SimpleApp.Web.Controllers
             return View(categoryViewModel);
         }
 
-        // POST: CategoryController/Edit/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CategoryViewModel categoryViewModel)
@@ -132,7 +132,7 @@ namespace SimpleApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: CategoryController/Delete/5
+        
         [HttpGet]
         public ActionResult Delete(Guid id)
         {
@@ -152,7 +152,7 @@ namespace SimpleApp.Web.Controllers
             return View(categoryViewModel);
         }
 
-        // POST: CategoryController/Delete/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
