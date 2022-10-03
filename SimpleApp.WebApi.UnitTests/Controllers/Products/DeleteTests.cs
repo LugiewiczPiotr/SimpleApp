@@ -11,13 +11,13 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 {
     public class DeleteTests : BaseTests
     {
-        private Product product;
+        private Product Product;
         private void CorrectFlow()
         {
-            product = Builder<Product>.CreateNew().Build();
+            Product = Builder<Product>.CreateNew().Build();
             ProductLogicMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(product));
+                .Returns(Result.Ok(Product));
             ProductLogicMock
                 .Setup(r => r.Delete(It.IsAny<Product>())).Returns(Result.Ok());
         }
@@ -59,17 +59,17 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var controller = Create();
             ProductLogicMock
                 .Setup(r => r.Delete(It.IsAny<Product>()))
-                .Returns(Result.Failure<Category>(product.Name, errorMessage));
+                .Returns(Result.Failure<Category>(Product.Name, errorMessage));
 
             // Act
-            var result = controller.Delete(product.Id);
+            var result = controller.Delete(Product.Id);
 
             // Assert
             result.Should().BeBadRequest<Category>(errorMessage);
             ProductLogicMock
-                .Verify(x => x.GetById(product.Id), Times.Once());
+                .Verify(x => x.GetById(Product.Id), Times.Once());
             ProductLogicMock
-                .Verify(x => x.Delete(product), Times.Once());
+                .Verify(x => x.Delete(Product), Times.Once());
         }
 
         [Fact]
@@ -79,14 +79,14 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var logic = Create();
 
             // Act
-            var result = logic.Delete(product.Id);
+            var result = logic.Delete(Product.Id);
 
             // Assert
             result.Should().BeOfType<NoContentResult>();
             ProductLogicMock
-                .Verify(x => x.GetById(product.Id), Times.Once());
+                .Verify(x => x.GetById(Product.Id), Times.Once());
             ProductLogicMock
-                .Verify(x => x.Delete(product), Times.Once());
+                .Verify(x => x.Delete(Product), Times.Once());
         }
     }
 }

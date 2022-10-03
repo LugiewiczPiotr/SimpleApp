@@ -11,13 +11,13 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
 {
     public class DeleteTests : BaseTests
     {
-        private Category category;
+        private Category Category;
         private void CorrectFlow()
         {
-            category = Builder<Category>.CreateNew().Build();
+            Category = Builder<Category>.CreateNew().Build();
             CategoryLogicMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(category));
+                .Returns(Result.Ok(Category));
             CategoryLogicMock
                 .Setup(r => r.Delete(It.IsAny<Category>())).Returns(Result.Ok());
         }
@@ -59,17 +59,17 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var controller = Create();
             CategoryLogicMock
                 .Setup(r => r.Delete(It.IsAny<Category>()))
-                .Returns(Result.Failure<Category>(category.Name, errorMessage));
+                .Returns(Result.Failure<Category>(Category.Name, errorMessage));
 
             // Act
-            var result = controller.Delete(category.Id);
+            var result = controller.Delete(Category.Id);
 
             // Assert
             result.Should().BeBadRequest<Category>(errorMessage);
             CategoryLogicMock
-                .Verify(x => x.GetById(category.Id), Times.Once());
+                .Verify(x => x.GetById(Category.Id), Times.Once());
             CategoryLogicMock
-                .Verify(x => x.Delete(category), Times.Once());
+                .Verify(x => x.Delete(Category), Times.Once());
         }
 
         [Fact]
@@ -79,14 +79,14 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var controller = Create();
 
             // Act
-            var result = controller.Delete(category.Id);
+            var result = controller.Delete(Category.Id);
 
             // Assert
             result.Should().BeOfType<NoContentResult>();
             CategoryLogicMock
-                .Verify(x => x.GetById(category.Id), Times.Once());
+                .Verify(x => x.GetById(Category.Id), Times.Once());
             CategoryLogicMock
-                .Verify(x => x.Delete(category), Times.Once());
+                .Verify(x => x.Delete(Category), Times.Once());
         }
     }
 }

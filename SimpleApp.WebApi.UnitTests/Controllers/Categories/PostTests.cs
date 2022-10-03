@@ -11,18 +11,18 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
 {
     public class PostTests : BaseTests
     {
-        private Category category;
-        private CategoryDto categoryDto;
+        private Category Category;
+        private CategoryDto CategoryDto;
         private void CorrectFlow()
         {
-            category = Builder<Category>.CreateNew().Build();
-            categoryDto = Builder<CategoryDto>.CreateNew().Build();
+            Category = Builder<Category>.CreateNew().Build();
+            CategoryDto = Builder<CategoryDto>.CreateNew().Build();
             MapperMock.Setup(x => x.Map<Category>(It.IsAny<CategoryDto>()))
-               .Returns(category);
+               .Returns(Category);
             CategoryLogicMock.Setup(x => x.Add(It.IsAny<Category>()))
-                .Returns(Result.Ok(category));
+                .Returns(Result.Ok(Category));
             MapperMock.Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))
-                .Returns(categoryDto);
+                .Returns(CategoryDto);
         }
 
         protected override CategoryController Create()
@@ -40,18 +40,18 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var errorMessage = "validation fail";
             CategoryLogicMock
                 .Setup(x => x.Add(It.IsAny<Category>()))
-                .Returns(Result.Failure<Category>(category.Name, errorMessage));
+                .Returns(Result.Failure<Category>(Category.Name, errorMessage));
 
             // Act
-            var result = controller.Post(categoryDto);
+            var result = controller.Post(CategoryDto);
             
             // Assert
             result.Should().BeBadRequest<Category>(errorMessage);
             MapperMock.Verify(
-               x => x.Map<Category>(categoryDto), Times.Once());
+               x => x.Map<Category>(CategoryDto), Times.Once());
 
             CategoryLogicMock.Verify(
-               x => x.Add(category), Times.Once());
+               x => x.Add(Category), Times.Once());
 
             MapperMock.Verify(
               x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Never());
@@ -64,18 +64,18 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var controller = Create();
            
             // Act
-            var result = controller.Post(categoryDto);
+            var result = controller.Post(CategoryDto);
 
             // Assert
-            result.Should().BeCreatedAtAction(categoryDto);
+            result.Should().BeCreatedAtAction(CategoryDto);
             MapperMock.Verify(
-               x => x.Map<Category>(categoryDto), Times.Once());
+               x => x.Map<Category>(CategoryDto), Times.Once());
 
             CategoryLogicMock.Verify(
-               x => x.Add(category), Times.Once());
+               x => x.Add(Category), Times.Once());
 
             MapperMock.Verify(
-               x => x.Map<CategoryDto>(category), Times.Once());
+               x => x.Map<CategoryDto>(Category), Times.Once());
         }
     }
 }
