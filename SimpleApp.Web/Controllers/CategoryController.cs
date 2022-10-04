@@ -10,7 +10,6 @@ namespace SimpleApp.Web.Controllers
 {
     public class CategoryController : Controller
     {
-
         private readonly ICategoryLogic _categoryLogic;
         private readonly IMapper _mapper;
         public CategoryController(ICategoryLogic categoryLogic, IMapper mapper)
@@ -31,7 +30,6 @@ namespace SimpleApp.Web.Controllers
             return View(indexViewModel);
         }
 
-
         public IActionResult Details(Guid id)
         {
             if (id == Guid.Empty)
@@ -51,14 +49,12 @@ namespace SimpleApp.Web.Controllers
             return View(categoryViewModel);
         }
 
-        
         public ActionResult Create()
         {
             var categoryViewModel = new CategoryViewModel();
             return View(categoryViewModel);
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CategoryViewModel categoryViewModel)
@@ -81,7 +77,6 @@ namespace SimpleApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        
         public ActionResult Edit(Guid id)
         {
             if (id == Guid.Empty)
@@ -93,7 +88,6 @@ namespace SimpleApp.Web.Controllers
 
             if (getResult.Success == false)
             {
-                
                 return NotFound();
             }
 
@@ -101,7 +95,6 @@ namespace SimpleApp.Web.Controllers
             return View(categoryViewModel);
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CategoryViewModel categoryViewModel)
@@ -120,7 +113,7 @@ namespace SimpleApp.Web.Controllers
             }
 
             _mapper.Map(categoryViewModel, getResult.Value);
-           
+
             var result = _categoryLogic.Update(getResult.Value);
 
             if (result.Success == false)
@@ -132,7 +125,6 @@ namespace SimpleApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        
         [HttpGet]
         public ActionResult Delete(Guid id)
         {
@@ -152,7 +144,6 @@ namespace SimpleApp.Web.Controllers
             return View(categoryViewModel);
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]

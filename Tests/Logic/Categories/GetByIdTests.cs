@@ -24,7 +24,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             // Assert
             result.Should().BeFailure($"Category with ID {guid} does not exist.");
             CategoryRepositoryMock.Verify(
-                x => x.GetById(guid), Times.Once()); 
+                x => x.GetById(guid), Times.Once());
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             // Assert
             result.Should().BeSuccess(category);
             CategoryRepositoryMock.Verify(
-                x => x.GetById(category.Id), Times.Once()); 
+                x => x.GetById(category.Id), Times.Once());
         }
     }
 }

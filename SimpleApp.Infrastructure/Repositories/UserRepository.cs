@@ -7,7 +7,8 @@ namespace SimpleApp.Infrastructure.Repositories
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        public UserRepository(AppDbContext dataContext) : base(dataContext)
+        public UserRepository(AppDbContext dataContext)
+            : base(dataContext)
         {
         }
 
@@ -17,8 +18,8 @@ namespace SimpleApp.Infrastructure.Repositories
         }
 
         public User GetUserByEmail(string email)
-        { 
-            return Context.Users.FirstOrDefault(x => x.Email == email); 
+        {
+            return Context.Users.FirstOrDefault(x => x.Email == email);
         }
     }
 }

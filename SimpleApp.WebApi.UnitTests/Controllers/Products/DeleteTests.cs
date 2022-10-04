@@ -11,23 +11,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 {
     public class DeleteTests : BaseTests
     {
-        private Product Product;
-        private void CorrectFlow()
-        {
-            Product = Builder<Product>.CreateNew().Build();
-            ProductLogicMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(Product));
-            ProductLogicMock
-                .Setup(r => r.Delete(It.IsAny<Product>())).Returns(Result.Ok());
-        }
-
-        protected override ProductController Create()
-        {
-            var controller = base.Create();
-            CorrectFlow();
-            return controller;
-        }
+        private Product _product;
 
         [Fact]
         public void Return_NotFound_When_Product_Not_Exist()
@@ -59,17 +43,17 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var controller = Create();
             ProductLogicMock
                 .Setup(r => r.Delete(It.IsAny<Product>()))
-                .Returns(Result.Failure<Category>(Product.Name, errorMessage));
+                .Returns(Result.Failure<Category>(_product.Name, errorMessage));
 
             // Act
-            var result = controller.Delete(Product.Id);
+            var result = controller.Delete(_product.Id);
 
             // Assert
             result.Should().BeBadRequest<Category>(errorMessage);
             ProductLogicMock
-                .Verify(x => x.GetById(Product.Id), Times.Once());
+                .Verify(x => x.GetById(_product.Id), Times.Once());
             ProductLogicMock
-                .Verify(x => x.Delete(Product), Times.Once());
+                .Verify(x => x.Delete(_product), Times.Once());
         }
 
         [Fact]
@@ -79,14 +63,31 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var logic = Create();
 
             // Act
-            var result = logic.Delete(Product.Id);
+            var result = logic.Delete(_product.Id);
 
             // Assert
             result.Should().BeOfType<NoContentResult>();
             ProductLogicMock
-                .Verify(x => x.GetById(Product.Id), Times.Once());
+                .Verify(x => x.GetById(_product.Id), Times.Once());
             ProductLogicMock
-                .Verify(x => x.Delete(Product), Times.Once());
+                .Verify(x => x.Delete(_product), Times.Once());
+        }
+
+        protected override ProductController Create()
+        {
+            var controller = base.Create();
+            CorrectFlow();
+            return controller;
+        }
+
+        private void CorrectFlow()
+        {
+            _product = Builder<Product>.CreateNew().Build();
+            ProductLogicMock
+                .Setup(r => r.GetById(It.IsAny<Guid>()))
+                .Returns(Result.Ok(_product));
+            ProductLogicMock
+                .Setup(r => r.Delete(It.IsAny<Product>())).Returns(Result.Ok());
         }
     }
 }

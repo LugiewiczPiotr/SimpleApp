@@ -12,31 +12,8 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
 {
     public class PutTests : BaseTests
     {
-        private Category Category;
-        private CategoryDto CategoryDto;
-        private void CorrectFlow()
-        {
-            CategoryDto = Builder<CategoryDto>.CreateNew().Build();
-            Category = Builder<Category>.CreateNew().Build();
-            CategoryLogicMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(Category));
-            MapperMock
-                .Setup(x => x.Map(It.IsAny<CategoryDto>(), It.IsAny<Category>()));
-            CategoryLogicMock
-                .Setup(r => r.Update(It.IsAny<Category>()))
-                .Returns(Result.Ok(Category));
-            MapperMock
-                .Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))
-                .Returns(CategoryDto);
-        }
-
-        protected override CategoryController Create()
-        {
-            var controller = base.Create();
-            CorrectFlow();
-            return controller;
-        }
+        private Category _category;
+        private CategoryDto _categoryDto;
 
         [Fact]
         public void Return_NotFound_When_Category_Not_Exist()
@@ -50,7 +27,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
                 .Returns(Result.Failure<Category>(errorMessage));
 
             // Act
-            var result = controller.Put(guid, CategoryDto);
+            var result = controller.Put(guid, _categoryDto);
 
             // Assert
             result.Should().BeNotFound<Category>(errorMessage);
@@ -75,21 +52,21 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var errorMessage = "BadRequest";
             CategoryLogicMock
                 .Setup(r => r.Update(It.IsAny<Category>()))
-                .Returns(Result.Failure<Category>(Category.Name, errorMessage));
+                .Returns(Result.Failure<Category>(_category.Name, errorMessage));
 
             // Act
-            var result = controller.Put(CategoryDto.Id, CategoryDto);
+            var result = controller.Put(_categoryDto.Id, _categoryDto);
 
             // Assert
             result.Should().BeBadRequest<Category>(errorMessage);
             CategoryLogicMock.Verify(
-                x => x.GetById(CategoryDto.Id), Times.Once());
+                x => x.GetById(_categoryDto.Id), Times.Once());
 
             CategoryLogicMock.Verify(
-                x => x.Update(Category), Times.Once());
+                x => x.Update(_category), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map(CategoryDto, Category), Times.Once());
+                x => x.Map(_categoryDto, _category), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Never());
@@ -102,21 +79,45 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var controller = Create();
 
             // Act
-            var result = controller.Put(CategoryDto.Id, CategoryDto);
+            var result = controller.Put(_categoryDto.Id, _categoryDto);
 
             // Assert
-            result.Should().BeOk(CategoryDto);
+            result.Should().BeOk(_categoryDto);
             CategoryLogicMock.Verify(
-                x => x.GetById(CategoryDto.Id), Times.Once());
+                x => x.GetById(_categoryDto.Id), Times.Once());
 
             CategoryLogicMock.Verify(
-                x => x.Update(Category), Times.Once());
+                x => x.Update(_category), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map(CategoryDto, Category), Times.Once());
+                x => x.Map(_categoryDto, _category), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map<CategoryDto>(Category), Times.Once());
+                x => x.Map<CategoryDto>(_category), Times.Once());
+        }
+
+        protected override CategoryController Create()
+        {
+            var controller = base.Create();
+            CorrectFlow();
+            return controller;
+        }
+
+        private void CorrectFlow()
+        {
+            _categoryDto = Builder<CategoryDto>.CreateNew().Build();
+            _category = Builder<Category>.CreateNew().Build();
+            CategoryLogicMock
+                .Setup(r => r.GetById(It.IsAny<Guid>()))
+                .Returns(Result.Ok(_category));
+            MapperMock
+                .Setup(x => x.Map(It.IsAny<CategoryDto>(), It.IsAny<Category>()));
+            CategoryLogicMock
+                .Setup(r => r.Update(It.IsAny<Category>()))
+                .Returns(Result.Ok(_category));
+            MapperMock
+                .Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))
+                .Returns(_categoryDto);
         }
     }
 }

@@ -34,7 +34,6 @@ namespace SimpleApp.Web.Controllers
             return View(indexViewModel);
         }
 
-        
         public ActionResult Details(Guid id)
         {
             if (id == Guid.Empty)
@@ -47,13 +46,12 @@ namespace SimpleApp.Web.Controllers
             {
                 return NotFound();
             }
-            
+
             var productViewModel = _mapper.Map<ProductViewModel>(getResult.Value);
 
             return View(productViewModel);
         }
 
-        
         public ActionResult Create()
         {
             var productViewModel = new ProductViewModel();
@@ -61,7 +59,6 @@ namespace SimpleApp.Web.Controllers
             return View(productViewModel);
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ProductViewModel productViewModel)
@@ -74,7 +71,7 @@ namespace SimpleApp.Web.Controllers
 
             var product = _mapper.Map<Product>(productViewModel);
 
-            var addProduct =_productLogic.Add(product);
+            var addProduct = _productLogic.Add(product);
             if (addProduct.Success == false)
             {
                 Supply(productViewModel);
@@ -85,7 +82,6 @@ namespace SimpleApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        
         public ActionResult Edit(Guid id)
         {
             if (id == Guid.Empty)
@@ -94,7 +90,7 @@ namespace SimpleApp.Web.Controllers
             }
 
             var getResult = _productLogic.GetById(id);
-            
+
             if (getResult.Success == false)
             {
                 return NotFound();
@@ -107,12 +103,10 @@ namespace SimpleApp.Web.Controllers
             return View(productViewModel);
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ProductViewModel productViewModel)
         {
-
             if (ModelState.IsValid == false)
             {
                 Supply(productViewModel);
@@ -134,11 +128,10 @@ namespace SimpleApp.Web.Controllers
                 Supply(productViewModel);
                 return View(productViewModel);
             }
-            
+
             return RedirectToAction("Index");
         }
 
-        
         [HttpGet]
         public ActionResult Delete(Guid id)
         {
@@ -157,7 +150,6 @@ namespace SimpleApp.Web.Controllers
             return View(productViewModel);
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
@@ -173,7 +165,6 @@ namespace SimpleApp.Web.Controllers
 
             if (deleteResult.Success == false)
             {
-                
                 return BadRequest();
             }
 

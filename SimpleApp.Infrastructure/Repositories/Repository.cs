@@ -8,12 +8,12 @@ namespace SimpleApp.Infrastructure.Repositories
 {
     public abstract class Repository<T> : IRepository<T> where T : BaseModel, new()
     {
+        protected readonly AppDbContext Context;
+
         protected Repository(AppDbContext dataContext)
         {
             Context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
         }
-
-        protected readonly AppDbContext Context;
 
         public virtual T GetById(Guid id)
         {

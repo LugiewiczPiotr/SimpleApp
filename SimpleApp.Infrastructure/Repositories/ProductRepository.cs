@@ -10,8 +10,8 @@ namespace SimpleApp.Infrastructure.Repositories
 {
     public class ProductRepository : Repository<Product>, IProductRepository
     {
-
-        public ProductRepository(AppDbContext db) : base(db)
+        public ProductRepository(AppDbContext db)
+            : base(db)
         {
         }
 

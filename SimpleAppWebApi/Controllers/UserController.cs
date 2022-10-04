@@ -9,7 +9,6 @@ using SimpleApp.WebApi.DTO;
 
 namespace SimpleApp.WebApi.Controllers
 {
-
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
@@ -24,7 +23,7 @@ namespace SimpleApp.WebApi.Controllers
         }
 
         /// <summary>
-        /// Register user
+        /// Register user.
         /// </summary>
         [HttpPost("Register")]
         [AllowAnonymous]
@@ -49,7 +48,7 @@ namespace SimpleApp.WebApi.Controllers
         }
 
         /// <summary>
-        /// Login
+        /// Login.
         /// </summary>
         [HttpPost("Login")]
         [AllowAnonymous]
@@ -65,7 +64,7 @@ namespace SimpleApp.WebApi.Controllers
 
             var getTokenResult = _userLogic.Authenticate(data);
             if (getTokenResult.Success == false)
-            { 
+            {
                 return Unauthorized(getTokenResult);
             }
 

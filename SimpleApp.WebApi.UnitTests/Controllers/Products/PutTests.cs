@@ -12,31 +12,8 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 {
     public class PutTests : BaseTests
     {
-        private Product Product;
-        private ProductDto ProductDto;
-        private void CorrectFlow()
-        {
-            ProductDto = Builder<ProductDto>.CreateNew().Build();
-            Product = Builder<Product>.CreateNew().Build();
-            ProductLogicMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(Product));
-            MapperMock
-                .Setup(x => x.Map(It.IsAny<ProductDto>(), It.IsAny<Product>()));
-            ProductLogicMock
-                .Setup(r => r.Update(It.IsAny<Product>()))
-                .Returns(Result.Ok(Product));
-            MapperMock
-                .Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
-                .Returns(ProductDto);
-        }
-
-        protected override ProductController Create()
-        {
-            var controller = base.Create();
-            CorrectFlow();
-            return controller;
-        }
+        private Product _product;
+        private ProductDto _productDto;
 
         [Fact]
         public void Return_NotFound_When_Product_Not_Exist()
@@ -50,7 +27,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Returns(Result.Failure<Product>(errorMessage));
 
             // Act
-            var result = logic.Put(guid, ProductDto);
+            var result = logic.Put(guid, _productDto);
 
             // Assert
             result.Should().BeNotFound<Product>(errorMessage);
@@ -75,21 +52,21 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var errorMessage = "BadRequest";
             ProductLogicMock
                 .Setup(r => r.Update(It.IsAny<Product>()))
-                .Returns(Result.Failure<Product>(Product.Name, errorMessage));
+                .Returns(Result.Failure<Product>(_product.Name, errorMessage));
 
             // Act
-            var result = logic.Put(ProductDto.Id, ProductDto);
+            var result = logic.Put(_productDto.Id, _productDto);
 
             // Assert
             result.Should().BeBadRequest<Product>(errorMessage);
             ProductLogicMock.Verify(
-                x => x.GetById(ProductDto.Id), Times.Once());
+                x => x.GetById(_productDto.Id), Times.Once());
 
             ProductLogicMock.Verify(
-                x => x.Update(Product), Times.Once());
+                x => x.Update(_product), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map(ProductDto, Product), Times.Once());
+                x => x.Map(_productDto, _product), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Never());
@@ -102,21 +79,45 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var logic = Create();
 
             // Act
-            var result = logic.Put(ProductDto.Id, ProductDto);
+            var result = logic.Put(_productDto.Id, _productDto);
 
             // Assert
-            result.Should().BeOk(ProductDto);
+            result.Should().BeOk(_productDto);
             ProductLogicMock.Verify(
-                x => x.GetById(ProductDto.Id), Times.Once());
+                x => x.GetById(_productDto.Id), Times.Once());
 
             ProductLogicMock.Verify(
-                x => x.Update(Product), Times.Once());
+                x => x.Update(_product), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map(ProductDto, Product), Times.Once());
+                x => x.Map(_productDto, _product), Times.Once());
 
             MapperMock.Verify(
-                x => x.Map<ProductDto>(Product), Times.Once());
+                x => x.Map<ProductDto>(_product), Times.Once());
+        }
+
+        protected override ProductController Create()
+        {
+            var controller = base.Create();
+            CorrectFlow();
+            return controller;
+        }
+
+        private void CorrectFlow()
+        {
+            _productDto = Builder<ProductDto>.CreateNew().Build();
+            _product = Builder<Product>.CreateNew().Build();
+            ProductLogicMock
+                .Setup(r => r.GetById(It.IsAny<Guid>()))
+                .Returns(Result.Ok(_product));
+            MapperMock
+                .Setup(x => x.Map(It.IsAny<ProductDto>(), It.IsAny<Product>()));
+            ProductLogicMock
+                .Setup(r => r.Update(It.IsAny<Product>()))
+                .Returns(Result.Ok(_product));
+            MapperMock
+                .Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
+                .Returns(_productDto);
         }
     }
 }

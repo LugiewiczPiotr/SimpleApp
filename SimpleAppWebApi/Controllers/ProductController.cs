@@ -37,12 +37,12 @@ namespace SimpleApp.WebApi.Controllers
                 return BadRequest(result);
             }
 
-            var products =_mapper.Map<IList<ProductDto>>(result.Value);
-            return Ok(Result.Ok(products)); 
+            var products = _mapper.Map<IList<ProductDto>>(result.Value);
+            return Ok(Result.Ok(products));
         }
 
         /// <summary>
-        /// "Get product by id."
+        /// "Get product by id.".
         /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -81,7 +81,8 @@ namespace SimpleApp.WebApi.Controllers
             }
 
             var productResult = _mapper.Map<ProductDto>(addResult.Value);
-            return CreatedAtAction(nameof(Get),
+            return CreatedAtAction(
+                nameof(Get),
                 new { id = addResult.Value.Id },
                 Result.Ok(productResult));
         }
@@ -140,7 +141,7 @@ namespace SimpleApp.WebApi.Controllers
             {
                 return BadRequest(deleteResult);
             }
-            
+
             return NoContent();
         }
     }

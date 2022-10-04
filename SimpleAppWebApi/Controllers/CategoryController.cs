@@ -42,7 +42,7 @@ namespace SimpleApp.WebApi.Controllers
         }
 
         /// <summary>
-        /// "Get category by id."
+        /// "Get category by id.".
         /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -81,7 +81,8 @@ namespace SimpleApp.WebApi.Controllers
             }
 
             var categoryResult = _mapper.Map<CategoryDto>(addResult.Value);
-            return CreatedAtAction(nameof(Get),
+            return CreatedAtAction(
+                nameof(Get),
                 new { id = addResult.Value.Id },
                 Result.Ok(categoryResult));
         }
@@ -95,7 +96,6 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<CategoryDto>))]
         public IActionResult Put(Guid id, [FromBody] CategoryDto categoryDto)
         {
-
             var getResult = _categoryLogic.GetById(id);
 
             if (getResult.Success == false)

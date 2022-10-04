@@ -15,12 +15,12 @@ namespace Microsoft.AspNetCore.Mvc
 
         public class ActionResultAssertions : ReferenceTypeAssertions<IActionResult, ActionResultAssertions>
         {
-            protected override string Identifier => "actionResult";
-
             public ActionResultAssertions(IActionResult actionResult)
             {
                 Subject = actionResult;
             }
+
+            protected override string Identifier => "actionResult";
 
             public ActionResultAssertions BeOk<T>(T value, string because = "", params object[] becauseArgs)
             {
@@ -133,7 +133,6 @@ namespace Microsoft.AspNetCore.Mvc
                string because = "",
                params object[] becauseArgs)
             {
-
                 var subject = Subject.As<ObjectResult>();
                 var subjectValue = subject.Value.As<Result<T>>();
 

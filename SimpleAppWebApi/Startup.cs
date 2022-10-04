@@ -27,7 +27,6 @@ namespace SimpleApp.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.Configure<JwtSettings>(Configuration.GetSection(JwtSettings.SectionName));
             services.AddAuthentication(x =>
             {
@@ -51,8 +50,8 @@ namespace SimpleApp.WebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "SimpleApp", 
-                    Version = "v1" 
+                    Title = "SimpleApp",
+                    Version = "v1"
                 });
                 var filePath = Path.Combine(System.AppContext.BaseDirectory, "SimpleApp.WebApi.xml");
                 c.IncludeXmlComments(filePath);

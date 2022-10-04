@@ -4,7 +4,7 @@ using SimpleApp.Core.Models;
 
 namespace SimpleApp.Infrastructure.Data.EntityConfigurations
 {
-    class CategoryEnityConfigurate : IEntityTypeConfiguration<Category>
+    internal class CategoryEnityConfigurate : IEntityTypeConfiguration<Category>
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {

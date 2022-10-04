@@ -6,7 +6,8 @@ namespace SimpleApp.Infrastructure.Repositories
 {
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        public CategoryRepository(AppDbContext db) : base(db)
+        public CategoryRepository(AppDbContext db)
+            : base(db)
         {
         }
     }
