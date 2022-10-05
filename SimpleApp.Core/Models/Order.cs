@@ -6,9 +6,9 @@ namespace SimpleApp.Core.Models
     public class Order : BaseModel
     {
        public Guid UserId { get; set; }
-       public User User { get; set; }
+       public virtual User User { get; set; }
        public string Date { get; set; }
        public string Status { get; set; }
-       public ICollection<OrderItem> OrderItems { get; set; }
+       public virtual ICollection<OrderItem> OrderItems { get; set; }
     }
 }
