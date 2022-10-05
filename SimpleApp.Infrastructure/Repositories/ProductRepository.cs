@@ -17,9 +17,8 @@ namespace SimpleApp.Infrastructure.Repositories
 
         public override Product GetById(Guid id)
         {
-            Context.Products.Include(c => c.Category).
+           return Context.Products.Include(c => c.Category).
                 FirstOrDefault(e => e.Id == id && e.IsActive);
-            return base.GetById(id);
         }
 
         public void DeleteByCategoryId(Guid id)
