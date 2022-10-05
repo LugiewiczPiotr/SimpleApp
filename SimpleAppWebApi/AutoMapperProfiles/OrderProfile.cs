@@ -10,6 +10,8 @@ namespace SimpleApp.WebApi.AutoMapperProfiles
         {
             CreateMap<Order, OrderDto>()
                 .ReverseMap();
+
+            CreateMap<ManageOrderDto, Order>();
         }
     }
 }
