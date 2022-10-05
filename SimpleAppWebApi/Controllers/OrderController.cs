@@ -103,15 +103,15 @@ namespace SimpleApp.WebApi.Controllers
 
             _mapper.Map(orderDto, getResult.Value);
 
-            var resultUpdate = _orderLogic.Update(getResult.Value);
+            var updateResult = _orderLogic.Update(getResult.Value);
 
-            if (resultUpdate.Success == false)
+            if (updateResult.Success == false)
             {
-                resultUpdate.AddErrorToModelState(ModelState);
-                return BadRequest(resultUpdate);
+                updateResult.AddErrorToModelState(ModelState);
+                return BadRequest(updateResult);
             }
 
-            var orderResult = _mapper.Map<OrderDto>(resultUpdate.Value);
+            var orderResult = _mapper.Map<OrderDto>(updateResult.Value);
             return Ok(Result.Ok(orderResult));
         }
 
