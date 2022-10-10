@@ -11,11 +11,13 @@ namespace SimpleApp.Core.FluentValidation
         {
             RuleFor(x => x.Email).NotEmpty().WithMessage("This field cannot be empty")
             .Must(login => userRepository.CheckIfUserExists(login))
-            .WithMessage("Login is invalid");
+            .WithMessage("Email or password is invalid")
+            .OverridePropertyName("Login Data");
 
             RuleFor(x => x.Password).NotEmpty().WithMessage("This field cannot be empty")
-            .Must((x, y) => accountService.VerifyPassword(x)).
-             WithMessage("Password is invalid");
+            .Must((x, y) => accountService.VerifyPassword(x))
+            .WithMessage("Email or password is invalid")
+            .OverridePropertyName("Login Data");
         }
     }
 }
