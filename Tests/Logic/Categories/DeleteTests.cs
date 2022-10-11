@@ -31,7 +31,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
         }
 
         [Fact]
-        public void Return_Succes_When_Category_Is_Deleted()
+        public void Return_Success_When_Category_Is_Deleted()
         {
             // Arrange
             var logic = Create();
