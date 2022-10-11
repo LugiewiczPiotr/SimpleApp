@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using SimpleApp.Core.Models;
 
-namespace SimpleApp.Infrastructure.Repositories
+namespace SimpleApp.Core.Interfaces.Repositories
 {
     public interface IRepository<T> where T : BaseModel
     {
