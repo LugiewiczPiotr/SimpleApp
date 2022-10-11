@@ -13,7 +13,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             // Arrange
             var logic = Create();
             var products = Builder<Product>.CreateListOfSize(10).Build();
-            ProductRespositoryMock
+            ProductRepositoryMock
                 .Setup(r => r.GetAllActive()).Returns(products);
 
             // Act
@@ -21,7 +21,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
 
             // Assert
             result.Should().BeSuccess(products);
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.GetAllActive(), Times.Once());
         }
     }

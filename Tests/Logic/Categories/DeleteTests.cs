@@ -23,7 +23,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             CategoryRepositoryMock.Verify(
                 x => x.Delete(It.IsAny<Category>()), Times.Never());
 
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                x => x.DeleteByCategoryId(It.IsAny<Guid>()), Times.Never());
 
             CategoryRepositoryMock.Verify(
@@ -40,7 +40,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             category.Id = product.CategoryId;
             CategoryRepositoryMock.Setup(
                 x => x.Delete(category));
-            ProductRespositoryMock.Setup(
+            ProductRepositoryMock.Setup(
                 r => r.DeleteByCategoryId(category.Id));
 
             // Act
@@ -48,7 +48,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
 
             // Assert
             result.Success.Should().BeTrue();
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                x => x.DeleteByCategoryId(category.Id), Times.Once());
 
             CategoryRepositoryMock.Verify(

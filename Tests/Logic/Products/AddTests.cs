@@ -24,10 +24,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             ValidatorMock.Verify(
                 x => x.Validate(It.IsAny<Product>()), Times.Never());
 
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                x => x.Add(It.IsAny<Product>()), Times.Never());
 
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Never());
         }
 
@@ -48,10 +48,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             ValidatorMock.Verify(
                x => x.Validate(product), Times.Once());
 
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                x => x.Add(It.IsAny<Product>()), Times.Never());
 
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Never());
         }
 
@@ -71,10 +71,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             ValidatorMock.Verify(
               x => x.Validate(product), Times.Once());
 
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                x => x.Add(product), Times.Once());
 
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Once());
         }
     }

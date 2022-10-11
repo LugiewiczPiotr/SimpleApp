@@ -20,10 +20,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.Delete(It.IsAny<Product>()), Times.Never());
 
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Never());
         }
 
@@ -33,7 +33,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             // Arrange
             var logic = Create();
             var product = Builder<Product>.CreateNew().Build();
-            ProductRespositoryMock
+            ProductRepositoryMock
                 .Setup(r => r.Delete(product));
 
             // Act
@@ -41,10 +41,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
 
             // Assert
             result.Success.Should().BeTrue();
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.Delete(product), Times.Once());
 
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Once());
         }
     }

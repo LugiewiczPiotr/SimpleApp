@@ -13,7 +13,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
         {
             // Arrange
             var logic = Create();
-            ProductRespositoryMock
+            ProductRepositoryMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
                 .Returns((Product)null);
             var guid = Guid.NewGuid();
@@ -23,7 +23,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
 
             // Assert
             result.Should().BeFailure($"Product with ID {guid} does not exist.");
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.GetById(guid), Times.Once());
         }
 
@@ -33,7 +33,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             // Arrange
             var logic = Create();
             var product = Builder<Product>.CreateNew().Build();
-            ProductRespositoryMock
+            ProductRepositoryMock
                 .Setup(r => r.GetById(It.IsAny<Guid>())).
                 Returns(product);
 
@@ -42,7 +42,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
 
             // Assert
             result.Should().BeSuccess(product);
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.GetById(product.Id), Times.Once());
         }
     }
