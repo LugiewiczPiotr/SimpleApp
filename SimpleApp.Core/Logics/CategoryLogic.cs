@@ -12,6 +12,7 @@ namespace SimpleApp.Core.Logics
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
         private readonly IValidator<Category> _validator;
+
         public CategoryLogic(
             ICategoryRepository categoryRepository,
             IProductRepository productRepository,

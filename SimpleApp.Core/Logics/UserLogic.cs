@@ -14,6 +14,7 @@ namespace SimpleApp.Core.Logics
         private readonly IValidator<UserLoginAndPassword> _loginValidator;
         private readonly IAccountService _accountService;
         private readonly IPasswordHasher<User> _passwordHasher;
+
         public UserLogic(
             IUserRepository userRepository,
             IValidator<User> registerValidator,
