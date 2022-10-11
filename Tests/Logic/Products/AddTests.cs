@@ -37,7 +37,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             // Arrange
             var logic = Create();
             var product = Builder<Product>.CreateNew().Build();
-            string errorMessage = "validation fail";
+            const string errorMessage = "validation fail";
             ValidatorMock.SetValidationFailure(product.Name, errorMessage);
 
             // Act

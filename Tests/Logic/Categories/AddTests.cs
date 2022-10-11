@@ -37,7 +37,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             // Arrange
             var logic = Create();
             var category = Builder<Category>.CreateNew().Build();
-            string errorMessage = "validation fail";
+            const string errorMessage = "validation fail";
             ValidatorMock.SetValidationFailure(category.Name, errorMessage);
 
             // Act
