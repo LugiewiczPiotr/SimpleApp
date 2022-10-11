@@ -50,7 +50,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
         }
 
         [Fact]
-        public void Return_Succes_When_Product_Is_Valid()
+        public void Return_Success_When_Product_Is_Valid()
         {
             // Arrange
             var logic = Create();
