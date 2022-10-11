@@ -31,7 +31,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.AvailableCategories)
                 <div class="col-md-10">
-                    @Html.DropDownListFor(m => m.CategoryId,
+                    @Html.DropDownListFor(m => m.Category,
                    new SelectList(
                        Model.AvailableCategories,
                        nameof(SelectItemViewModel.Value),

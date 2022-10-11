@@ -1,21 +1,25 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models;
-using System;
 
 namespace SimpleApp.Core.Logics
 {
-    public class UserLogic : IUserLogic 
+    public class UserLogic : IUserLogic
     {
         private readonly IUserRepository _userRepository;
         private readonly IValidator<User> _registerValidator;
         private readonly IValidator<UserLoginAndPassword> _loginValidator;
         private readonly IAccountService _accountService;
         private readonly IPasswordHasher<User> _passwordHasher;
-        public UserLogic(IUserRepository userRepository, IValidator<User> registerValidator,
-            IAccountService accountService,IValidator<UserLoginAndPassword> loginValidator,
+
+        public UserLogic(
+            IUserRepository userRepository,
+            IValidator<User> registerValidator,
+            IAccountService accountService,
+            IValidator<UserLoginAndPassword> loginValidator,
             IPasswordHasher<User> passwordHasher)
         {
             _userRepository = userRepository;
@@ -27,11 +31,11 @@ namespace SimpleApp.Core.Logics
 
         public Result<string> Authenticate(UserLoginAndPassword userLoginAndPassword)
         {
-            if(userLoginAndPassword == null)
+            if (userLoginAndPassword == null)
             {
                 throw new ArgumentNullException(nameof(userLoginAndPassword));
             }
-            
+
             var validationResult = _loginValidator.Validate(userLoginAndPassword);
             if (validationResult.IsValid == false)
             {
@@ -50,7 +54,6 @@ namespace SimpleApp.Core.Logics
 
         public Result<User> CreateAccount(User user)
         {
-
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));

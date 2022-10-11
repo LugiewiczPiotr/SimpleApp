@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SimpleApp.WebApi.DTO
+﻿namespace SimpleApp.WebApi.DTO
 {
     public class RegisterDto
     {

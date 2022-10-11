@@ -1,10 +1,9 @@
-﻿using FluentValidation;
+﻿using System;
+using System.Collections.Generic;
+using FluentValidation;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SimpleApp.Core.Logics
 {
@@ -13,13 +12,16 @@ namespace SimpleApp.Core.Logics
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
         private readonly IValidator<Category> _validator;
-       public CategoryLogic(ICategoryRepository categoryRepository, IProductRepository productRepository,IValidator<Category> validator)
+
+        public CategoryLogic(
+            ICategoryRepository categoryRepository,
+            IProductRepository productRepository,
+            IValidator<Category> validator)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
             _validator = validator;
         }
-        
 
         public Result<IEnumerable<Category>> GetAllActive()
         {
@@ -47,7 +49,7 @@ namespace SimpleApp.Core.Logics
             }
 
             var validationResult = _validator.Validate(category);
-            if(validationResult.IsValid == false)
+            if (validationResult.IsValid == false)
             {
                 return Result.Failure<Category>(validationResult.Errors);
             }
@@ -76,7 +78,7 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(category);
         }
 
-        public Result Delete(Category category )
+        public Result Delete(Category category)
         {
             if (category == null)
             {
@@ -86,7 +88,7 @@ namespace SimpleApp.Core.Logics
             _productRepository.DeleteByCategoryId(category.Id);
             _categoryRepository.Delete(category);
             _categoryRepository.SaveChanges();
-            
+
             return Result.Ok();
         }
     }

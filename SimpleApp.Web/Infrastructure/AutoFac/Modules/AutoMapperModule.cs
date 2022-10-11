@@ -1,6 +1,6 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using Autofac;
 using AutoMapper;
-using System.Collections.Generic;
 
 namespace SimpleApp.Web.Infrastructure.AutoFac.Modules
 {

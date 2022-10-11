@@ -1,10 +1,9 @@
-﻿using SimpleApp.Core.Models;
-using SimpleApp.Infrastructure.Repositories;
-using System;
+﻿using System;
+using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.Interfaces.Repositories
 {
-   public interface IProductRepository : IRepository<Product>
+    public interface IProductRepository : IRepository<Product>
    {
         public void DeleteByCategoryId(Guid id);
    }

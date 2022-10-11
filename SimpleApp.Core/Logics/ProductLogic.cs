@@ -1,11 +1,9 @@
-﻿using FluentValidation;
-using SimpleApp.Core.FluentValidation;
+﻿using System;
+using System.Collections.Generic;
+using FluentValidation;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SimpleApp.Core.Logics
 {
@@ -87,5 +85,5 @@ namespace SimpleApp.Core.Logics
 
             return Result.Ok();
         }
-        }
     }
+}

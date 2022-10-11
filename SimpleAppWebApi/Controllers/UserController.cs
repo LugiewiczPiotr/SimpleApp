@@ -9,7 +9,6 @@ using SimpleApp.WebApi.DTO;
 
 namespace SimpleApp.WebApi.Controllers
 {
-
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
@@ -23,9 +22,8 @@ namespace SimpleApp.WebApi.Controllers
             _mapper = mapper;
         }
 
-
         /// <summary>
-        /// Register user
+        /// Register user.
         /// </summary>
         [HttpPost("Register")]
         [AllowAnonymous]
@@ -33,13 +31,14 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(User))]
         public IActionResult Register([FromBody] RegisterDto data)
         {
-            if(data == null)
+            if (data == null)
             {
                 return BadRequest("Email or password is invalid");
             }
+
             var user = _mapper.Map<User>(data);
             var createResult = _userLogic.CreateAccount(user);
-            if(createResult.Success == false)
+            if (createResult.Success == false)
             {
                 createResult.AddErrorToModelState(ModelState);
                 return BadRequest(createResult);
@@ -48,9 +47,8 @@ namespace SimpleApp.WebApi.Controllers
             return StatusCode(201);
         }
 
-
         /// <summary>
-        /// Login
+        /// Login.
         /// </summary>
         [HttpPost("Login")]
         [AllowAnonymous]
@@ -63,9 +61,10 @@ namespace SimpleApp.WebApi.Controllers
             {
                 return BadRequest("Email or password is invalid");
             }
+
             var getTokenResult = _userLogic.Authenticate(data);
-            if(getTokenResult.Success == false)
-            { 
+            if (getTokenResult.Success == false)
+            {
                 return Unauthorized(getTokenResult);
             }
 

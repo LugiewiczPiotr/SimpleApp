@@ -1,12 +1,12 @@
-﻿using FizzWare.NBuilder;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FizzWare.NBuilder;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimpleApp.Core;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.DTO;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
-using Microsoft.AspNetCore.Mvc;
 
 namespace SimpleApp.WebApi.UnitTests.Controllers.Products
 {
@@ -15,17 +15,17 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         [Fact]
         public void Return_BadRequest_When_Products_Is_Not_Valid()
         {
-            //Arrange
+            // Arrange
             var controller = Create();
             var errorMessage = "BadRequest";
             var products = Builder<Product>.CreateListOfSize(1).Build().AsEnumerable();
             ProductLogicMock.Setup(x => x.GetAllActive())
                 .Returns(Result.Failure<IEnumerable<Product>>(errorMessage));
 
-            //Act
+            // Act
             var result = controller.Get();
 
-            //Assert
+            // Assert
             result.Should().BeBadRequest<IEnumerable<Product>>(errorMessage);
             ProductLogicMock.Verify(
                 x => x.GetAllActive(), Times.Once());
@@ -37,7 +37,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         [Fact]
         public void Return_All_Products()
         {
-            //Arrange
+            // Arrange
             var controller = Create();
             var products = Builder<Product>.CreateListOfSize(1).Build().AsEnumerable();
             var productsDto = Builder<ProductDto>.CreateListOfSize(1).Build();
@@ -48,10 +48,10 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Setup(m => m.Map<IList<ProductDto>>(It.IsAny<IEnumerable<Product>>()))
                 .Returns(productsDto);
 
-            //Act
+            // Act
             var result = controller.Get();
 
-            //Assert
+            // Assert
             result.Should().BeOk(productsDto);
             ProductLogicMock.Verify(
                 x => x.GetAllActive(), Times.Once());

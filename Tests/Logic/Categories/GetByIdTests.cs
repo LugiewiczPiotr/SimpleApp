@@ -1,7 +1,7 @@
-﻿using FizzWare.NBuilder;
+﻿using System;
+using FizzWare.NBuilder;
 using Moq;
 using SimpleApp.Core.Models;
-using System;
 using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Categories
@@ -11,40 +11,39 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
         [Fact]
         public void Return_Error_When_Category_Not_Exist()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
             CategoryRepositoryMock
                 .Setup(r => r.GetById(It.IsAny<Guid>())).
                 Returns((Category)null);
             var guid = Guid.NewGuid();
 
-
-            //Act
+            // Act
             var result = logic.GetById(guid);
 
-            //Assert
+            // Assert
             result.Should().BeFailure($"Category with ID {guid} does not exist.");
             CategoryRepositoryMock.Verify(
-                x => x.GetById(guid), Times.Once()); 
+                x => x.GetById(guid), Times.Once());
         }
 
         [Fact]
         public void Return_Category_From_Repository()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
             var category = Builder<Category>.CreateNew().Build();
             CategoryRepositoryMock
                 .Setup(r => r.GetById(It.IsAny<Guid>())).
                 Returns(category);
 
-            //Act
+            // Act
             var result = logic.GetById(category.Id);
 
-            //Assert
+            // Assert
             result.Should().BeSuccess(category);
             CategoryRepositoryMock.Verify(
-                x => x.GetById(category.Id), Times.Once()); 
+                x => x.GetById(category.Id), Times.Once());
         }
     }
 }

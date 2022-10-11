@@ -1,8 +1,8 @@
-﻿using FizzWare.NBuilder;
+﻿using System;
+using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
 using SimpleApp.Core.Models;
-using System;
 using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Products
@@ -12,42 +12,40 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
         [Fact]
         public void Throw_ArgumentNullException_When_Argument_Is_Null()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
 
-            //Act
+            // Act
             Action result = () => logic.Delete(null);
 
-            //Assert
+            // Assert
             result.Should().Throw<ArgumentNullException>();
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.Delete(It.IsAny<Product>()), Times.Never());
 
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Never());
         }
 
         [Fact]
-        public void Return_Succes_When_Product_Is_Deleted()
+        public void Return_Success_When_Product_Is_Deleted()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
             var product = Builder<Product>.CreateNew().Build();
-            ProductRespositoryMock
+            ProductRepositoryMock
                 .Setup(r => r.Delete(product));
 
-            //Act
+            // Act
             var result = logic.Delete(product);
 
-            //Assert
+            // Assert
             result.Success.Should().BeTrue();
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.Delete(product), Times.Once());
 
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Once());
         }
-
-
     }
 }

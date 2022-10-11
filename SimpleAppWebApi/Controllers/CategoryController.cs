@@ -1,13 +1,12 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.DTO;
-using System;
-using System.Collections.Generic;
-
 
 namespace SimpleApp.WebApi.Controllers
 {
@@ -37,12 +36,13 @@ namespace SimpleApp.WebApi.Controllers
             {
                 return BadRequest(result);
             }
+
             var categories = _mapper.Map<IList<CategoryDto>>(result.Value);
             return Ok(Result.Ok(categories));
         }
 
         /// <summary>
-        /// "Get category by id."
+        /// "Get category by id.".
         /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -53,14 +53,17 @@ namespace SimpleApp.WebApi.Controllers
             {
                 return NotFound();
             }
+
             var getResult = _categoryLogic.GetById(id);
             if (getResult.Success == false)
             {
                 return NotFound(getResult);
             }
+
             var category = _mapper.Map<CategoryDto>(getResult.Value);
             return Ok(Result.Ok(category));
         }
+
         /// <summary>
         /// Create category.
         /// </summary>
@@ -76,8 +79,10 @@ namespace SimpleApp.WebApi.Controllers
                 addResult.AddErrorToModelState(ModelState);
                 return BadRequest(addResult);
             }
+
             var categoryResult = _mapper.Map<CategoryDto>(addResult.Value);
-            return CreatedAtAction(nameof(Get),
+            return CreatedAtAction(
+                nameof(Get),
                 new { id = addResult.Value.Id },
                 Result.Ok(categoryResult));
         }
@@ -91,7 +96,6 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<CategoryDto>))]
         public IActionResult Put(Guid id, [FromBody] CategoryDto categoryDto)
         {
-
             var getResult = _categoryLogic.GetById(id);
 
             if (getResult.Success == false)
@@ -109,6 +113,7 @@ namespace SimpleApp.WebApi.Controllers
                 resultUpdate.AddErrorToModelState(ModelState);
                 return BadRequest(resultUpdate);
             }
+
             var categoryResult = _mapper.Map<CategoryDto>(resultUpdate.Value);
             return Ok(Result.Ok(categoryResult));
         }

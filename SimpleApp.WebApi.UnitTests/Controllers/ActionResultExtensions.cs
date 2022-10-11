@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using SimpleApp.Core;
-using System.Linq;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -13,15 +13,14 @@ namespace Microsoft.AspNetCore.Mvc
             return new ActionResultAssertions(actionResult);
         }
 
-
         public class ActionResultAssertions : ReferenceTypeAssertions<IActionResult, ActionResultAssertions>
         {
-            protected override string Identifier => "actionResult";
-
             public ActionResultAssertions(IActionResult actionResult)
             {
                 Subject = actionResult;
             }
+
+            protected override string Identifier => "actionResult";
 
             public ActionResultAssertions BeOk<T>(T value, string because = "", params object[] becauseArgs)
             {
@@ -92,6 +91,7 @@ namespace Microsoft.AspNetCore.Mvc
 
                 return this;
             }
+
             public ActionResultAssertions BeBadRequest<T>(
                 string message,
                 string because = "",
@@ -127,12 +127,12 @@ namespace Microsoft.AspNetCore.Mvc
 
                 return this;
             }
+
             public ActionResultAssertions BeNotFound<T>(
                string message,
                string because = "",
                params object[] becauseArgs)
             {
-
                 var subject = Subject.As<ObjectResult>();
                 var subjectValue = subject.Value.As<Result<T>>();
 
@@ -158,9 +158,6 @@ namespace Microsoft.AspNetCore.Mvc
 
                 return this;
             }
-
         }
     }
-
 }
-

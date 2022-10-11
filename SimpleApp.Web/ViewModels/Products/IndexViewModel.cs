@@ -1,5 +1,4 @@
-﻿using SimpleApp.Web.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace SimpleApp.Web.ViewModels.Products
@@ -16,6 +15,4 @@ namespace SimpleApp.Web.ViewModels.Products
         public string Description { get; set; }
         public decimal Price { get; set; }
     }
-
-
 }
