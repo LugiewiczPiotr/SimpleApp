@@ -3,9 +3,9 @@ using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.FluentValidation
 {
-    public class ProductValidatior : AbstractValidator<Product>
+    public class ProductValidator : AbstractValidator<Product>
     {
-        public ProductValidatior()
+        public ProductValidator()
         {
             RuleFor(x => x.Name).NotEmpty().WithMessage("This field cannot be empty")
                 .MinimumLength(3).WithMessage("Minimum length of {MinLength} char allowed")
