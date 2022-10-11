@@ -85,5 +85,5 @@ namespace SimpleApp.Core.Logics
 
             return Result.Ok();
         }
-        }
     }
+}
