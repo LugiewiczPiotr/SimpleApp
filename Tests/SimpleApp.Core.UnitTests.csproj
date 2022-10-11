@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
+    <CodeAnalysisRuleSet>$(SolutionDir)StyleCop.ruleset</CodeAnalysisRuleSet>
     <IsPackable>false</IsPackable>
 
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,7 +37,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SimpleApp.Core\SimpleApp.Core.csproj" />
-    <ProjectReference Include="..\SimpleApp.Web\SimpleApp.Web.csproj" />
     <ProjectReference Include="..\SimpleAppWebApi\SimpleApp.WebApi.csproj" />
   </ItemGroup>
 

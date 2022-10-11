@@ -1,15 +1,15 @@
-﻿using SimpleApp.Core.Models;
+﻿using System.Linq;
 using SimpleApp.Core.Interfaces.Repositories;
+using SimpleApp.Core.Models;
 using SimpleApp.Infrastructure.Data;
-using System.Linq;
 
 namespace SimpleApp.Infrastructure.Repositories
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        public UserRepository(AppDbContext dataContext) : base(dataContext)
+        public UserRepository(AppDbContext dataContext)
+            : base(dataContext)
         {
-
         }
 
         public bool CheckIfUserExists(string email)
@@ -18,8 +18,8 @@ namespace SimpleApp.Infrastructure.Repositories
         }
 
         public User GetUserByEmail(string email)
-        { 
-            return Context.Users.FirstOrDefault(x => x.Email == email); 
+        {
+            return Context.Users.FirstOrDefault(x => x.Email == email);
         }
     }
 }

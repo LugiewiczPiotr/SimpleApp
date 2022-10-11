@@ -11,8 +11,6 @@ namespace SimpleApp.WebApi.AutoMapperProfiles
             CreateMap<Product, ProductDto>()
                 .ReverseMap()
                 .ForMember(p => p.Id, opt => opt.Ignore());
-
-
         }
     }
 }

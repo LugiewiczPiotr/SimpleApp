@@ -19,14 +19,15 @@ namespace SimpleApp.Core
 
         public class ResultAssertions<T> : ReferenceTypeAssertions<Result<T>, ResultAssertions<T>>
         {
-            protected override string Identifier => "Result";
-
             public ResultAssertions(Result<T> result)
             {
                 Subject = result;
             }
 
-            public ResultAssertions<T> BeSuccess(T value,
+            protected override string Identifier => "Result";
+
+            public ResultAssertions<T> BeSuccess(
+                T value,
                 string because = "",
                 params object[] becauseArgs)
             {
@@ -55,7 +56,8 @@ namespace SimpleApp.Core
                 return this;
             }
 
-            public ResultAssertions<T> BeFailure(string property,
+            public ResultAssertions<T> BeFailure(
+                string property,
                 string message,
                 string because = "",
                 params object[] becauseArgs)
@@ -95,7 +97,8 @@ namespace SimpleApp.Core
                 return this;
             }
 
-            public ResultAssertions<T> BeFailure(string message,
+            public ResultAssertions<T> BeFailure(
+                string message,
                 string because = "",
                 params object[] becauseArgs)
             {
@@ -107,13 +110,15 @@ namespace SimpleApp.Core
 
         public class ResultAssertions : ReferenceTypeAssertions<Result, ResultAssertions>
         {
-            protected override string Identifier => "Result";
             public ResultAssertions(Result result)
             {
                 Subject = result;
             }
 
-            public ResultAssertions BeSuccess(string because = "",
+            protected override string Identifier => "Result";
+
+            public ResultAssertions BeSuccess(
+                string because = "",
                 params object[] becauseArgs)
             {
                 Execute.Assertion
@@ -134,7 +139,8 @@ namespace SimpleApp.Core
                 return this;
             }
 
-            public ResultAssertions BeFailure(string because = "",
+            public ResultAssertions BeFailure(
+                string because = "",
                 params object[] becauseArgs)
             {
                 Execute.Assertion

@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using FizzWare.NBuilder;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimpleApp.Core;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.DTO;
-using System;
 using Xunit;
 
 namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
@@ -14,7 +14,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
         [Fact]
         public void Return_NotFound_When_Category_Not_Exist()
         {
-            //Arrange
+            // Arrange
             var controller = Create();
             var guid = Guid.NewGuid();
             var errorMessage = $"Category with ID {guid} does not exist.";
@@ -22,10 +22,10 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
                 .Returns(Result.Failure<Category>(errorMessage));
 
-            //Act
+            // Act
             var result = controller.Get(guid);
 
-            //Assert
+            // Assert
             result.Should().BeNotFound<Category>(errorMessage);
             CategoryLogicMock.Verify(
                 x => x.GetById(guid), Times.Once());
@@ -37,7 +37,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
         [Fact]
         public void Return_Ok_Category_When_Category_is_Exist()
         {
-            //Arrange
+            // Arrange
             var controller = Create();
             var category = Builder<Category>.CreateNew().Build();
             var categoryDto = Builder<CategoryDto>.CreateNew().Build();
@@ -46,10 +46,10 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             MapperMock.Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))
                 .Returns(categoryDto);
 
-            //Act
+            // Act
             var result = controller.Get(category.Id);
 
-            //Assert
+            // Assert
             result.Should().BeOk(categoryDto);
             CategoryLogicMock.Verify(
                 x => x.GetById(category.Id), Times.Once());

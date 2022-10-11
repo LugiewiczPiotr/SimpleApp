@@ -1,15 +1,14 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using SimpleApp.Core.Interfaces.Logics;
-using SimpleApp.Core.Models;
-using System;
+﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 using System.Text.RegularExpressions;
-using SimpleApp.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using SimpleApp.Core.Interfaces.Logics;
+using SimpleApp.Core.Interfaces.Repositories;
+using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.Logics
 {
@@ -19,8 +18,10 @@ namespace SimpleApp.Core.Logics
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly JwtSettings _jwtSettings;
 
-        public AccountService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher
-            ,IOptionsSnapshot<JwtSettings> optionsSnapshot)
+        public AccountService(
+            IUserRepository userRepository,
+            IPasswordHasher<User> passwordHasher,
+            IOptionsSnapshot<JwtSettings> optionsSnapshot)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
@@ -29,7 +30,6 @@ namespace SimpleApp.Core.Logics
 
         public string GenerateJwt(User user)
         {
-
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -50,7 +50,7 @@ namespace SimpleApp.Core.Logics
 
         public bool ValidatePasswordStrength(string password)
         {
-            var regex = new Regex(("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])"));
+            var regex = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])");
             return regex.IsMatch(password);
         }
 
@@ -61,13 +61,16 @@ namespace SimpleApp.Core.Logics
             {
                 return false;
             }
-            
-            var result = _passwordHasher.VerifyHashedPassword(user, user.Password,
+
+            var result = _passwordHasher.VerifyHashedPassword(
+                user,
+                user.Password,
                 userLoginAndPassword.Password);
-            if(result == PasswordVerificationResult.Failed)
+            if (result == PasswordVerificationResult.Failed)
             {
                 return false;
             }
+
             return true;
         }
     }

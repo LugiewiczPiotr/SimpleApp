@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Example StyleCop rules by Krzysztof Morcinek" Description="maintained at: https://github.com/kmorcinek/dotnet-tools-settings, of course update it to suit your needs" ToolsVersion="17.0">
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+    <Rule Id="IDE0005" Action="Warning" />
+    <Rule Id="IDE0052" Action="None" />
+    <Rule Id="IDE0060" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA0001" Action="None"/>
+	<Rule Id="SA1009" Action="None"/>
+	<Rule Id="SA1101" Action="None"/>
+	<Rule Id="SA1111" Action="None"/>
+	<Rule Id="SA1127" Action="None"/>
+	<Rule Id="SA1200" Action="None"/>
+	<Rule Id="SA1309" Action="None"/>
+	<Rule Id="SA1313" Action="None"/>
+	<Rule Id="SA1402" Action="None" />
+	<Rule Id="SA1412" Action="None"/>
+	<Rule Id="SA1413" Action="None"/>
+	<Rule Id="SA1516" Action="None"/>
+	<Rule Id="SA1600" Action="None"/>
+	<Rule Id="SA1601" Action="None"/>
+	<Rule Id="SA1604" Action="None"/>
+	<Rule Id="SA1609" Action="Warning"/>
+	<Rule Id="SA1611" Action="None"/>
+	<Rule Id="SA1615" Action="None"/>
+	<Rule Id="SA1633" Action="None"/>
+	<Rule Id="SA1401" Action="None"/>
+  </Rules>
+</RuleSet>

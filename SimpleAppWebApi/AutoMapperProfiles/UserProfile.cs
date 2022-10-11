@@ -1,6 +1,6 @@
-﻿using SimpleApp.Core.Models;
+﻿using AutoMapper;
+using SimpleApp.Core.Models;
 using SimpleApp.WebApi.DTO;
-using AutoMapper;
 
 namespace SimpleApp.WebApi.AutoMapperProfiles
 {

@@ -1,7 +1,7 @@
-﻿using FizzWare.NBuilder;
+﻿using System;
+using FizzWare.NBuilder;
 using Moq;
 using SimpleApp.Core.Models;
-using System;
 using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Products
@@ -11,40 +11,39 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
         [Fact]
         public void Return_Error_When_Product_Not_Exist()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
-            ProductRespositoryMock
+            ProductRepositoryMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
                 .Returns((Product)null);
             var guid = Guid.NewGuid();
 
-            //Act
+            // Act
             var result = logic.GetById(guid);
 
-            //Assert
+            // Assert
             result.Should().BeFailure($"Product with ID {guid} does not exist.");
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.GetById(guid), Times.Once());
         }
 
         [Fact]
         public void Return_Product_From_Repository()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
             var product = Builder<Product>.CreateNew().Build();
-            ProductRespositoryMock
+            ProductRepositoryMock
                 .Setup(r => r.GetById(It.IsAny<Guid>())).
                 Returns(product);
 
-            //Act
+            // Act
             var result = logic.GetById(product.Id);
 
-            //Assert
+            // Assert
             result.Should().BeSuccess(product);
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.GetById(product.Id), Times.Once());
-
         }
     }
 }

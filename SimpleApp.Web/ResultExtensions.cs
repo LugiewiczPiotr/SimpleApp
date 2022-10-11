@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SimpleApp.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SimpleApp.Web
 {
@@ -15,6 +11,7 @@ namespace SimpleApp.Web
             {
                 return;
             }
+
             foreach (var error in result.Errors)
             {
                 modelState.AddModelError(error.PropertyName, error.Message);

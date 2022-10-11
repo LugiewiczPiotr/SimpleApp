@@ -10,18 +10,18 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
         [Fact]
         public void Return_All_Products_From_Repository()
         {
-            //Arrange
+            // Arrange
             var logic = Create();
             var products = Builder<Product>.CreateListOfSize(10).Build();
-            ProductRespositoryMock
+            ProductRepositoryMock
                 .Setup(r => r.GetAllActive()).Returns(products);
 
-            //Act
+            // Act
             var result = logic.GetAllActive();
 
-            //Assert
+            // Assert
             result.Should().BeSuccess(products);
-            ProductRespositoryMock.Verify(
+            ProductRepositoryMock.Verify(
                 x => x.GetAllActive(), Times.Once());
         }
     }

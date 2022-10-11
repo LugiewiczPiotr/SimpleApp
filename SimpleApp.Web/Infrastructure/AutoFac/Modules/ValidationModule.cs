@@ -14,5 +14,4 @@ namespace SimpleApp.Web.Infrastructure.AutoFac.Modules
                 .AsImplementedInterfaces();
         }
     }
-    
 }
