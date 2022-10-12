@@ -1,6 +1,5 @@
-﻿using SimpleApp.Core.Models;
-using SimpleApp.Infrastructure.Repositories;
-using System;
+﻿using System;
+using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.Interfaces.Repositories
 {

@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models;
 using SimpleApp.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SimpleApp.Infrastructure.Repositories
 {

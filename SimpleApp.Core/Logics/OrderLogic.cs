@@ -1,16 +1,14 @@
-﻿using FluentValidation;
+﻿using System;
+using System.Collections.Generic;
+using FluentValidation;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SimpleApp.Core.Logics
 {
     public class OrderLogic : IOrderLogic
     {
-        public enum status { Pending, Processing, InTransit, Delivered }
         private readonly IOrderRepository _orderRepository;
         private readonly IValidator<Order> _validator;
         public OrderLogic(IOrderRepository orderRepository, IValidator<Order> validator)
@@ -39,14 +37,13 @@ namespace SimpleApp.Core.Logics
 
         public Result<Order> Add(Order order, Guid Id)
         {
-            if(order == null)
+            if (order == null)
             {
                 throw new ArgumentNullException(nameof(order));
             }
-       
+
             order.UserId = Id;
             order.Date = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
-            order.Status = status.Pending.ToString();
 
             var validationResult = _validator.Validate(order);
             if (validationResult.IsValid == false)
@@ -68,7 +65,7 @@ namespace SimpleApp.Core.Logics
             }
 
             var validationResult = _validator.Validate(order);
-            if(validationResult.IsValid == false)
+            if (validationResult.IsValid == false)
             {
                 return Result.Failure<Order>(validationResult.Errors);
             }

@@ -2,7 +2,7 @@
 
 namespace SimpleApp.Core.Models
 {
-    public class OrderItem 
+    public class OrderItem
     {
         public Guid Id { get; set; }
         public decimal Quantity { get; set; }

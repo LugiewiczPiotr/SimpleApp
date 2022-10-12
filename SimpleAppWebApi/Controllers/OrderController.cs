@@ -1,12 +1,12 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.DTO;
-using System;
-using System.Collections.Generic;
 
 namespace SimpleApp.WebApi.Controllers
 {
@@ -78,7 +78,8 @@ namespace SimpleApp.WebApi.Controllers
             }
 
             var resultDto = _mapper.Map<OrderDto>(addResult.Value);
-            return CreatedAtAction(nameof(Get),
+            return CreatedAtAction(
+                nameof(Get),
                 new { id = addResult.Value.Id },
                 Result.Ok(resultDto));
         }

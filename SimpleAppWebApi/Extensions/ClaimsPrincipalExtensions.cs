@@ -11,6 +11,5 @@ namespace SimpleApp.WebApi
 
             return new Guid(user.Value);
         }
-
     }
 }

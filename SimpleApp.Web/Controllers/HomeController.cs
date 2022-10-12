@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SimpleApp.Web.Models;
+using SimpleApp.Web.ViewModels;
 
 namespace SimpleApp.Web.Controllers
 {
