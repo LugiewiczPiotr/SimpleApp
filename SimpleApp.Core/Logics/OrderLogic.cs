@@ -43,7 +43,8 @@ namespace SimpleApp.Core.Logics
             }
 
             order.UserId = Id;
-            order.Date = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
+            order.PlacedOn = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+            order.Status = StatusOrder.Placed;
 
             var validationResult = _validator.Validate(order);
             if (validationResult.IsValid == false)
@@ -68,6 +69,16 @@ namespace SimpleApp.Core.Logics
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<Order>(validationResult.Errors);
+            }
+
+            if (order.Status == StatusOrder.Finalized)
+            {
+                order.FinalizedOn = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+            }
+
+            if (order.Status == StatusOrder.Cancelled)
+            {
+                order.CancelledOn = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
             }
 
             _orderRepository.SaveChanges();
