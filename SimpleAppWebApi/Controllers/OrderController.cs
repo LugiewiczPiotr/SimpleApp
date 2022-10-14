@@ -91,7 +91,7 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<OrderDto>))]
-        public IActionResult Put(Guid id, [FromBody] OrderDto orderDto)
+        public IActionResult Put(Guid id, [FromBody] ManageOrderDto manageOrderDto)
         {
 
             var getResult = _orderLogic.GetById(id);
@@ -102,7 +102,7 @@ namespace SimpleApp.WebApi.Controllers
                 return NotFound(getResult);
             }
 
-            _mapper.Map(orderDto, getResult.Value);
+            _mapper.Map(manageOrderDto, getResult.Value);
 
             var updateResult = _orderLogic.Update(getResult.Value);
 
