@@ -443,6 +443,9 @@
 						},
 						{
 							"name": "Get all category.",
+							"protocolProfileBehavior": {
+								"followAuthorizationHeader": true
+							},
 							"request": {
 								"method": "GET",
 								"header": [
@@ -537,7 +540,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"name\": \"<string>\"\n}",
+									"raw": "{\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"name\": \"<tring>\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -670,7 +673,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "f71b7791-2869-45cd-8ee9-0597f274c000",
+													"value": "a85068b9-2508-45d7-9b6a-6c18b744cca5",
 													"description": "(Required) "
 												}
 											]
@@ -683,10 +686,12 @@
 												"method": "GET",
 												"header": [],
 												"url": {
-													"raw": "{{baseUrl}}/api/Order/:id",
+													"raw": "https://localhost:500/api/Order/:id",
+													"protocol": "https",
 													"host": [
-														"{{baseUrl}}"
+														"localhost"
 													],
+													"port": "500",
 													"path": [
 														"api",
 														"Order",
@@ -767,7 +772,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"id\": \"f71b7791-2869-45cd-8ee9-0597f274c000\",\n  \"userId\": \"c2eb5d69-63de-47b2-87ee-69626b0961f7\",\n  \"date\": \"09.26.2022 08:15 PM\",\n  \"status\": \"Pending\",\n  \"orderItems\": [\n         {\n             \"productId\": \"390ac345-3881-4a59-8b05-4a111286a77e\",\n             \"quantity\": 4739424\n         },\n         {\n              \"productId\": \"2f62e33a-b9c9-4480-8336-7ab5ddd5e9c7\",\n               \"quantity\": 2000000\n         }\n        \n  ]\n}",
+											"raw": "{\n  \"orderItems\": [\n    {\n      \"productId\": \"25659892-a62e-41d7-8f90-0079d66a987e\",\n      \"quantity\": 200 \n      \n    },\n    {\n        \"productId\":  \"8aec18cd-7773-4046-ba7f-ee0897cc3f07\",\n        \"quantity\": 100 \n    }\n  ],\n  \"status\": \"cancelled\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -787,7 +792,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "f71b7791-2869-45cd-8ee9-0597f274c000"
+													"value": "54d6fb43-c984-440c-b85e-78558ef3ba3d"
 												}
 											]
 										}
@@ -808,10 +813,12 @@
 													}
 												},
 												"url": {
-													"raw": "{{baseUrl}}/api/Order/:id",
+													"raw": "https://localhost:500/api/Order/:id",
+													"protocol": "https",
 													"host": [
-														"{{baseUrl}}"
+														"localhost"
 													],
+													"port": "500",
 													"path": [
 														"api",
 														"Order",
@@ -927,6 +934,52 @@
 											],
 											"cookie": [],
 											"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
+										},
+										{
+											"name": "Update order.",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": \"f71b7791-2869-45cd-8ee9-0597f274c000\",\n  \"userId\": \"c2eb5d69-63de-47b2-87ee-69626b0961f7\",\n  \"date\": \"09.26.2022 08:15 PM\",\n  \"status\": \"Pending\",\n  \"orderItems\": [\n         {\n             \"productId\": \"390ac345-3881-4a59-8b05-4a111286a77e\",\n             \"quantity\": 4739424\n         },\n         {\n              \"productId\": \"2f62e33a-b9c9-4480-8336-7ab5ddd5e9c7\",\n               \"quantity\": 2000000\n         }\n        \n  ]\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Order/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Order",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "f71b7791-2869-45cd-8ee9-0597f274c000"
+														}
+													]
+												}
+											},
+											"_postman_previewlanguage": null,
+											"header": null,
+											"cookie": [],
+											"body": null
 										}
 									]
 								},
@@ -970,10 +1023,12 @@
 												"method": "DELETE",
 												"header": [],
 												"url": {
-													"raw": "{{baseUrl}}/api/Order/:id",
+													"raw": "https://localhost:500/api/Order/:id",
+													"protocol": "https",
 													"host": [
-														"{{baseUrl}}"
+														"localhost"
 													],
+													"port": "500",
 													"path": [
 														"api",
 														"Order",
@@ -1104,10 +1159,12 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/api/Order",
+											"raw": "https://localhost:500/api/Order",
+											"protocol": "https",
 											"host": [
-												"{{baseUrl}}"
+												"localhost"
 											],
+											"port": "500",
 											"path": [
 												"api",
 												"Order"
@@ -1172,7 +1229,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"orderItems\": [\n    {\n      \"productId\": \"390ac345-3881-4a59-8b05-4a111286a77e\",\n      \"quantity\": 4739424\n    },\n    {\n        \"productId\": \"2f62e33a-b9c9-4480-8336-7ab5ddd5e9c7\",\n        \"quantity\": 20\n    }\n    \n  ]\n}",
+									"raw": "{\n  \"orderItems\": [\n    {\n      \"productId\": \"78fc1667-a4ae-4df6-8716-fbfca9caba8b\",\n      \"quantity\": 473\n    },\n    {\n        \"productId\": \"8aec18cd-7773-4046-ba7f-ee0897cc3f07\",\n        \"quantity\": 2\n    }\n    \n  ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1206,10 +1263,12 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/Order",
+											"raw": "https://localhost:500/api/Order",
+											"protocol": "https",
 											"host": [
-												"{{baseUrl}}"
+												"localhost"
 											],
+											"port": "500",
 											"path": [
 												"api",
 												"Order"
@@ -1797,7 +1856,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"price\": \"<double>\",\n  \"category\": \"<uuid>\"\n}",
+									"raw": "{\n  \"id\": \"14a07801-2d03-4741-a422-6b0be1ff811f\",\n  \"name\": \"string\",\n  \"description\": \"stringus\",\n  \"price\": 12,\n  \"categoryId\": \"5f3d687c-0f74-4f1f-8be6-bf7e86cfc487\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1913,7 +1972,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+									"raw": "{\n  \"email\": \"nulla@w.pl\",\n \"password\": \"consFFectetfds2GG@@ur\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2013,6 +2072,30 @@
 						},
 						{
 							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
 							"request": {
 								"method": "POST",
 								"header": [
@@ -2027,7 +2110,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n \"email\": \"nulla@w.pl\",\n \"password\": \"consFFectetfds2GG@@ur\"\n}",
+									"raw": "{\n    \"email\": \"nulla@w.pl\",\n    \"password\": \"consFFectetfds2GG@@ur\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2080,6 +2163,12 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json"
+										},
+										{
+											"key": "Token",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
 										}
 									],
 									"cookie": [],
@@ -2171,7 +2260,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMmViNWQ2OS02M2RlLTQ3YjItODdlZS02OTYyNmIwOTYxZjciLCJuYmYiOjE2NjQyMTMyMTAsImV4cCI6MTY2NDIyNzYxMCwiaWF0IjoxNjY0MjEzMjEwfQ.JYKoci-NPcuiua8OmIDAy2ZioQdHU7ii8ku_xUIqocg",
+						"value": "{{authToken}}",
 						"type": "string"
 					}
 				]
@@ -2199,14 +2288,7 @@
 		}
 	],
 	"auth": {
-		"type": "bearer",
-		"bearer": [
-			{
-				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMmViNWQ2OS02M2RlLTQ3YjItODdlZS02OTYyNmIwOTYxZjciLCJuYmYiOjE2NjQxMTQ4NjcsImV4cCI6MTY2NDExODQ2NywiaWF0IjoxNjY0MTE0ODY3fQ.ERzjjU5JpYLVp8EbL-_p74Ud0pi-YIltaz-b9DErdnM",
-				"type": "string"
-			}
-		]
+		"type": "bearer"
 	},
 	"event": [
 		{
