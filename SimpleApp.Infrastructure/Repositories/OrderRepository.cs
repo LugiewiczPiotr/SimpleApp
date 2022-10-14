@@ -10,7 +10,8 @@ namespace SimpleApp.Infrastructure.Repositories
 {
     public class OrderRepository : Repository<Order>, IOrderRepository
     {
-        public OrderRepository(AppDbContext dataContext) : base(dataContext)
+        public OrderRepository(AppDbContext dataContext)
+            : base(dataContext)
         {
         }
 
@@ -32,7 +33,6 @@ namespace SimpleApp.Infrastructure.Repositories
             return Context.Orders.Include(i => i.User)
                 .Include(x => x.OrderItems)
                 .FirstOrDefault(x => x.Id == id && x.IsActive);
-               
         }
     }
 }

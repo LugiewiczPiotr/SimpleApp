@@ -36,12 +36,13 @@ namespace SimpleApp.WebApi.Controllers
             {
                 return BadRequest(result);
             }
+
             var orders = _mapper.Map<IList<OrderDto>>(result.Value);
             return Ok(Result.Ok(orders));
         }
 
         /// <summary>
-        /// "Get order by id."
+        /// "Get order by id.".
         /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -52,14 +53,17 @@ namespace SimpleApp.WebApi.Controllers
             {
                 return NotFound();
             }
+
             var getResult = _orderLogic.GetById(id);
             if (getResult.Success == false)
             {
                 return NotFound(getResult);
             }
+
             var order = _mapper.Map<OrderDto>(getResult.Value);
             return Ok(Result.Ok(order));
         }
+
         /// <summary>
         /// Create order.
         /// </summary>
@@ -93,7 +97,6 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<OrderDto>))]
         public IActionResult Put(Guid id, [FromBody] ManageOrderDto manageOrderDto)
         {
-
             var getResult = _orderLogic.GetById(id);
 
             if (getResult.Success == false)
