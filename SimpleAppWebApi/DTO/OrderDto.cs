@@ -7,7 +7,9 @@ namespace SimpleApp.WebApi.DTO
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public string Date { get; set; }
+        public DateTime PlacedOn { get; set; }
+        public DateTime? FinalizedOn { get; set; }
+        public DateTime? CancelledOn { get; set; }
         public string Status { get; set; }
         public ICollection<OrderItemDto> OrderItems { get; set; }
     }
