@@ -2,8 +2,8 @@
 {
     public enum StatusOrder
     {
-        PlaceOn,
-        FinalizedOn,
-        CancelledOn
+        Placed,
+        Finalized,
+        Cancelled
     }
 }
