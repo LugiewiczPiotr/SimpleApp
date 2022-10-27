@@ -25,7 +25,7 @@ namespace SimpleApp.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get all orders.
+        /// Get all user orders.
         /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
