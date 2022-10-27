@@ -73,6 +73,7 @@ namespace SimpleApp.WebApi.Controllers
         public IActionResult Post([FromBody] CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
+
             var addResult = _categoryLogic.Add(category);
             if (addResult.Success == false)
             {
@@ -97,7 +98,6 @@ namespace SimpleApp.WebApi.Controllers
         public IActionResult Put(Guid id, [FromBody] CategoryDto categoryDto)
         {
             var getResult = _categoryLogic.GetById(id);
-
             if (getResult.Success == false)
             {
                 getResult.AddErrorToModelState(ModelState);
@@ -107,7 +107,6 @@ namespace SimpleApp.WebApi.Controllers
             _mapper.Map(categoryDto, getResult.Value);
 
             var resultUpdate = _categoryLogic.Update(getResult.Value);
-
             if (resultUpdate.Success == false)
             {
                 resultUpdate.AddErrorToModelState(ModelState);
@@ -128,14 +127,12 @@ namespace SimpleApp.WebApi.Controllers
         public IActionResult Delete(Guid id)
         {
             var getResult = _categoryLogic.GetById(id);
-
             if (getResult.Success == false)
             {
                 return NotFound(getResult);
             }
 
             var deleteResult = _categoryLogic.Delete(getResult.Value);
-
             if (deleteResult.Success == false)
             {
                 return BadRequest(deleteResult);

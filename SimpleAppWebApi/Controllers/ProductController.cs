@@ -73,6 +73,7 @@ namespace SimpleApp.WebApi.Controllers
         public IActionResult Post([FromBody] ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
+
             var addResult = _productLogic.Add(product);
             if (addResult.Success == false)
             {
@@ -97,7 +98,6 @@ namespace SimpleApp.WebApi.Controllers
         public IActionResult Put(Guid id, [FromBody] ProductDto productDto)
         {
             var getResult = _productLogic.GetById(id);
-
             if (getResult.Success == false)
             {
                 getResult.AddErrorToModelState(ModelState);
@@ -107,7 +107,6 @@ namespace SimpleApp.WebApi.Controllers
             _mapper.Map(productDto, getResult.Value);
 
             var resultUpdate = _productLogic.Update(getResult.Value);
-
             if (resultUpdate.Success == false)
             {
                 resultUpdate.AddErrorToModelState(ModelState);
@@ -129,14 +128,12 @@ namespace SimpleApp.WebApi.Controllers
         public IActionResult Delete(Guid id)
         {
             var getResult = _productLogic.GetById(id);
-
             if (getResult.Success == false)
             {
                 return NotFound(getResult);
             }
 
             var deleteResult = _productLogic.Delete(getResult.Value);
-
             if (deleteResult.Success == false)
             {
                 return BadRequest(deleteResult);

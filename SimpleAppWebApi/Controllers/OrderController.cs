@@ -99,7 +99,6 @@ namespace SimpleApp.WebApi.Controllers
         public IActionResult Put(Guid id, [FromBody] ManageOrderDto manageOrderDto)
         {
             var getResult = _orderLogic.GetById(id);
-
             if (getResult.Success == false)
             {
                 getResult.AddErrorToModelState(ModelState);
@@ -109,7 +108,6 @@ namespace SimpleApp.WebApi.Controllers
             _mapper.Map(manageOrderDto, getResult.Value);
 
             var updateResult = _orderLogic.Update(getResult.Value);
-
             if (updateResult.Success == false)
             {
                 updateResult.AddErrorToModelState(ModelState);
@@ -130,14 +128,12 @@ namespace SimpleApp.WebApi.Controllers
         public IActionResult Delete(Guid id)
         {
             var getResult = _orderLogic.GetById(id);
-
             if (getResult.Success == false)
             {
                 return NotFound(getResult);
             }
 
             var deleteResult = _orderLogic.Delete(getResult.Value);
-
             if (deleteResult.Success == false)
             {
                 return BadRequest(deleteResult);
