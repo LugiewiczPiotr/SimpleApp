@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Claims;
 
-namespace SimpleApp.WebApi
+namespace SimpleApp.WebApi.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {

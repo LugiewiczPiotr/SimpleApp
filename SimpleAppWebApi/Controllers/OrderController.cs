@@ -7,6 +7,7 @@ using SimpleApp.Core;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Models;
 using SimpleApp.WebApi.DTO;
+using SimpleApp.WebApi.Extensions;
 
 namespace SimpleApp.WebApi.Controllers
 {
