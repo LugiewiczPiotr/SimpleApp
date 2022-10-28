@@ -11,7 +11,7 @@ namespace SimpleApp.Infrastructure.Data.EntityConfigurations
             builder.Property(c => c.ProductId)
                 .IsRequired();
 
-            builder.Property(c => c.Quantity)
+            builder.Property(c => c.Quantity).HasColumnType("decimal(8,3)")
                 .IsRequired();
         }
     }
