@@ -1,6 +1,6 @@
 ﻿namespace SimpleApp.Core.Models
 {
-    public enum StatusOrder
+    public enum OrderStatus
     {
         Placed,
         Finalized,
