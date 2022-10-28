@@ -17,7 +17,8 @@ namespace SimpleApp.Infrastructure.Repositories
 
         public override IEnumerable<Order> GetAllActive()
         {
-           return Context.Orders.Include(x => x.OrderItems)
+           return Context.Orders
+                .Include(x => x.OrderItems)
                 .Include(x => x.User)
                 .Where(e => e.IsActive)
                 .ToList();
@@ -25,12 +26,14 @@ namespace SimpleApp.Infrastructure.Repositories
 
         public bool CheckIfProductExist(Guid Id)
         {
-           return Context.Products.Where(p => p.Id == Id).Any();
+           return Context.Products
+                .Where(p => p.Id == Id).Any();
         }
 
         public override Order GetById(Guid id)
         {
-            return Context.Orders.Include(i => i.User)
+            return Context.Orders
+                .Include(i => i.User)
                 .Include(x => x.OrderItems)
                 .FirstOrDefault(x => x.Id == id && x.IsActive);
         }
