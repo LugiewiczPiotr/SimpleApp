@@ -8,6 +8,16 @@
   <ItemGroup>
     <Compile Remove="Migrations\20221013174035_AddOrderStatus.cs" />
     <Compile Remove="Migrations\20221013174035_AddOrderStatus.Designer.cs" />
+    <Compile Remove="Migrations\20221028182408_AddCompositeKey.cs" />
+    <Compile Remove="Migrations\20221028182408_AddCompositeKey.Designer.cs" />
+    <Compile Remove="Migrations\20221028183001_AddCompositeKey.cs" />
+    <Compile Remove="Migrations\20221028183001_AddCompositeKey.Designer.cs" />
+    <Compile Remove="Migrations\20221028184444_UpdateCompositeKey.cs" />
+    <Compile Remove="Migrations\20221028184444_UpdateCompositeKey.Designer.cs" />
+    <Compile Remove="Migrations\20221028184633_ChangeCompositeKey.cs" />
+    <Compile Remove="Migrations\20221028184633_ChangeCompositeKey.Designer.cs" />
+    <Compile Remove="Migrations\20221029153629_ChangePrimaryKey.cs" />
+    <Compile Remove="Migrations\20221029153629_ChangePrimaryKey.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
