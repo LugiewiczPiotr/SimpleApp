@@ -11,7 +11,7 @@ namespace SimpleApp.Infrastructure.Data.EntityConfigurations
         {
             builder
                .Property(x => x.Status)
-               .HasConversion(new EnumToStringConverter<StatusOrder>());
+               .HasConversion(new EnumToStringConverter<OrderStatus>());
         }
     }
 }
