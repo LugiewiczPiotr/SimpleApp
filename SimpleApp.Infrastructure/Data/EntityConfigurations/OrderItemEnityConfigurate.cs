@@ -13,6 +13,8 @@ namespace SimpleApp.Infrastructure.Data.EntityConfigurations
 
             builder.Property(c => c.Quantity).HasColumnType("decimal(8,3)")
                 .IsRequired();
+
+            builder.HasKey(c => new { c.OrderId, c.ProductId });
         }
     }
 }
