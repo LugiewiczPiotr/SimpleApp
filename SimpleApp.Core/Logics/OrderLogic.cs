@@ -44,7 +44,7 @@ namespace SimpleApp.Core.Logics
 
             order.UserId = Id;
             order.PlacedOn = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
-            order.Status = StatusOrder.Placed;
+            order.Status = OrderStatus.Placed;
 
             var validationResult = _validator.Validate(order);
             if (validationResult.IsValid == false)
@@ -71,12 +71,12 @@ namespace SimpleApp.Core.Logics
                 return Result.Failure<Order>(validationResult.Errors);
             }
 
-            if (order.Status == StatusOrder.Finalized)
+            if (order.Status == OrderStatus.Finalized)
             {
                 order.FinalizedOn = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
             }
 
-            if (order.Status == StatusOrder.Cancelled)
+            if (order.Status == OrderStatus.Cancelled)
             {
                 order.CancelledOn = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
             }

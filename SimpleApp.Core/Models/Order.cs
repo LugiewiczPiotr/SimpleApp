@@ -10,7 +10,7 @@ namespace SimpleApp.Core.Models
        public DateTime PlacedOn { get; set; }
        public DateTime? FinalizedOn { get; set; }
        public DateTime? CancelledOn { get; set; }
-       public StatusOrder Status { get; set; }
+       public OrderStatus Status { get; set; }
        public virtual ICollection<OrderItem> OrderItems { get; set; }
     }
 }
