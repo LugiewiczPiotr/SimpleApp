@@ -6,7 +6,7 @@ namespace SimpleApp.Core.Interfaces.Logics
 {
     public interface IOrderLogic : ILogic
     {
-        Result<IEnumerable<Order>> GetAllActive();
+        Result<IEnumerable<Order>> GetAllActiveOrders(Guid userId);
 
         Result<Order> GetById(Guid id);
 
