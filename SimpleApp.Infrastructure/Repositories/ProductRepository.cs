@@ -37,5 +37,11 @@ namespace SimpleApp.Infrastructure.Repositories
                 .Where(e => e.CategoryId == id)
                 .Update(x => new Product() { IsActive = false });
         }
+
+        public bool CheckIfProductExist(Guid Id)
+        {
+            return Context.Products
+                 .Where(p => p.Id == Id).Any();
+        }
     }
 }

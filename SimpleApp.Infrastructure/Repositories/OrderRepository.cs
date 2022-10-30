@@ -24,12 +24,6 @@ namespace SimpleApp.Infrastructure.Repositories
                 .ToList();
         }
 
-        public bool CheckIfProductExist(Guid Id)
-        {
-           return Context.Products
-                .Where(p => p.Id == Id).Any();
-        }
-
         public override Order GetById(Guid id)
         {
             return Context.Orders
