@@ -10,7 +10,7 @@ namespace SimpleApp.Core.Interfaces.Logics
 
         Result<Order> GetById(Guid id);
 
-        Result<Order> Add(Order order, Guid Id);
+        Result<Order> Add(Order order, Guid userId);
 
         Result<Order> Update(Order order);
 
