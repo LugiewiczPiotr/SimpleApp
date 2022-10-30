@@ -1,6 +1,7 @@
 ﻿using FizzWare.NBuilder;
 using Moq;
 using SimpleApp.Core.Models;
+using System.Linq;
 using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Orders
@@ -13,17 +14,20 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             // Arrange
             var logic = Create();
             var orders = Builder<Order>.CreateListOfSize(10).Build();
+
+            var orderId = orders.Cast<Order>()
+                .FirstOrDefault(x => x.UserId != null);
             OrderRepositoryMock
-                .Setup(r => r.GetAllActive())
+                .Setup(r => r.GetAllActiveOrders(orderId.UserId))
                 .Returns(orders);
 
             // Act
-            var result = logic.GetAllActive();
+            var result = logic.GetAllActiveOrders(orderId.UserId);
 
             // Assert
             result.Should().BeSuccess(orders);
             OrderRepositoryMock.Verify(
-                x => x.GetAllActive(), Times.Once());
+                x => x.GetAllActiveOrders(orderId.UserId), Times.Once());
         }
     }
 }
