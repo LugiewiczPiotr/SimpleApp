@@ -63,20 +63,19 @@ namespace SimpleApp.Core.Logics
                 throw new ArgumentNullException(nameof(order));
             }
 
+            if (order.Status == OrderStatus.Finalized)
+            {
+                order.FinalizedOn = DateTime.UtcNow;
+            }
+            else
+            {
+                order.FinalizedOn = DateTime.UtcNow;
+            }
+
             var validationResult = _validator.Validate(order);
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<Order>(validationResult.Errors);
-            }
-
-            if (order.Status == OrderStatus.Finalized)
-            {
-                order.FinalizedOn = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
-            }
-
-            if (order.Status == OrderStatus.Cancelled)
-            {
-                order.CancelledOn = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
             }
 
             _orderRepository.SaveChanges();
