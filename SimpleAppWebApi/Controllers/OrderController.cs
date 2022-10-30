@@ -32,7 +32,7 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<OrderDto>))]
         public IActionResult Get()
         {
-            var result = _orderLogic.GetAllActive();
+            var result = _orderLogic.GetAllActiveOrders(User.GetUserId());
             if (result.Success == false)
             {
                 return BadRequest(result);
