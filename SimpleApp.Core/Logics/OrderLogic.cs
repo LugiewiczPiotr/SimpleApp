@@ -43,8 +43,6 @@ namespace SimpleApp.Core.Logics
             }
 
             order.UserId = Id;
-            order.PlacedOn = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
-            order.Status = OrderStatus.Placed;
 
             var validationResult = _validator.Validate(order);
             if (validationResult.IsValid == false)
