@@ -15,12 +15,11 @@ namespace SimpleApp.Infrastructure.Repositories
         {
         }
 
-        public override IEnumerable<Order> GetAllActive()
+        public IEnumerable<Order> GetAllActiveOrders(Guid userId)
         {
            return Context.Orders
                 .Include(x => x.OrderItems)
-                .Include(x => x.User)
-                .Where(e => e.IsActive)
+                .Where(u => u.UserId == userId && u.IsActive)
                 .ToList();
         }
 
