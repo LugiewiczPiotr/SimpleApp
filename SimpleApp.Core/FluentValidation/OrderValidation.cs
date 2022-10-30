@@ -6,13 +6,13 @@ namespace SimpleApp.Core.FluentValidation
 {
     public class OrderValidation : AbstractValidator<Order>
     {
-        public OrderValidation(IOrderRepository orderRepository)
+        public OrderValidation(IProductRepository productRepository)
         {
             RuleForEach(x => x.OrderItems).ChildRules(orders =>
             {
                 orders.RuleFor(x => x.ProductId).NotEmpty()
                 .WithMessage("This field cannot be empty")
-                .Must(product => orderRepository.CheckIfProductExist(product))
+                .Must(product => productRepository.CheckIfProductExist(product))
                 .WithMessage("Product dont exist");
 
                 orders.RuleFor(x => x.Quantity).NotEmpty()
