@@ -17,9 +17,9 @@ namespace SimpleApp.Core.Logics
             _validator = validator;
         }
 
-        public Result<IEnumerable<Order>> GetAllActive()
+        public Result<IEnumerable<Order>> GetAllActiveOrders(Guid userId)
         {
-            var orders = _orderRepository.GetAllActive();
+            var orders = _orderRepository.GetAllActiveOrders(userId);
 
             return Result.Ok(orders);
         }
