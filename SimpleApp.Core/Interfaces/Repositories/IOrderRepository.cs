@@ -5,6 +5,5 @@ namespace SimpleApp.Core.Interfaces.Repositories
 {
     public interface IOrderRepository : IRepository<Order>
     {
-        public bool CheckIfProductExist(Guid Id);
     }
 }
