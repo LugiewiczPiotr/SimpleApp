@@ -11,6 +11,7 @@ namespace SimpleApp.Core.Logics
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IValidator<Order> _validator;
+
         public OrderLogic(IOrderRepository orderRepository, IValidator<Order> validator)
         {
             _orderRepository = orderRepository;
@@ -67,9 +68,9 @@ namespace SimpleApp.Core.Logics
             {
                 order.FinalizedOn = DateTime.UtcNow;
             }
-            else
+            else if (order.Status == OrderStatus.Cancelled)
             {
-                order.FinalizedOn = DateTime.UtcNow;
+                order.CancelledOn = DateTime.UtcNow;
             }
 
             var validationResult = _validator.Validate(order);
