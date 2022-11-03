@@ -7,7 +7,7 @@ namespace SimpleApp.Core.Models
     {
         public Order()
         {
-            PlacedOn = DateTime.Now;
+            PlacedOn = DateTime.UtcNow;
             Status = OrderStatus.Placed;
         }
 
