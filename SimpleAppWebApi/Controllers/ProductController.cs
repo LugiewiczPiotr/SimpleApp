@@ -17,6 +17,7 @@ namespace SimpleApp.WebApi.Controllers
     {
         private readonly IProductLogic _productLogic;
         private readonly IMapper _mapper;
+
         public ProductController(IProductLogic productLogic, IMapper mapper)
         {
             _productLogic = productLogic;

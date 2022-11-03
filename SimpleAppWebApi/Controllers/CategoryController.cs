@@ -17,6 +17,7 @@ namespace SimpleApp.WebApi.Controllers
     {
         private readonly ICategoryLogic _categoryLogic;
         private readonly IMapper _mapper;
+
         public CategoryController(ICategoryLogic categoryLogic, IMapper mapper)
         {
             _categoryLogic = categoryLogic;

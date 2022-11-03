@@ -18,6 +18,7 @@ namespace SimpleApp.WebApi.Controllers
     {
         private readonly IOrderLogic _orderLogic;
         private readonly IMapper _mapper;
+
         public OrderController(IOrderLogic orderLogic, IMapper mapper)
         {
             _orderLogic = orderLogic;

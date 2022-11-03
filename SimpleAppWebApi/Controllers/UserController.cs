@@ -16,6 +16,7 @@ namespace SimpleApp.WebApi.Controllers
     {
         private readonly IUserLogic _userLogic;
         private readonly IMapper _mapper;
+
         public UserController(IUserLogic userLogic, IMapper mapper)
         {
             _userLogic = userLogic;
