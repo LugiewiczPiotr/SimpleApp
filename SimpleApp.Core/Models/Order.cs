@@ -7,15 +7,15 @@ namespace SimpleApp.Core.Models
     {
         public Order()
         {
-            PlacedOn = DateTime.UtcNow;
+            PlacedAt = DateTime.UtcNow;
             Status = OrderStatus.Placed;
         }
 
         public Guid UserId { get; set; }
         public virtual User User { get; set; }
-        public DateTime PlacedOn { get; set; }
-        public DateTime? FinalizedOn { get; set; }
-        public DateTime? CancelledOn { get; set; }
+        public DateTime PlacedAt { get; set; }
+        public DateTime? FinalizedAt { get; set; }
+        public DateTime? CancelledAt { get; set; }
         public OrderStatus Status { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
     }
