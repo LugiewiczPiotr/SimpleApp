@@ -36,14 +36,14 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(order);
         }
 
-        public Result<Order> Add(Order order, Guid Id)
+        public Result<Order> Add(Order order, Guid userId)
         {
             if (order == null)
             {
                 throw new ArgumentNullException(nameof(order));
             }
 
-            order.UserId = Id;
+            order.UserId = userId;
 
             var validationResult = _validator.Validate(order);
             if (validationResult.IsValid == false)
@@ -66,11 +66,19 @@ namespace SimpleApp.Core.Logics
 
             if (order.Status == OrderStatus.Finalized)
             {
-                order.FinalizedOn = DateTime.UtcNow;
+                order.FinalizedAt = DateTime.UtcNow;
+                order.CancelledAt = null;
             }
             else if (order.Status == OrderStatus.Cancelled)
             {
-                order.CancelledOn = DateTime.UtcNow;
+                order.CancelledAt = DateTime.UtcNow;
+                order.FinalizedAt = null;
+            }
+            else
+            {
+                order.PlacedAt = DateTime.UtcNow;
+                order.CancelledAt = null;
+                order.FinalizedAt = null;
             }
 
             var validationResult = _validator.Validate(order);
