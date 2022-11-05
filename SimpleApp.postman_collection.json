@@ -38,7 +38,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "<uuid>",
+													"value": "",
 													"description": "(Required) "
 												}
 											]
@@ -135,7 +135,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\"\n}",
+											"raw": "{\n  \"name\": \"<string>\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -155,7 +155,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "<uuid>",
+													"value": "",
 													"description": "(Required) "
 												}
 											]
@@ -540,7 +540,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"name\": \"<tring>\"\n}",
+									"raw": "{\n  \"name\": \"<tring>\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -770,7 +770,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"orderItems\": [\n    {\n      \"productId\": \"75f75091-916e-42d6-bf7e-27f841f49d47\",\n      \"quantity\": 200 \n      \n    }\n  ],\n  \"status\": \"Cancelled\"\n}",
+											"raw": "{\n  \"orderItems\": [\n    {\n      \"productId\": \"75f75091-916e-42d6-bf7e-27f841f49d47\",\n      \"quantity\": 200 \n      \n    }\n  ],\n  \"status\": \"Placed\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1444,7 +1444,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"price\": \"<double>\",\n  \"category\": \"<uuid>\"\n}",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"price\": 2,\n  \"categoryId\": \"<uuid>\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1846,7 +1846,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id\": \"14a07801-2d03-4741-a422-6b0be1ff811f\",\n  \"name\": \"string\",\n  \"description\": \"stringus\",\n  \"price\": 12,\n  \"categoryId\": \"af5a0981-644d-4856-812c-425cd7f047e7\"\n}",
+									"raw": "{\n  \"name\": \"string\",\n  \"description\": \"stringus\",\n  \"price\": 12,\n  \"categoryId\": \"af5a0981-644d-4856-812c-425cd7f047e7\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
