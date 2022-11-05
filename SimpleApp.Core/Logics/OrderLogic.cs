@@ -74,7 +74,7 @@ namespace SimpleApp.Core.Logics
                 order.CancelledAt = DateTime.UtcNow;
                 order.FinalizedAt = null;
             }
-            else
+            else if (order.Status == OrderStatus.Placed)
             {
                 order.PlacedAt = DateTime.UtcNow;
                 order.CancelledAt = null;
