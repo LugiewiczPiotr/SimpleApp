@@ -2,7 +2,7 @@
 
 namespace SimpleApp.Core.Models
 {
-    public class BaseModel
+    public abstract class BaseModel
     {
         public BaseModel()
         {

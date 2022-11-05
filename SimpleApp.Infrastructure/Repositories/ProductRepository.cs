@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SimpleApp.Core.Interfaces.Repositories;
@@ -15,16 +16,32 @@ namespace SimpleApp.Infrastructure.Repositories
         {
         }
 
+        public override IEnumerable<Product> GetAllActive()
+        {
+            return Context.Products
+                .Include(c => c.Category)
+                 .Where(p => p.IsActive)
+                 .ToList();
+        }
+
         public override Product GetById(Guid id)
         {
-           return Context.Products.Include(c => c.Category).
-                FirstOrDefault(e => e.Id == id && e.IsActive);
+           return Context.Products
+                .Include(c => c.Category)
+                .FirstOrDefault(e => e.Id == id && e.IsActive);
         }
 
         public void DeleteByCategoryId(Guid id)
         {
-            Context.Products.Where(e => e.CategoryId == id).
-                Update(x => new Product() { IsActive = false });
+            Context.Products
+                .Where(e => e.CategoryId == id)
+                .Update(x => new Product() { IsActive = false });
+        }
+
+        public bool CheckIfProductExist(Guid Id)
+        {
+            return Context.Products
+                 .Where(p => p.Id == Id).Any();
         }
     }
 }

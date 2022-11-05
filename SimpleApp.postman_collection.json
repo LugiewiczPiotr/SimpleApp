@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2da335f9-c619-4c1a-ad6f-d8613dee3082",
+		"_postman_id": "b9ba5daf-5fea-468e-96d1-27b715055e78",
 		"name": "SimpleApp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17013135"
@@ -38,7 +38,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+													"value": "",
 													"description": "(Required) "
 												}
 											]
@@ -63,7 +63,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -99,7 +99,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -135,7 +135,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\"\n}",
+											"raw": "{\n  \"name\": \"<string>\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -155,7 +155,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+													"value": "",
 													"description": "(Required) "
 												}
 											]
@@ -189,7 +189,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -234,7 +234,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -279,7 +279,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -322,7 +322,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+													"value": "<uuid>",
 													"description": "(Required) "
 												}
 											]
@@ -347,7 +347,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -383,7 +383,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -419,7 +419,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -443,6 +443,9 @@
 						},
 						{
 							"name": "Get all category.",
+							"protocolProfileBehavior": {
+								"followAuthorizationHeader": true
+							},
 							"request": {
 								"method": "GET",
 								"header": [
@@ -517,7 +520,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"culpa_b\": {}\n}"
+									"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
 								}
 							]
 						},
@@ -537,7 +540,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\"\n}",
+									"raw": "{\n  \"name\": \"<tring>\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -635,6 +638,687 @@
 					]
 				},
 				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "\"Get order by id.\"",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Order/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Order",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "4e805757-513b-4a1e-ac60-34d23c5b013b",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Order/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Order",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<uuid>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": \"<boolean>\",\n  \"errors\": [\n    {\n      \"propertyName\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"propertyName\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ],\n  \"value\": {\n    \"id\": \"<uuid>\",\n    \"userId\": \"<uuid>\",\n    \"date\": \"<string>\",\n    \"productId\": \"<uuid>\",\n    \"quantity\": \"<integer>\",\n    \"status\": \"<string>\"\n  }\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Order/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Order",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<uuid>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Update order.",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"orderItems\": [\n    {\n      \"productId\": \"75f75091-916e-42d6-bf7e-27f841f49d47\",\n      \"quantity\": 200 \n      \n    }\n  ],\n  \"status\": \"Placed\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Order/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Order",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "4e805757-513b-4a1e-ac60-34d23c5b013b"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": \"<uuid>\",\n  \"userId\": \"<uuid>\",\n  \"date\": \"<string>\",\n  \"productId\": \"<uuid>\",\n  \"quantity\": \"<integer>\",\n  \"status\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Order/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Order",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<uuid>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": \"<boolean>\",\n  \"errors\": [\n    {\n      \"propertyName\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"propertyName\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ],\n  \"value\": {\n    \"id\": \"<uuid>\",\n    \"userId\": \"<uuid>\",\n    \"date\": \"<string>\",\n    \"productId\": \"<uuid>\",\n    \"quantity\": \"<integer>\",\n    \"status\": \"<string>\"\n  }\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": \"<uuid>\",\n  \"userId\": \"<uuid>\",\n  \"date\": \"<string>\",\n  \"productId\": \"<uuid>\",\n  \"quantity\": \"<integer>\",\n  \"status\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Order/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Order",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<uuid>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": \"<uuid>\",\n  \"userId\": \"<uuid>\",\n  \"date\": \"<string>\",\n  \"productId\": \"<uuid>\",\n  \"quantity\": \"<integer>\",\n  \"status\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Order/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Order",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<uuid>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
+										},
+										{
+											"name": "Update order.",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": \"f71b7791-2869-45cd-8ee9-0597f274c000\",\n  \"userId\": \"c2eb5d69-63de-47b2-87ee-69626b0961f7\",\n  \"date\": \"09.26.2022 08:15 PM\",\n  \"status\": \"Pending\",\n  \"orderItems\": [\n         {\n             \"productId\": \"390ac345-3881-4a59-8b05-4a111286a77e\",\n             \"quantity\": 4739424\n         },\n         {\n              \"productId\": \"2f62e33a-b9c9-4480-8336-7ab5ddd5e9c7\",\n               \"quantity\": 2000000\n         }\n        \n  ]\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Order/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Order",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "f71b7791-2869-45cd-8ee9-0597f274c000"
+														}
+													]
+												}
+											},
+											"_postman_previewlanguage": null,
+											"header": null,
+											"cookie": [],
+											"body": null
+										}
+									]
+								},
+								{
+									"name": "Delete  order.",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Order/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Order",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "0f08b4ae-729e-479b-961a-e3610172d464",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Order/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Order",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<uuid>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Order/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Order",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<uuid>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Order/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Order",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<uuid>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get all orders.",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Order",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Order"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": \"<boolean>\",\n  \"errors\": [\n    {\n      \"propertyName\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"propertyName\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ],\n  \"value\": {\n    \"id\": \"<uuid>\",\n    \"userId\": \"<uuid>\",\n    \"date\": \"<string>\",\n    \"productId\": \"<uuid>\",\n    \"quantity\": \"<integer>\",\n    \"status\": \"<string>\"\n  }\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Order",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Order"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Create order.",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"orderItems\": [\n    {\n      \"productId\": \"75f75091-916e-42d6-bf7e-27f841f49d47\",\n      \"quantity\": 472\n    }\n    \n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Order",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"orderProduct\": [\n    {\n      \"product\": \"<uuid>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"product\": \"<uuid>\",\n      \"quantity\": \"<integer>\"\n    }\n  ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Order",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Order"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": \"<boolean>\",\n  \"errors\": [\n    {\n      \"propertyName\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"propertyName\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ],\n  \"value\": {\n    \"id\": \"<uuid>\",\n    \"userId\": \"<uuid>\",\n    \"date\": \"<string>\",\n    \"productId\": \"<uuid>\",\n    \"quantity\": \"<integer>\",\n    \"status\": \"<string>\"\n  }\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"orderProduct\": [\n    {\n      \"product\": \"<uuid>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"product\": \"<uuid>\",\n      \"quantity\": \"<integer>\"\n    }\n  ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Order",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Order"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
 					"name": "Product",
 					"item": [
 						{
@@ -663,7 +1347,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+													"value": "<uuid>",
 													"description": "(Required) "
 												}
 											]
@@ -688,7 +1372,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -724,7 +1408,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -760,7 +1444,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"price\": \"<double>\",\n  \"category\": \"<uuid>\"\n}",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"price\": 2,\n  \"categoryId\": \"<uuid>\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -780,7 +1464,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+													"value": "<uuid>",
 													"description": "(Required) "
 												}
 											]
@@ -814,7 +1498,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -859,7 +1543,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -904,7 +1588,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -947,7 +1631,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+													"value": "<uuid>",
 													"description": "(Required) "
 												}
 											]
@@ -972,7 +1656,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -1008,7 +1692,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -1044,7 +1728,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "urn:uuid:31d9a6b0-bea7-ecea-d7e0-d562e2fd0211",
+															"value": "<uuid>",
 															"description": "(Required) "
 														}
 													]
@@ -1162,7 +1846,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"price\": \"<double>\",\n  \"category\": \"<uuid>\"\n}",
+									"raw": "{\n  \"name\": \"string\",\n  \"description\": \"stringus\",\n  \"price\": 12,\n  \"categoryId\": \"af5a0981-644d-4856-812c-425cd7f047e7\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1278,7 +1962,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id\": \"urn:uuid:9fe7b3b9-d0b5-5f19-6be0-8f72168d0fa3\",\n  \"email\": \"Duis aute occaecat\",\n  \"password\": \"do\"\n}",
+									"raw": "{\n  \"email\": \"nulla@w.pl\",\n \"password\": \"consFFectetfds2GG@@ur\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1305,7 +1989,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"id\": \"<uuid>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+											"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1343,7 +2027,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"id\": \"<uuid>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+											"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1378,6 +2062,31 @@
 						},
 						{
 							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody)\r",
+											"postman.setEnvironmentVariable(\"authToken\", jsonData.value.value)\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
 							"request": {
 								"method": "POST",
 								"header": [
@@ -1392,7 +2101,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"ut tempor labore minim\",\n  \"password\": \"sint velit eiusmod aute culpa\"\n}",
+									"raw": "{\n    \"email\": \"nulla@w.pl\",\n    \"password\": \"consFFectetfds2GG@@ur\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1438,13 +2147,19 @@
 											]
 										}
 									},
-									"status": "Created",
-									"code": 201,
+									"status": "OK",
+									"code": 200,
 									"_postman_previewlanguage": "json",
 									"header": [
 										{
 											"key": "Content-Type",
 											"value": "application/json"
+										},
+										{
+											"key": "Token",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
 										}
 									],
 									"cookie": [],
@@ -1487,12 +2202,103 @@
 									],
 									"cookie": [],
 									"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/User/Login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"User",
+												"Login"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
 								}
 							]
 						}
 					]
 				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{authToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
