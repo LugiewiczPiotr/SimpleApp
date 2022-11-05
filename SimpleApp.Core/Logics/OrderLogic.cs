@@ -64,21 +64,23 @@ namespace SimpleApp.Core.Logics
                 throw new ArgumentNullException(nameof(order));
             }
 
-            if (order.Status == OrderStatus.Finalized)
+            switch (order.Status)
             {
-                order.FinalizedAt = DateTime.UtcNow;
-                order.CancelledAt = null;
-            }
-            else if (order.Status == OrderStatus.Cancelled)
-            {
-                order.CancelledAt = DateTime.UtcNow;
-                order.FinalizedAt = null;
-            }
-            else if (order.Status == OrderStatus.Placed)
-            {
-                order.PlacedAt = DateTime.UtcNow;
-                order.CancelledAt = null;
-                order.FinalizedAt = null;
+                case OrderStatus.Finalized:
+                    order.FinalizedAt = DateTime.UtcNow;
+                    order.CancelledAt = null;
+                    break;
+
+                case OrderStatus.Cancelled:
+                    order.CancelledAt = DateTime.UtcNow;
+                    order.FinalizedAt = null;
+                    break;
+
+                case OrderStatus.Placed:
+                    order.PlacedAt = DateTime.UtcNow;
+                    order.CancelledAt = null;
+                    order.FinalizedAt = null;
+                    break;
             }
 
             var validationResult = _validator.Validate(order);
