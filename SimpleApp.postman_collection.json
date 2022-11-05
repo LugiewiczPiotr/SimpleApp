@@ -673,7 +673,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "a85068b9-2508-45d7-9b6a-6c18b744cca5",
+													"value": "4e805757-513b-4a1e-ac60-34d23c5b013b",
 													"description": "(Required) "
 												}
 											]
@@ -686,12 +686,10 @@
 												"method": "GET",
 												"header": [],
 												"url": {
-													"raw": "https://localhost:500/api/Order/:id",
-													"protocol": "https",
+													"raw": "{{baseUrl}}/api/Order/:id",
 													"host": [
-														"localhost"
+														"{{baseUrl}}"
 													],
-													"port": "500",
 													"path": [
 														"api",
 														"Order",
@@ -772,7 +770,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"orderItems\": [\n    {\n      \"productId\": \"25659892-a62e-41d7-8f90-0079d66a987e\",\n      \"quantity\": 200 \n      \n    },\n    {\n        \"productId\":  \"8aec18cd-7773-4046-ba7f-ee0897cc3f07\",\n        \"quantity\": 100 \n    }\n  ],\n  \"status\": \"cancelled\"\n}",
+											"raw": "{\n  \"orderItems\": [\n    {\n      \"productId\": \"75f75091-916e-42d6-bf7e-27f841f49d47\",\n      \"quantity\": 200 \n      \n    }\n  ],\n  \"status\": \"Cancelled\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -792,7 +790,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "54d6fb43-c984-440c-b85e-78558ef3ba3d"
+													"value": "4e805757-513b-4a1e-ac60-34d23c5b013b"
 												}
 											]
 										}
@@ -813,12 +811,10 @@
 													}
 												},
 												"url": {
-													"raw": "https://localhost:500/api/Order/:id",
-													"protocol": "https",
+													"raw": "{{baseUrl}}/api/Order/:id",
 													"host": [
-														"localhost"
+														"{{baseUrl}}"
 													],
-													"port": "500",
 													"path": [
 														"api",
 														"Order",
@@ -1023,12 +1019,10 @@
 												"method": "DELETE",
 												"header": [],
 												"url": {
-													"raw": "https://localhost:500/api/Order/:id",
-													"protocol": "https",
+													"raw": "{{baseUrl}}/api/Order/:id",
 													"host": [
-														"localhost"
+														"{{baseUrl}}"
 													],
-													"port": "500",
 													"path": [
 														"api",
 														"Order",
@@ -1159,12 +1153,10 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "https://localhost:500/api/Order",
-											"protocol": "https",
+											"raw": "{{baseUrl}}/api/Order",
 											"host": [
-												"localhost"
+												"{{baseUrl}}"
 											],
-											"port": "500",
 											"path": [
 												"api",
 												"Order"
@@ -1229,7 +1221,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"orderItems\": [\n    {\n      \"productId\": \"78fc1667-a4ae-4df6-8716-fbfca9caba8b\",\n      \"quantity\": 473\n    },\n    {\n        \"productId\": \"8aec18cd-7773-4046-ba7f-ee0897cc3f07\",\n        \"quantity\": 2\n    }\n    \n  ]\n}",
+									"raw": "{\n  \"orderItems\": [\n    {\n      \"productId\": \"75f75091-916e-42d6-bf7e-27f841f49d47\",\n      \"quantity\": 472\n    }\n    \n  ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1263,12 +1255,10 @@
 											}
 										},
 										"url": {
-											"raw": "https://localhost:500/api/Order",
-											"protocol": "https",
+											"raw": "{{baseUrl}}/api/Order",
 											"host": [
-												"localhost"
+												"{{baseUrl}}"
 											],
-											"port": "500",
 											"path": [
 												"api",
 												"Order"
@@ -1856,7 +1846,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id\": \"14a07801-2d03-4741-a422-6b0be1ff811f\",\n  \"name\": \"string\",\n  \"description\": \"stringus\",\n  \"price\": 12,\n  \"categoryId\": \"5f3d687c-0f74-4f1f-8be6-bf7e86cfc487\"\n}",
+									"raw": "{\n  \"id\": \"14a07801-2d03-4741-a422-6b0be1ff811f\",\n  \"name\": \"string\",\n  \"description\": \"stringus\",\n  \"price\": 12,\n  \"categoryId\": \"af5a0981-644d-4856-812c-425cd7f047e7\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2077,7 +2067,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"\r",
+											"var jsonData = JSON.parse(responseBody)\r",
+											"postman.setEnvironmentVariable(\"authToken\", jsonData.value.value)\r",
 											""
 										],
 										"type": "text/javascript"
