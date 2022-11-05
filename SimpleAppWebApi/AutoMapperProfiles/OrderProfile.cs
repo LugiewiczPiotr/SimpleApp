@@ -10,7 +10,9 @@ namespace SimpleApp.WebApi.AutoMapperProfiles
         {
             CreateMap<Order, OrderDto>();
 
-            CreateMap<ManageOrderDto, Order>();
+            CreateMap<ManageOrderDto, Order>()
+                .ForMember(dest => dest.OrderItems, opt => opt.PreCondition(source => source.OrderItems != null))
+                .ForMember(dest => dest.Status, opt => opt.PreCondition(source => source.Status != null));
         }
     }
 }
