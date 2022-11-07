@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Microsoft.AspNetCore.Identity;
 using SimpleApp.Core.Interfaces.Logics;
-using SimpleApp.Core.Logics;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entity;
+using SimpleApp.Core.Services;
 
 namespace SimpleApp.WebApi.Infrastructure.AutoFac.Modules
 {

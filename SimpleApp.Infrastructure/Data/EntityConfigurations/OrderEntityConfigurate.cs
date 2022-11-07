@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Enums;
+using SimpleApp.Core.Models.Entity;
 
 namespace SimpleApp.Infrastructure.Data.EntityConfigurations
 {

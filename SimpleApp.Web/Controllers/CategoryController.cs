@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core.Interfaces.Logics;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entity;
 using SimpleApp.Web.ViewModels.Categories;
 
 namespace SimpleApp.Web.Controllers

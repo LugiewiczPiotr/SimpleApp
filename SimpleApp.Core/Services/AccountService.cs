@@ -8,9 +8,10 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entity;
+using SimpleApp.Core.Models.Settings;
 
-namespace SimpleApp.Core.Logics
+namespace SimpleApp.Core.Services
 {
     public class AccountService : IAccountService
     {

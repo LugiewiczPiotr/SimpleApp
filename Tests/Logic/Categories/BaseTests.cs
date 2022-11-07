@@ -2,7 +2,7 @@
 using Moq;
 using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Logics;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entity;
 
 namespace SimpleApp.Core.UnitTests.Logic.Categories
 {

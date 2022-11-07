@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entity;
 
 namespace SimpleApp.Core.FluentValidation
 {

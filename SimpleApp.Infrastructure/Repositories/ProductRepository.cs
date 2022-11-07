@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SimpleApp.Core.Interfaces.Repositories;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entity;
 using SimpleApp.Infrastructure.Data;
 using Z.EntityFramework.Plus;
 

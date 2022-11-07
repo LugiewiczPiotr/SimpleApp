@@ -1,4 +1,4 @@
-﻿namespace SimpleApp.Core.Models
+﻿namespace SimpleApp.Core.Enums
 {
     public enum OrderStatus
     {

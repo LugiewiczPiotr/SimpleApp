@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Settings;
 using SimpleApp.Infrastructure.Data;
 
 namespace SimpleApp.WebApi

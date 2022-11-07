@@ -2,7 +2,7 @@
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entity;
 using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Categories

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entity;
 using SimpleApp.Web.ViewModels.Products;
 
 namespace SimpleApp.Web.AutoMapperProfiles

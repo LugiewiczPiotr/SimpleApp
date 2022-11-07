@@ -1,6 +1,6 @@
 ﻿using FizzWare.NBuilder;
 using Moq;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entity;
 using System.Linq;
 using Xunit;
 
