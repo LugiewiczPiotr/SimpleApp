@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Models.Entity;
-using SimpleApp.Core.Services;
+using SimpleApp.Infrastructure.Services;
 
 namespace SimpleApp.WebApi.Infrastructure.AutoFac.Modules
 {

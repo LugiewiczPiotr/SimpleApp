@@ -11,7 +11,7 @@ using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models.Entity;
 using SimpleApp.Core.Models.Settings;
 
-namespace SimpleApp.Core.Services
+namespace SimpleApp.Infrastructure.Services
 {
     public class AccountService : IAccountService
     {
