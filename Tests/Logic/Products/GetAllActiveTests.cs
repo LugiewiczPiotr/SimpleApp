@@ -1,6 +1,6 @@
 ﻿using FizzWare.NBuilder;
 using Moq;
-using SimpleApp.Core.Models.Entity;
+using SimpleApp.Core.Models.Entities;
 using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Products

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SimpleApp.Core.Interfaces.Repositories;
-using SimpleApp.Core.Models.Entity;
+using SimpleApp.Core.Models.Entities;
 using SimpleApp.Infrastructure.Data;
 
 namespace SimpleApp.Infrastructure.Repositories

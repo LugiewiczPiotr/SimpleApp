@@ -3,7 +3,7 @@ using FizzWare.NBuilder;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimpleApp.Core;
-using SimpleApp.Core.Models.Entity;
+using SimpleApp.Core.Models.Entities;
 using SimpleApp.WebApi.DTO;
 using Xunit;
 

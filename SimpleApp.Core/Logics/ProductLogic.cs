@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FluentValidation;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
-using SimpleApp.Core.Models.Entity;
+using SimpleApp.Core.Models.Entities;
 
 namespace SimpleApp.Core.Logics
 {

@@ -1,5 +1,5 @@
 ﻿using System;
-using SimpleApp.Core.Models.Entity;
+using SimpleApp.Core.Models.Entities;
 
 namespace SimpleApp.Core.Interfaces.Repositories
 {

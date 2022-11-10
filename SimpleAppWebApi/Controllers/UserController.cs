@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core;
 using SimpleApp.Core.Interfaces.Logics;
-using SimpleApp.Core.Models.Entity;
+using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entities;
 using SimpleApp.WebApi.DTO;
 
 namespace SimpleApp.WebApi.Controllers
