@@ -1,4 +1,4 @@
-﻿namespace SimpleApp.Core.Models
+﻿namespace SimpleApp.Core.Models.Entities
 {
     public class User : BaseModel
     {

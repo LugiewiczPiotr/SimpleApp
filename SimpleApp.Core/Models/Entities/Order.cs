@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using SimpleApp.Core.Enums;
 
-namespace SimpleApp.Core.Models
+namespace SimpleApp.Core.Models.Entities
 {
     public class Order : BaseModel
     {

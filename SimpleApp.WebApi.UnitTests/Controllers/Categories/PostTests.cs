@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimpleApp.Core;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entities;
 using SimpleApp.WebApi.Controllers;
 using SimpleApp.WebApi.DTO;
 using Xunit;

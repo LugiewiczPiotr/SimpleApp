@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SimpleApp.Core.Models
+namespace SimpleApp.Core.Models.Entities
 {
     public class Category : BaseModel
     {

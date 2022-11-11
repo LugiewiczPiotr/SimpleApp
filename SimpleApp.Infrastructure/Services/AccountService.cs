@@ -6,11 +6,13 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
+using SimpleApp.Core.Interfaces.Services;
 using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entities;
+using SimpleApp.Core.Models.Settings;
 
-namespace SimpleApp.Core.Logics
+namespace SimpleApp.Infrastructure.Services
 {
     public class AccountService : IAccountService
     {

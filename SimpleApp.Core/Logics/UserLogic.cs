@@ -3,7 +3,9 @@ using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
+using SimpleApp.Core.Interfaces.Services;
 using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entities;
 
 namespace SimpleApp.Core.Logics
 {

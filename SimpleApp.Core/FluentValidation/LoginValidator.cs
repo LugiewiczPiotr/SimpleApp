@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
+using SimpleApp.Core.Interfaces.Services;
 using SimpleApp.Core.Models;
 
 namespace SimpleApp.Core.FluentValidation

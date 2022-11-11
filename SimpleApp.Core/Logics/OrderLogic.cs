@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentValidation;
+using SimpleApp.Core.Enums;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entities;
 
 namespace SimpleApp.Core.Logics
 {

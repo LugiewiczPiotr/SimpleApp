@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entities;
 
 namespace SimpleApp.Infrastructure.Data
 {

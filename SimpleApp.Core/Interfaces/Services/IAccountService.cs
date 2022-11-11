@@ -1,6 +1,7 @@
 ﻿using SimpleApp.Core.Models;
+using SimpleApp.Core.Models.Entities;
 
-namespace SimpleApp.Core.Interfaces.Logics
+namespace SimpleApp.Core.Interfaces.Services
 {
     public interface IAccountService
     {
