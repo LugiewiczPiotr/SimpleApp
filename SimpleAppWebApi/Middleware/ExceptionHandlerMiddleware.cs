@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace SimpleApp.WebApi.Middleware
 {
     public class ExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger _logger;
+        private readonly ILogger<ExceptionHandlerMiddleware> _logger;
 
-        public ExceptionHandlerMiddleware(RequestDelegate next, ILogger logger)
+        public ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
         {
             _next = next;
             _logger = logger;
@@ -24,7 +25,10 @@ namespace SimpleApp.WebApi.Middleware
             }
             catch (Exception error)
             {
-                _logger.Error(error, "An unhandled exception has occurred");
+                context.Response.StatusCode = 500;
+                var result = JsonSerializer.Serialize(error);
+                _logger.LogError(error, "An unhandled exception has occurred");
+                await context.Response.WriteAsync(result);
             }
         }
     }
