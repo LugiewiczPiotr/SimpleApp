@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
-namespace SimpleApp.WebApi.Middleware
+namespace SimpleApp.WebApi.Infrastructure.Middleware
 {
     public class ExceptionHandlerMiddleware
     {
@@ -26,8 +26,9 @@ namespace SimpleApp.WebApi.Middleware
             catch (Exception error)
             {
                 context.Response.StatusCode = 500;
-                var result = JsonSerializer.Serialize(error);
+                var result = JsonConvert.SerializeObject(error);
                 _logger.LogError(error, "An unhandled exception has occurred");
+                context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync(result);
             }
         }
