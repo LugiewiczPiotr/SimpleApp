@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using SimpleApp.Core.Models.Settings;
 using SimpleApp.Infrastructure.Data;
 using SimpleApp.WebApi.Infrastructure.Middleware;
@@ -72,6 +73,8 @@ namespace SimpleApp.WebApi
             }
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
 

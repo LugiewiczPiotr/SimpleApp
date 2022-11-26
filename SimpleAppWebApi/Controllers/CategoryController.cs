@@ -39,7 +39,7 @@ namespace SimpleApp.WebApi.Controllers
             }
 
             var categories = _mapper.Map<IList<CategoryDto>>(result.Value);
-            return Ok(Result.Ok(categories));
+            throw new Exception();
         }
 
         /// <summary>
