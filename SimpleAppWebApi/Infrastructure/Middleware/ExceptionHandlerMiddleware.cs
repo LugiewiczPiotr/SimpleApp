@@ -23,11 +23,11 @@ namespace SimpleApp.WebApi.Infrastructure.Middleware
             {
                 await _next(context);
             }
-            catch (Exception error)
+            catch (Exception exception)
             {
                 context.Response.StatusCode = 500;
-                var result = JsonConvert.SerializeObject(error);
-                _logger.LogError(error, "An unhandled exception has occurred");
+                var result = JsonConvert.SerializeObject(exception);
+                _logger.LogError(exception, "An unhandled exception has occurred");
                 context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync(result);
             }
