@@ -1,6 +1,7 @@
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace SimpleApp.WebApi
 {
@@ -17,6 +18,7 @@ namespace SimpleApp.WebApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }).UseSerilog((hostingContext, loggerConfiguration) =>
+                loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
     }
 }
