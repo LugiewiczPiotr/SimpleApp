@@ -38,10 +38,7 @@ namespace SimpleApp.Core.Logics
 
         public Result<Product> Add(Product product)
         {
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            ArgumentNullException.ThrowIfNull(nameof(product));
 
             var validationResult = _validator.Validate(product);
             if (validationResult.IsValid == false)
@@ -57,10 +54,7 @@ namespace SimpleApp.Core.Logics
 
         public Result<Product> Update(Product product)
         {
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            ArgumentNullException.ThrowIfNull(nameof(product));
 
             var validationResult = _validator.Validate(product);
             if (validationResult.IsValid == false)
@@ -75,10 +69,7 @@ namespace SimpleApp.Core.Logics
 
         public Result Delete(Product product)
         {
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            ArgumentNullException.ThrowIfNull(nameof(product));
 
             _productRepository.Delete(product);
             _productRepository.SaveChanges();
