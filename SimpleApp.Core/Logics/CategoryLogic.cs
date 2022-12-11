@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentValidation;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
@@ -23,16 +24,16 @@ namespace SimpleApp.Core.Logics
             _validator = validator;
         }
 
-        public Result<IEnumerable<Category>> GetAllActive()
+        public async Task<Result<IEnumerable<Category>>> GetAllActive()
         {
-            var categories = _categoryRepository.GetAllActive();
+            var categories = await _categoryRepository.GetAllActive();
 
             return Result.Ok(categories);
         }
 
-        public Result<Category> GetById(Guid id)
+        public async Task<Result<Category>> GetById(Guid id)
         {
-            var category = _categoryRepository.GetById(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null)
             {
                 return Result.Failure<Category>($"Category with ID {id} does not exist.");
@@ -41,39 +42,39 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(category);
         }
 
-        public Result<Category> Add(Category category)
+        public async Task<Result<Category>> Add(Category category)
         {
             if (category == null)
             {
                 throw new ArgumentNullException(nameof(category));
             }
 
-            var validationResult = _validator.Validate(category);
+            var validationResult = await _validator.ValidateAsync(category);
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<Category>(validationResult.Errors);
             }
 
-            _categoryRepository.Add(category);
-            _categoryRepository.SaveChanges();
+            await _categoryRepository.Add(category);
+            await _categoryRepository.SaveChanges();
 
             return Result.Ok(category);
         }
 
-        public Result<Category> Update(Category category)
+        public async Task<Result<Category>> Update(Category category)
         {
             if (category == null)
             {
                 throw new ArgumentNullException(nameof(category));
             }
 
-            var validationResult = _validator.Validate(category);
+            var validationResult = await _validator.ValidateAsync(category);
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<Category>(validationResult.Errors);
             }
 
-            _categoryRepository.SaveChanges();
+            await _categoryRepository.SaveChanges();
 
             return Result.Ok(category);
         }

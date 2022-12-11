@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentValidation;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
@@ -18,16 +19,16 @@ namespace SimpleApp.Core.Logics
             _validator = validator;
         }
 
-        public Result<IEnumerable<Product>> GetAllActive()
+        public async Task<Result<IEnumerable<Product>>> GetAllActive()
         {
-            var products = _productRepository.GetAllActive();
+            var products = await _productRepository.GetAllActive();
 
             return Result.Ok(products);
         }
 
-        public Result<Product> GetById(Guid id)
+        public async Task<Result<Product>> GetById(Guid id)
         {
-            var product = _productRepository.GetById(id);
+            var product = await _productRepository.GetByIdAsync(id);
             if (product == null)
             {
                 return Result.Failure<Product>($"Product with ID {id} does not exist.");
@@ -36,39 +37,39 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(product);
         }
 
-        public Result<Product> Add(Product product)
+        public async Task<Result<Product>> Add(Product product)
         {
             if (product == null)
             {
                 throw new ArgumentNullException(nameof(product));
             }
 
-            var validationResult = _validator.Validate(product);
+            var validationResult = await _validator.ValidateAsync(product);
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<Product>(validationResult.Errors);
             }
 
-            _productRepository.Add(product);
-            _productRepository.SaveChanges();
+            await _productRepository.Add(product);
+            await _productRepository.SaveChanges();
 
             return Result.Ok(product);
         }
 
-        public Result<Product> Update(Product product)
+        public async Task<Result<Product>> Update(Product product)
         {
             if (product == null)
             {
                 throw new ArgumentNullException(nameof(product));
             }
 
-            var validationResult = _validator.Validate(product);
+            var validationResult = await _validator.ValidateAsync(product);
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<Product>(validationResult.Errors);
             }
 
-            _productRepository.SaveChanges();
+            await _productRepository.SaveChanges();
 
             return Result.Ok(product);
         }

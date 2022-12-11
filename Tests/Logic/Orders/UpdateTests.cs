@@ -17,7 +17,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             var logic = Create();
 
             // Act
-            Action result = () => logic.Update(null);
+            Action result = () => logic.UpdateAsync(null);
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
@@ -38,7 +38,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             ValidatorMock.SetValidationFailure(order.Id.ToString(), errorMessage);
 
             // Act
-            var result = logic.Update(order);
+            var result = logic.UpdateAsync(order);
 
             // Assert
             result.Should().BeFailure(property: order.Id.ToString(), message: errorMessage);
@@ -58,7 +58,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             ValidatorMock.SetValidationSuccess();
 
             // Act
-            var result = logic.Update(order);
+            var result = logic.UpdateAsync(order);
 
             // Assert
             result.Should().BeSuccess(order);

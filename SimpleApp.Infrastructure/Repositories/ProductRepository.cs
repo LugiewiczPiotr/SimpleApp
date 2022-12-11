@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models.Entities;
@@ -16,19 +17,19 @@ namespace SimpleApp.Infrastructure.Repositories
         {
         }
 
-        public override IEnumerable<Product> GetAllActive()
+        public override async Task<IEnumerable<Product>> GetAllActive()
         {
-            return Context.Products
+            return await Context.Products
                 .Include(c => c.Category)
                  .Where(p => p.IsActive)
-                 .ToList();
+                 .ToListAsync();
         }
 
-        public override Product GetById(Guid id)
+        public override async Task<Product> GetByIdAsync(Guid id)
         {
-           return Context.Products
+           return await Context.Products
                 .Include(c => c.Category)
-                .FirstOrDefault(e => e.Id == id && e.IsActive);
+                .FirstOrDefaultAsync(e => e.Id == id && e.IsActive);
         }
 
         public void DeleteByCategoryId(Guid id)

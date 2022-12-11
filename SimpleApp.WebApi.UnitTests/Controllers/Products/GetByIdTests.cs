@@ -23,7 +23,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Returns(Result.Failure<Product>(errorMessage));
 
             // Act
-            var result = controller.Get(guid);
+            var result = controller.GetAsync(guid);
 
             // Assert
             result.Should().BeNotFound<Product>(errorMessage);
@@ -47,7 +47,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Returns(productDto);
 
             // Act
-            var result = controller.Get(product.Id);
+            var result = controller.GetAsync(product.Id);
 
             // Assert
             result.Should().BeOk(productDto);

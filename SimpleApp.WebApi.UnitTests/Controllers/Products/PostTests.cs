@@ -25,7 +25,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Returns(Result.Failure<Product>(_product.Name, errorMessage));
 
             // Act
-            var result = controller.Post(_productDto);
+            var result = controller.PostAsync(_productDto);
 
             // Assert
             result.Should().BeBadRequest<Product>(errorMessage);
@@ -46,7 +46,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var controller = Create();
 
             // Act
-            var result = controller.Post(_productDto);
+            var result = controller.PostAsync(_productDto);
 
             // Assert
             result.Should().BeCreatedAtAction(_productDto);

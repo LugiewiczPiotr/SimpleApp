@@ -27,7 +27,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Returns(Result.Failure<Product>(errorMessage));
 
             // Act
-            var result = logic.Put(guid, _productDto);
+            var result = logic.PutAsync(guid, _productDto);
 
             // Assert
             result.Should().BeNotFound<Product>(errorMessage);
@@ -55,7 +55,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Returns(Result.Failure<Product>(_product.Name, errorMessage));
 
             // Act
-            var result = logic.Put(_productDto.Id, _productDto);
+            var result = logic.PutAsync(_productDto.Id, _productDto);
 
             // Assert
             result.Should().BeBadRequest<Product>(errorMessage);
@@ -79,7 +79,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var logic = Create();
 
             // Act
-            var result = logic.Put(_productDto.Id, _productDto);
+            var result = logic.PutAsync(_productDto.Id, _productDto);
 
             // Assert
             result.Should().BeOk(_productDto);

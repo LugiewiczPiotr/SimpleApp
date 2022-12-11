@@ -16,7 +16,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             var logic = Create();
 
             // Act
-            Action result = () => logic.Add(null);
+            Action result = () => logic.AddAsync(null);
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
@@ -40,7 +40,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             ValidatorMock.SetValidationFailure(product.Name, errorMessage);
 
             // Act
-            var result = logic.Add(product);
+            var result = logic.AddAsync(product);
 
             // Assert
             result.Should().BeFailure(property: product.Name, message: errorMessage);
@@ -63,7 +63,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             ValidatorMock.SetValidationSuccess();
 
             // Act
-            var result = logic.Add(product);
+            var result = logic.AddAsync(product);
 
             // Assert
             result.Should().BeSuccess(product);

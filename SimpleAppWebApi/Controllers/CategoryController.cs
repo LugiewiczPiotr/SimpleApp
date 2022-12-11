@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,9 +31,9 @@ namespace SimpleApp.WebApi.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<CategoryDto>))]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var result = _categoryLogic.GetAllActive();
+            var result = await _categoryLogic.GetAllActive();
             if (result.Success == false)
             {
                 return BadRequest(result);
@@ -48,14 +49,14 @@ namespace SimpleApp.WebApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<CategoryDto>))]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
             if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var getResult = _categoryLogic.GetById(id);
+            var getResult = await _categoryLogic.GetById(id);
             if (getResult.Success == false)
             {
                 return NotFound(getResult);
@@ -71,11 +72,11 @@ namespace SimpleApp.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<CategoryDto>))]
-        public IActionResult Post([FromBody] CategoryDto categoryDto)
+        public async Task<IActionResult> Post([FromBody] CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
 
-            var addResult = _categoryLogic.Add(category);
+            var addResult = await _categoryLogic.Add(category);
             if (addResult.Success == false)
             {
                 addResult.AddErrorToModelState(ModelState);
@@ -96,9 +97,9 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<CategoryDto>))]
-        public IActionResult Put(Guid id, [FromBody] CategoryDto categoryDto)
+        public async Task<IActionResult> Put(Guid id, [FromBody] CategoryDto categoryDto)
         {
-            var getResult = _categoryLogic.GetById(id);
+            var getResult = await _categoryLogic.GetById(id);
             if (getResult.Success == false)
             {
                 getResult.AddErrorToModelState(ModelState);
@@ -107,7 +108,7 @@ namespace SimpleApp.WebApi.Controllers
 
             _mapper.Map(categoryDto, getResult.Value);
 
-            var resultUpdate = _categoryLogic.Update(getResult.Value);
+            var resultUpdate = await _categoryLogic.Update(getResult.Value);
             if (resultUpdate.Success == false)
             {
                 resultUpdate.AddErrorToModelState(ModelState);
@@ -125,9 +126,9 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult>Delete(Guid id)
         {
-            var getResult = _categoryLogic.GetById(id);
+            var getResult = await _categoryLogic.GetById(id);
             if (getResult.Success == false)
             {
                 return NotFound(getResult);

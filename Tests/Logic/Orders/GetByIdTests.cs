@@ -14,7 +14,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             // Arrange
             var logic = Create();
             OrderRepositoryMock
-                .Setup(r => r.GetById(It.IsAny<Guid>())).
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).
                 Returns((Order)null);
             var guid = Guid.NewGuid();
 
@@ -24,7 +24,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             // Assert
             result.Should().BeFailure($"Order with ID {guid} does not exist.");
             OrderRepositoryMock.Verify(
-                x => x.GetById(guid), Times.Once());
+                x => x.GetByIdAsync(guid), Times.Once());
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             var logic = Create();
             var order = Builder<Order>.CreateNew().Build();
             OrderRepositoryMock
-                .Setup(r => r.GetById(It.IsAny<Guid>())).
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).
                 Returns(order);
 
             // Act
@@ -43,7 +43,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             // Assert
             result.Should().BeSuccess(order);
             OrderRepositoryMock.Verify(
-                x => x.GetById(order.Id), Times.Once());
+                x => x.GetByIdAsync(order.Id), Times.Once());
         }
     }
 }

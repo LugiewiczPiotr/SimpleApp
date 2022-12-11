@@ -23,7 +23,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Returns(Result.Failure<IEnumerable<Product>>(errorMessage));
 
             // Act
-            var result = controller.Get();
+            var result = controller.GetAsync();
 
             // Assert
             result.Should().BeBadRequest<IEnumerable<Product>>(errorMessage);
@@ -49,7 +49,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Returns(productsDto);
 
             // Act
-            var result = controller.Get();
+            var result = controller.GetAsync();
 
             // Assert
             result.Should().BeOk(productsDto);

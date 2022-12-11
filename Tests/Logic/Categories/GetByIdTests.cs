@@ -14,7 +14,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             // Arrange
             var logic = Create();
             CategoryRepositoryMock
-                .Setup(r => r.GetById(It.IsAny<Guid>())).
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).
                 Returns((Category)null);
             var guid = Guid.NewGuid();
 
@@ -24,7 +24,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             // Assert
             result.Should().BeFailure($"Category with ID {guid} does not exist.");
             CategoryRepositoryMock.Verify(
-                x => x.GetById(guid), Times.Once());
+                x => x.GetByIdAsync(guid), Times.Once());
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             var logic = Create();
             var category = Builder<Category>.CreateNew().Build();
             CategoryRepositoryMock
-                .Setup(r => r.GetById(It.IsAny<Guid>())).
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).
                 Returns(category);
 
             // Act
@@ -43,7 +43,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             // Assert
             result.Should().BeSuccess(category);
             CategoryRepositoryMock.Verify(
-                x => x.GetById(category.Id), Times.Once());
+                x => x.GetByIdAsync(category.Id), Times.Once());
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentValidation;
 using SimpleApp.Core.Enums;
 using SimpleApp.Core.Interfaces.Logics;
@@ -19,16 +20,16 @@ namespace SimpleApp.Core.Logics
             _validator = validator;
         }
 
-        public Result<IEnumerable<Order>> GetAllActiveOrders(Guid userId)
+        public async Task<Result<IEnumerable<Order>>> GetAllActiveOrders(Guid userId)
         {
-            var orders = _orderRepository.GetAllActiveOrders(userId);
+            var orders = await _orderRepository.GetAllActiveOrders(userId);
 
             return Result.Ok(orders);
         }
 
-        public Result<Order> GetById(Guid id)
+        public async Task<Result<Order>> GetById(Guid id)
         {
-            var order = _orderRepository.GetById(id);
+            var order = await _orderRepository.GetByIdAsync(id);
             if (order == null)
             {
                 return Result.Failure<Order>($"Order with ID {id} does not exist.");
@@ -37,7 +38,7 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(order);
         }
 
-        public Result<Order> Add(Order order, Guid userId)
+        public async Task<Result<Order>> Add(Order order, Guid userId)
         {
             if (order == null)
             {
@@ -46,19 +47,19 @@ namespace SimpleApp.Core.Logics
 
             order.UserId = userId;
 
-            var validationResult = _validator.Validate(order);
+            var validationResult = await _validator.ValidateAsync(order);
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<Order>(validationResult.Errors);
             }
 
-            _orderRepository.Add(order);
-            _orderRepository.SaveChanges();
+            await _orderRepository.Add(order);
+            await _orderRepository.SaveChanges();
 
             return Result.Ok(order);
         }
 
-        public Result<Order> Update(Order order)
+        public async Task<Result<Order>> Update(Order order)
         {
             if (order == null)
             {
@@ -84,13 +85,13 @@ namespace SimpleApp.Core.Logics
                     break;
             }
 
-            var validationResult = _validator.Validate(order);
+            var validationResult = await _validator.ValidateAsync(order);
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<Order>(validationResult.Errors);
             }
 
-            _orderRepository.SaveChanges();
+            await _orderRepository.SaveChanges();
 
             return Result.Ok(order);
         }

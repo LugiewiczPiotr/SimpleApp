@@ -25,7 +25,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Returns(Result.Failure<Product>(errorMessage));
 
             // Act
-            var result = controller.Delete(guid);
+            var result = controller.DeleteAsync(guid);
 
             // Assert
             result.Should().BeNotFound<Product>(errorMessage);
@@ -46,7 +46,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Returns(Result.Failure<Category>(_product.Name, errorMessage));
 
             // Act
-            var result = controller.Delete(_product.Id);
+            var result = controller.DeleteAsync(_product.Id);
 
             // Assert
             result.Should().BeBadRequest<Category>(errorMessage);
@@ -63,7 +63,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var logic = Create();
 
             // Act
-            var result = logic.Delete(_product.Id);
+            var result = logic.DeleteAsync(_product.Id);
 
             // Assert
             result.Should().BeOfType<NoContentResult>();
