@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core.Interfaces.Logics;
@@ -22,10 +23,10 @@ namespace SimpleApp.Web.Controllers
             _mapper = mapper;
         }
 
-        // GET: ProductController1
-        public ActionResult Index()
+
+        public async Task<ActionResult> Index()
         {
-            var products = _productLogic.GetAllActive();
+            var products = await _productLogic.GetAllActive();
             var indexViewModel = new IndexViewModel()
             {
                 Products = _mapper.Map<IList<IndexItemViewModel>>(products.Value)
@@ -34,14 +35,14 @@ namespace SimpleApp.Web.Controllers
             return View(indexViewModel);
         }
 
-        public ActionResult Details(Guid id)
+        public async Task<ActionResult> Details(Guid id)
         {
             if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var getResult = _productLogic.GetById(id);
+            var getResult = await _productLogic.GetById(id);
             if (getResult.Success == false)
             {
                 return NotFound();
@@ -52,29 +53,29 @@ namespace SimpleApp.Web.Controllers
             return View(productViewModel);
         }
 
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             var productViewModel = new ProductViewModel();
-            Supply(productViewModel);
+            await Supply(productViewModel);
             return View(productViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ProductViewModel productViewModel)
+        public async Task<ActionResult> Create(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid == false)
             {
-                Supply(productViewModel);
+                await Supply(productViewModel);
                 return View(productViewModel);
             }
 
             var product = _mapper.Map<Product>(productViewModel);
 
-            var addProduct = _productLogic.Add(product);
+            var addProduct = await _productLogic.Add(product);
             if (addProduct.Success == false)
             {
-                Supply(productViewModel);
+                await Supply(productViewModel);
                 addProduct.AddErrorToModelState(ModelState);
                 return View(productViewModel);
             }
@@ -82,14 +83,14 @@ namespace SimpleApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(Guid id)
+        public async Task<ActionResult> Edit(Guid id)
         {
             if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var getResult = _productLogic.GetById(id);
+            var getResult = await _productLogic.GetById(id);
 
             if (getResult.Success == false)
             {
@@ -98,22 +99,22 @@ namespace SimpleApp.Web.Controllers
 
             var productViewModel = _mapper.Map<ProductViewModel>(getResult.Value);
 
-            Supply(productViewModel);
+            await Supply(productViewModel);
 
             return View(productViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ProductViewModel productViewModel)
+        public async Task<ActionResult> Edit(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid == false)
             {
-                Supply(productViewModel);
+                await Supply(productViewModel);
                 return View(productViewModel);
             }
 
-            var getResult = _productLogic.GetById(productViewModel.Id);
+            var getResult = await _productLogic.GetById(productViewModel.Id);
             if (getResult.Success == false)
             {
                 return NotFound();
@@ -121,11 +122,11 @@ namespace SimpleApp.Web.Controllers
 
             _mapper.Map(productViewModel, getResult.Value);
 
-            var updateResult = _productLogic.Update(getResult.Value);
+            var updateResult = await _productLogic.Update(getResult.Value);
             if (updateResult.Success == false)
             {
                 updateResult.AddErrorToModelState(ModelState);
-                Supply(productViewModel);
+                await Supply(productViewModel);
                 return View(productViewModel);
             }
 
@@ -133,14 +134,14 @@ namespace SimpleApp.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Delete(Guid id)
+        public async Task<ActionResult> DeleteAsync(Guid id)
         {
             if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var getResult = _productLogic.GetById(id);
+            var getResult = await _productLogic.GetById(id);
             if (getResult.Success == false)
             {
                 return NotFound();
@@ -153,9 +154,9 @@ namespace SimpleApp.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
-        public ActionResult DeletePost(Guid id)
+        public async Task<ActionResult> DeletePost(Guid id)
         {
-            var getResult = _productLogic.GetById(id);
+            var getResult = await _productLogic.GetById(id);
             if (getResult.Success == false)
             {
                 return NotFound();
@@ -171,9 +172,9 @@ namespace SimpleApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        private void Supply(ProductViewModel viewModel)
+        private async Task Supply(ProductViewModel viewModel)
         {
-            var categoriesList = _categoryLogic.GetAllActive();
+            var categoriesList = await _categoryLogic.GetAllActive();
 
             viewModel.AvailableCategories = _mapper.Map<IEnumerable<SelectItemViewModel>>(categoriesList.Value);
         }
