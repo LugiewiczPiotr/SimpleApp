@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -16,7 +17,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         private ProductDto _productDto;
 
         [Fact]
-        public void Return_NotFound_When_Product_Not_Exist()
+        public async Task Return_NotFound_When_Product_Not_Exist()
         {
             // Arrange
             var logic = Create();
@@ -24,10 +25,10 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var errorMessage = $"Product with ID {guid} does not exist.";
             ProductLogicMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Failure<Product>(errorMessage));
+                .ReturnsAsync(Result.Failure<Product>(errorMessage));
 
             // Act
-            var result = logic.PutAsync(guid, _productDto);
+            var result = await logic.Put(guid, _productDto);
 
             // Assert
             result.Should().BeNotFound<Product>(errorMessage);
@@ -45,17 +46,17 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         }
 
         [Fact]
-        public void Return_BadRequest_When_Product_Is_Not_Valid()
+        public async Task Return_BadRequest_When_Product_Is_Not_Valid()
         {
             // Arrange
             var logic = Create();
             var errorMessage = "BadRequest";
             ProductLogicMock
                 .Setup(r => r.Update(It.IsAny<Product>()))
-                .Returns(Result.Failure<Product>(_product.Name, errorMessage));
+                .ReturnsAsync(Result.Failure<Product>(_product.Name, errorMessage));
 
             // Act
-            var result = logic.PutAsync(_productDto.Id, _productDto);
+            var result = await logic.Put(_productDto.Id, _productDto);
 
             // Assert
             result.Should().BeBadRequest<Product>(errorMessage);
@@ -73,13 +74,13 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         }
 
         [Fact]
-        public void Return_Created_Category_When_Product_is_Valid()
+        public async Task Return_Created_Category_When_Product_is_Valid()
         {
             // Arrange
             var logic = Create();
 
             // Act
-            var result = logic.PutAsync(_productDto.Id, _productDto);
+            var result = await logic.Put(_productDto.Id, _productDto);
 
             // Assert
             result.Should().BeOk(_productDto);
@@ -109,12 +110,12 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             _product = Builder<Product>.CreateNew().Build();
             ProductLogicMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(_product));
+                .ReturnsAsync(Result.Ok(_product));
             MapperMock
                 .Setup(x => x.Map(It.IsAny<ProductDto>(), It.IsAny<Product>()));
             ProductLogicMock
                 .Setup(r => r.Update(It.IsAny<Product>()))
-                .Returns(Result.Ok(_product));
+                .ReturnsAsync(Result.Ok(_product));
             MapperMock
                 .Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
                 .Returns(_productDto);

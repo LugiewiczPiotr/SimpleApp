@@ -5,6 +5,7 @@ using SimpleApp.Core;
 using SimpleApp.Core.Models.Entities;
 using SimpleApp.WebApi.Controllers;
 using SimpleApp.WebApi.DTO;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace SimpleApp.WebApi.UnitTests.Controllers.Products
@@ -15,17 +16,17 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         private ProductDto _productDto;
 
         [Fact]
-        public void Return_BeBadRequest_When_Product_Is_Not_Valid()
+        public async Task Return_BeBadRequest_When_Product_Is_Not_Valid()
         {
             // Arrange
             var controller = Create();
             var errorMessage = "validation fail";
             ProductLogicMock
                 .Setup(x => x.Add(It.IsAny<Product>()))
-                .Returns(Result.Failure<Product>(_product.Name, errorMessage));
+                .ReturnsAsync(Result.Failure<Product>(_product.Name, errorMessage));
 
             // Act
-            var result = controller.PostAsync(_productDto);
+            var result = await controller.Post(_productDto);
 
             // Assert
             result.Should().BeBadRequest<Product>(errorMessage);
@@ -40,13 +41,13 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         }
 
         [Fact]
-        public void Return_Created_When_Product_Is_Valid()
+        public async Task Return_Created_When_Product_Is_Valid()
         {
             // Arrange
             var controller = Create();
 
             // Act
-            var result = controller.PostAsync(_productDto);
+            var result = await controller.Post(_productDto);
 
             // Assert
             result.Should().BeCreatedAtAction(_productDto);
@@ -74,7 +75,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             MapperMock.Setup(x => x.Map<Product>(It.IsAny<ProductDto>()))
                 .Returns(_product);
             ProductLogicMock.Setup(x => x.Add(It.IsAny<Product>()))
-                .Returns(Result.Ok(_product));
+                .ReturnsAsync(Result.Ok(_product));
             MapperMock.Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
                 .Returns(_productDto);
         }

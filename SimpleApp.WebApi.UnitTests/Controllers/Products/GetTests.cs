@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -13,17 +14,17 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
     public class GetTests : BaseTests
     {
         [Fact]
-        public void Return_BadRequest_When_Products_Is_Not_Valid()
+        public async Task Return_BadRequest_When_Products_Is_Not_Valid()
         {
             // Arrange
             var controller = Create();
             var errorMessage = "BadRequest";
             var products = Builder<Product>.CreateListOfSize(1).Build().AsEnumerable();
             ProductLogicMock.Setup(x => x.GetAllActive())
-                .Returns(Result.Failure<IEnumerable<Product>>(errorMessage));
+                .ReturnsAsync(Result.Failure<IEnumerable<Product>>(errorMessage));
 
             // Act
-            var result = controller.GetAsync();
+            var result = await controller.Get();
 
             // Assert
             result.Should().BeBadRequest<IEnumerable<Product>>(errorMessage);
@@ -35,7 +36,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         }
 
         [Fact]
-        public void Return_All_Products()
+        public async Task Return_All_Products()
         {
             // Arrange
             var controller = Create();
@@ -43,13 +44,13 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var productsDto = Builder<ProductDto>.CreateListOfSize(1).Build();
             ProductLogicMock
                 .Setup(r => r.GetAllActive())
-                .Returns(Result.Ok(products));
+                .ReturnsAsync(Result.Ok(products));
             MapperMock
                 .Setup(m => m.Map<IList<ProductDto>>(It.IsAny<IEnumerable<Product>>()))
                 .Returns(productsDto);
 
             // Act
-            var result = controller.GetAsync();
+            var result = await controller.Get();
 
             // Assert
             result.Should().BeOk(productsDto);

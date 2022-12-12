@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -12,7 +13,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
     public class GetByIdTests : BaseTests
     {
         [Fact]
-        public void Return_NotFound_When_Product_Not_Exist()
+        public async Task Return_NotFound_When_Product_Not_Exist()
         {
             // Arrange
             var controller = Create();
@@ -20,10 +21,10 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var errorMessage = $"Product with ID {guid} does not exist.";
             ProductLogicMock
                 .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Failure<Product>(errorMessage));
+                .ReturnsAsync(Result.Failure<Product>(errorMessage));
 
             // Act
-            var result = controller.GetAsync(guid);
+            var result = await controller.Get(guid);
 
             // Assert
             result.Should().BeNotFound<Product>(errorMessage);
@@ -35,19 +36,19 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         }
 
         [Fact]
-        public void Return_Ok_When_Product_is_Exist()
+        public async Task Return_Ok_When_Product_is_Exist()
         {
             // Arrange
             var controller = Create();
             var product = Builder<Product>.CreateNew().Build();
             var productDto = Builder<ProductDto>.CreateNew().Build();
             ProductLogicMock.Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(product));
+                .ReturnsAsync(Result.Ok(product));
             MapperMock.Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
                 .Returns(productDto);
 
             // Act
-            var result = controller.GetAsync(product.Id);
+            var result = await controller.Get(product.Id);
 
             // Assert
             result.Should().BeOk(productDto);
