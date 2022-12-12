@@ -25,7 +25,7 @@ namespace SimpleApp.Infrastructure.Repositories
                  .ToListAsync();
         }
 
-        public override async Task<Product> GetByIdAsync(Guid id)
+        public override async Task<Product> GetById(Guid id)
         {
            return await Context.Products
                 .Include(c => c.Category)

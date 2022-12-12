@@ -24,7 +24,7 @@ namespace SimpleApp.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public override async Task<Order> GetByIdAsync(Guid id)
+        public override async Task<Order> GetById(Guid id)
         {
             return await Context.Orders
                 .Include(i => i.User)
