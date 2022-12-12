@@ -31,7 +31,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<ProductDto>))]
-        public async Task<IActionResult> GetAsync()
+        public async Task<IActionResult> Get()
         {
             var result = await _productLogic.GetAllActive();
             if (result.Success == false)
@@ -49,7 +49,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<ProductDto>))]
-        public async Task<IActionResult> GetAsync(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
             if (id == Guid.Empty)
             {
@@ -72,7 +72,7 @@ namespace SimpleApp.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<ProductDto>))]
-        public async Task<IActionResult> PostAsync([FromBody] ProductDto productDto)
+        public async Task<IActionResult> Post([FromBody] ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
 
@@ -85,7 +85,7 @@ namespace SimpleApp.WebApi.Controllers
 
             var productResult = _mapper.Map<ProductDto>(addResult.Value);
             return CreatedAtAction(
-                nameof(GetAsync),
+                nameof(Get),
                 new { id = addResult.Value.Id },
                 Result.Ok(productResult));
         }
@@ -127,7 +127,7 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> DeleteAsync(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var getResult = await _productLogic.GetById(id);
             if (getResult.Success == false)
