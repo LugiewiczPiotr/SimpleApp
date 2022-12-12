@@ -29,7 +29,7 @@ namespace SimpleApp.Core.Logics
 
         public async Task<Result<Order>> GetById(Guid id)
         {
-            var order = await _orderRepository.GetByIdAsync(id);
+            var order = await _orderRepository.GetById(id);
             if (order == null)
             {
                 return Result.Failure<Order>($"Order with ID {id} does not exist.");

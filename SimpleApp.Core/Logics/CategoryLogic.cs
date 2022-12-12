@@ -33,7 +33,7 @@ namespace SimpleApp.Core.Logics
 
         public async Task<Result<Category>> GetById(Guid id)
         {
-            var category = await _categoryRepository.GetByIdAsync(id);
+            var category = await _categoryRepository.GetById(id);
             if (category == null)
             {
                 return Result.Failure<Category>($"Category with ID {id} does not exist.");

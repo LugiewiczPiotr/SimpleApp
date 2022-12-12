@@ -28,7 +28,7 @@ namespace SimpleApp.Core.Logics
 
         public async Task<Result<Product>> GetById(Guid id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
+            var product = await _productRepository.GetById(id);
             if (product == null)
             {
                 return Result.Failure<Product>($"Product with ID {id} does not exist.");

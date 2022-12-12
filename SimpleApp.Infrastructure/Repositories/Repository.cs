@@ -18,7 +18,7 @@ namespace SimpleApp.Infrastructure.Repositories
             Context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
         }
 
-        public virtual async Task<T> GetByIdAsync(Guid id)
+        public virtual async Task<T> GetById(Guid id)
         {
             return await Context.Set<T>()
                 .FirstOrDefaultAsync(e => e.Id == id && e.IsActive);

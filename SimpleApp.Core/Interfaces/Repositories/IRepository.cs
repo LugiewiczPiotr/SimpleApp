@@ -10,7 +10,7 @@ namespace SimpleApp.Core.Interfaces.Repositories
         Task<T> Add(T entity);
         void Delete(T entity);
         Task<IEnumerable<T>> GetAllActive();
-        Task<T> GetByIdAsync(Guid id);
+        Task<T> GetById(Guid id);
         Task SaveChanges();
     }
 }
