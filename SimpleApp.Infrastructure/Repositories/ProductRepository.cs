@@ -39,10 +39,10 @@ namespace SimpleApp.Infrastructure.Repositories
                 .Update(x => new Product() { IsActive = false });
         }
 
-        public bool CheckIfProductExist(Guid Id)
+        public async Task<bool> CheckIfProductExist(Guid Id)
         {
-            return Context.Products
-                 .Where(p => p.Id == Id).Any();
+            return await Context.Products
+                 .Where(p => p.Id == Id).AnyAsync();
         }
     }
 }
