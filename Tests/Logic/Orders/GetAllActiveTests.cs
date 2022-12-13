@@ -1,7 +1,8 @@
-﻿using FizzWare.NBuilder;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using FizzWare.NBuilder;
 using Moq;
 using SimpleApp.Core.Models.Entities;
-using System.Linq;
 using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Orders
@@ -9,7 +10,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
     public class GetAllActiveTests : BaseTests
     {
         [Fact]
-        public void Return_All_Orders_From_Repository()
+        public async Task Return_All_Orders_From_Repository()
         {
             // Arrange
             var logic = Create();
@@ -19,10 +20,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
                 .FirstOrDefault(x => x.UserId != null);
             OrderRepositoryMock
                 .Setup(r => r.GetAllActiveOrders(orderId.UserId))
-                .Returns(orders);
+                .ReturnsAsync(orders);
 
             // Act
-            var result = logic.GetAllActiveOrders(orderId.UserId);
+            var result = await logic.GetAllActiveOrders(orderId.UserId);
 
             // Assert
             result.Should().BeSuccess(orders);

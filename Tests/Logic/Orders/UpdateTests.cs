@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
@@ -17,19 +19,19 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             var logic = Create();
 
             // Act
-            Action result = () => logic.UpdateAsync(null);
+            Func<Task> result = async () => await logic.Update(null);
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
             ValidatorMock.Verify(
-                x => x.Validate(It.IsAny<Order>()), Times.Never());
+                x => x.ValidateAsync(It.IsAny<Order>(), CancellationToken.None), Times.Never());
 
             OrderRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Never());
         }
 
         [Fact]
-        public void Return_Failure_When_Order_Is_Not_Valid()
+        public async Task Return_Failure_When_Order_Is_Not_Valid()
         {
             // Arrange
             var logic = Create();
@@ -38,19 +40,19 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             ValidatorMock.SetValidationFailure(order.Id.ToString(), errorMessage);
 
             // Act
-            var result = logic.UpdateAsync(order);
+            var result = await logic.Update(order);
 
             // Assert
             result.Should().BeFailure(property: order.Id.ToString(), message: errorMessage);
             ValidatorMock.Verify(
-                x => x.Validate(order), Times.Once());
+                x => x.ValidateAsync(order, CancellationToken.None), Times.Once());
 
             OrderRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Never());
         }
 
         [Fact]
-        public void Return_Success_When_Order_Is_Valid()
+        public async Task Return_Success_When_Order_Is_Valid()
         {
             // Arrange
             var logic = Create();
@@ -58,12 +60,12 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             ValidatorMock.SetValidationSuccess();
 
             // Act
-            var result = logic.UpdateAsync(order);
+            var result = await logic.Update(order);
 
             // Assert
             result.Should().BeSuccess(order);
             ValidatorMock.Verify(
-                x => x.Validate(order), Times.Once());
+                x => x.ValidateAsync(order, CancellationToken.None), Times.Once());
 
             OrderRepositoryMock.Verify(
                 x => x.SaveChanges(), Times.Once());

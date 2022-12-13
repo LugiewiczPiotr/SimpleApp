@@ -1,4 +1,5 @@
-﻿using FizzWare.NBuilder;
+﻿using System.Threading.Tasks;
+using FizzWare.NBuilder;
 using Moq;
 using SimpleApp.Core.Models.Entities;
 using Xunit;
@@ -8,16 +9,16 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
     public class GetAllActiveTests : BaseTests
     {
         [Fact]
-        public void Return_All_Products_From_Repository()
+        public async Task Return_All_Products_From_Repository()
         {
             // Arrange
             var logic = Create();
             var products = Builder<Product>.CreateListOfSize(10).Build();
             ProductRepositoryMock
-                .Setup(r => r.GetAllActive()).Returns(products);
+                .Setup(r => r.GetAllActive()).ReturnsAsync(products);
 
             // Act
-            var result = logic.GetAllActive();
+            var result = await logic.GetAllActive();
 
             // Assert
             result.Should().BeSuccess(products);

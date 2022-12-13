@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
@@ -16,12 +18,12 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             var logic = Create();
 
             // Act
-            Action result = () => logic.AddAsync(null);
+            Func<Task> result = async () => await logic.Add(null);
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
             ValidatorMock.Verify(
-                x => x.Validate(It.IsAny<Product>()), Times.Never());
+                x => x.ValidateAsync(It.IsAny<Product>(), CancellationToken.None), Times.Never());
 
             ProductRepositoryMock.Verify(
                x => x.Add(It.IsAny<Product>()), Times.Never());
@@ -31,7 +33,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
         }
 
         [Fact]
-        public void Return_Failure_When_Product_Is_Not_Valid()
+        public async Task Return_Failure_When_Product_Is_Not_Valid()
         {
             // Arrange
             var logic = Create();
@@ -40,12 +42,12 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             ValidatorMock.SetValidationFailure(product.Name, errorMessage);
 
             // Act
-            var result = logic.AddAsync(product);
+            var result = await logic.Add(product);
 
             // Assert
             result.Should().BeFailure(property: product.Name, message: errorMessage);
             ValidatorMock.Verify(
-               x => x.Validate(product), Times.Once());
+               x => x.ValidateAsync(product, CancellationToken.None), Times.Once());
 
             ProductRepositoryMock.Verify(
                x => x.Add(It.IsAny<Product>()), Times.Never());
@@ -55,7 +57,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
         }
 
         [Fact]
-        public void Return_Success_When_Product_Is_Valid()
+        public async Task Return_Success_When_Product_Is_Valid()
         {
             // Arrange
             var logic = Create();
@@ -63,12 +65,12 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             ValidatorMock.SetValidationSuccess();
 
             // Act
-            var result = logic.AddAsync(product);
+            var result = await logic.Add(product);
 
             // Assert
             result.Should().BeSuccess(product);
             ValidatorMock.Verify(
-              x => x.Validate(product), Times.Once());
+              x => x.ValidateAsync(product, CancellationToken.None), Times.Once());
 
             ProductRepositoryMock.Verify(
                x => x.Add(product), Times.Once());
