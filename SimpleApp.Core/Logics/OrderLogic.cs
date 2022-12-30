@@ -39,10 +39,7 @@ namespace SimpleApp.Core.Logics
 
         public Result<Order> Add(Order order, Guid userId)
         {
-            if (order == null)
-            {
-                throw new ArgumentNullException(nameof(order));
-            }
+            ArgumentNullException.ThrowIfNull(nameof(order));
 
             order.UserId = userId;
 
@@ -60,10 +57,7 @@ namespace SimpleApp.Core.Logics
 
         public Result<Order> Update(Order order)
         {
-            if (order == null)
-            {
-                throw new ArgumentNullException(nameof(order));
-            }
+            ArgumentNullException.ThrowIfNull(nameof(order));
 
             switch (order.Status)
             {
@@ -97,10 +91,7 @@ namespace SimpleApp.Core.Logics
 
         public Result Delete(Order order)
         {
-            if (order == null)
-            {
-                throw new ArgumentNullException(nameof(order));
-            }
+            ArgumentNullException.ThrowIfNull(nameof(order));
 
             _orderRepository.Delete(order);
             _orderRepository.SaveChanges();

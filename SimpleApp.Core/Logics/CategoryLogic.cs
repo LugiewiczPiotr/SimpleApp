@@ -43,10 +43,7 @@ namespace SimpleApp.Core.Logics
 
         public Result<Category> Add(Category category)
         {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
+            ArgumentNullException.ThrowIfNull(category, nameof(category));
 
             var validationResult = _validator.Validate(category);
             if (validationResult.IsValid == false)
@@ -62,10 +59,7 @@ namespace SimpleApp.Core.Logics
 
         public Result<Category> Update(Category category)
         {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
+            ArgumentNullException.ThrowIfNull(category, nameof(category));
 
             var validationResult = _validator.Validate(category);
             if (validationResult.IsValid == false)
@@ -80,10 +74,7 @@ namespace SimpleApp.Core.Logics
 
         public Result Delete(Category category)
         {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
+            ArgumentNullException.ThrowIfNull(category, nameof(category));
 
             _productRepository.DeleteByCategoryId(category.Id);
             _categoryRepository.Delete(category);
