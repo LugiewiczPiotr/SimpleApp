@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using Moq;
 using SimpleApp.Core.Models.Entities;
-using System.Linq;
 using Xunit;
 
 namespace SimpleApp.Core.UnitTests.Logic.Orders
