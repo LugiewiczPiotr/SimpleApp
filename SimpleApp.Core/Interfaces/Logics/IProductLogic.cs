@@ -11,7 +11,7 @@ namespace SimpleApp.Core.Interfaces.Logics
 
         Task<Result<Product>> GetByIdAsync(Guid id);
 
-        Task<Result<Product>> AddAsync(Product product); 
+        Task<Result<Product>> AddAsync(Product product);
 
         Task<Result<Product>> UpdateAsync(Product product);
 
