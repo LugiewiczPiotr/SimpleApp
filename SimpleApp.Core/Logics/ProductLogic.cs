@@ -39,10 +39,7 @@ namespace SimpleApp.Core.Logics
 
         public async Task<Result<Product>> AddAsync(Product product)
         {
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            ArgumentNullException.ThrowIfNull(nameof(product));
 
             var validationResult = await _validator.ValidateAsync(product);
             if (validationResult.IsValid == false)
@@ -58,10 +55,7 @@ namespace SimpleApp.Core.Logics
 
         public async Task<Result<Product>> UpdateAsync(Product product)
         {
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            ArgumentNullException.ThrowIfNull(nameof(product));
 
             var validationResult = await _validator.ValidateAsync(product);
             if (validationResult.IsValid == false)
@@ -76,10 +70,7 @@ namespace SimpleApp.Core.Logics
 
         public Result Delete(Product product)
         {
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            ArgumentNullException.ThrowIfNull(nameof(product));
 
             _productRepository.Delete(product);
             _productRepository.SaveChangesAsync();

@@ -33,10 +33,7 @@ namespace SimpleApp.Core.Logics
 
         public Result<string> Authenticate(UserLoginAndPassword userLoginAndPassword)
         {
-            if (userLoginAndPassword == null)
-            {
-                throw new ArgumentNullException(nameof(userLoginAndPassword));
-            }
+            ArgumentNullException.ThrowIfNull(nameof(userLoginAndPassword));
 
             var validationResult = _loginValidator.Validate(userLoginAndPassword);
             if (validationResult.IsValid == false)
@@ -56,10 +53,7 @@ namespace SimpleApp.Core.Logics
 
         public Result<User> CreateAccount(User user)
         {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
+            ArgumentNullException.ThrowIfNull(nameof(user));
 
             var validationResult = _registerValidator.Validate(user);
             if (validationResult.IsValid == false)

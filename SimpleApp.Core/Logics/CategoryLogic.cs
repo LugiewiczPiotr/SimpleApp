@@ -44,10 +44,7 @@ namespace SimpleApp.Core.Logics
 
         public async Task<Result<Category>> AddAsync(Category category)
         {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
+            ArgumentNullException.ThrowIfNull(category, nameof(category));
 
             var validationResult = await _validator.ValidateAsync(category);
             if (validationResult.IsValid == false)
@@ -63,10 +60,7 @@ namespace SimpleApp.Core.Logics
 
         public async Task<Result<Category>> UpdateAsync(Category category)
         {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
+            ArgumentNullException.ThrowIfNull(category, nameof(category));
 
             var validationResult = await _validator.ValidateAsync(category);
             if (validationResult.IsValid == false)
@@ -81,10 +75,7 @@ namespace SimpleApp.Core.Logics
 
         public Result Delete(Category category)
         {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
+            ArgumentNullException.ThrowIfNull(category, nameof(category));
 
             _productRepository.DeleteByCategoryId(category.Id);
             _categoryRepository.Delete(category);
