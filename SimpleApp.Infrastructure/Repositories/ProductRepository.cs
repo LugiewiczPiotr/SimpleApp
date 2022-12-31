@@ -27,14 +27,14 @@ namespace SimpleApp.Infrastructure.Repositories
 
         public override async Task<Product> GetByIdAsync(Guid id)
         {
-           return await _context.Products
+           return await Context.Products
                 .Include(c => c.Category)
                 .FirstOrDefaultAsync(e => e.Id == id && e.IsActive);
         }
 
         public void DeleteByCategoryId(Guid id)
         {
-            _context.Products
+            Context.Products
                 .Where(e => e.CategoryId == id)
                 .Update(x => new Product() { IsActive = false });
         }
