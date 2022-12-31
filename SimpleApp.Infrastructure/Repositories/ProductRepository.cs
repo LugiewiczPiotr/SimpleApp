@@ -19,7 +19,7 @@ namespace SimpleApp.Infrastructure.Repositories
 
         public override async Task<IEnumerable<Product>> GetAllActiveAsync()
         {
-            return await Context.Products
+            return await _context.Products
                 .Include(c => c.Category)
                  .Where(p => p.IsActive)
                  .ToListAsync();
@@ -27,14 +27,14 @@ namespace SimpleApp.Infrastructure.Repositories
 
         public override async Task<Product> GetByIdAsync(Guid id)
         {
-           return await Context.Products
+           return await _context.Products
                 .Include(c => c.Category)
                 .FirstOrDefaultAsync(e => e.Id == id && e.IsActive);
         }
 
         public void DeleteByCategoryId(Guid id)
         {
-            Context.Products
+            _context.Products
                 .Where(e => e.CategoryId == id)
                 .Update(x => new Product() { IsActive = false });
         }

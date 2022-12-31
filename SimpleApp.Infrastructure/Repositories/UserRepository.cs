@@ -14,12 +14,12 @@ namespace SimpleApp.Infrastructure.Repositories
 
         public bool CheckIfUserExists(string email)
         {
-            return Context.Users.Any(u => u.Email == email);
+            return _context.Users.Any(u => u.Email == email);
         }
 
         public User GetUserByEmail(string email)
         {
-            return Context.Users.FirstOrDefault(x => x.Email == email);
+            return _context.Users.FirstOrDefault(x => x.Email == email);
         }
     }
 }

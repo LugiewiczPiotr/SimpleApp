@@ -11,29 +11,29 @@ namespace SimpleApp.Infrastructure.Repositories
 {
     public abstract class Repository<T> : IRepository<T> where T : BaseModel, new()
     {
-        protected readonly AppDbContext Context;
-
         protected Repository(AppDbContext dataContext)
         {
-            Context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
+            _context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
         }
+
+        protected readonly AppDbContext _context;
 
         public virtual async Task<T> GetByIdAsync(Guid id)
         {
-            return await Context.Set<T>()
+            return await _context.Set<T>()
                 .FirstOrDefaultAsync(e => e.Id == id && e.IsActive);
         }
 
         public virtual async Task<IEnumerable<T>> GetAllActiveAsync()
         {
-            return await Context.Set<T>()
+            return await _context.Set<T>()
                 .Where(e => e.IsActive)
                 .ToListAsync();
         }
 
         public virtual async Task<T> AddAsync(T entity)
         {
-            await Context.Set<T>()
+            await _context.Set<T>()
                 .AddAsync(entity);
 
             return entity;
@@ -46,7 +46,7 @@ namespace SimpleApp.Infrastructure.Repositories
 
         public virtual async Task SaveChangesAsync()
         {
-            await Context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

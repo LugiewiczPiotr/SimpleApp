@@ -18,7 +18,7 @@ namespace SimpleApp.Infrastructure.Repositories
 
         public async Task<IEnumerable<Order>> GetAllActiveOrdersAsync(Guid userId)
         {
-           return await Context.Orders
+           return await _context.Orders
                 .Include(x => x.OrderItems)
                 .Where(u => u.UserId == userId && u.IsActive)
                 .ToListAsync();
@@ -26,7 +26,7 @@ namespace SimpleApp.Infrastructure.Repositories
 
         public override async Task<Order> GetByIdAsync(Guid id)
         {
-            return await Context.Orders
+            return await _context.Orders
                 .Include(i => i.User)
                 .Include(x => x.OrderItems)
                 .FirstOrDefaultAsync(x => x.Id == id && x.IsActive);
