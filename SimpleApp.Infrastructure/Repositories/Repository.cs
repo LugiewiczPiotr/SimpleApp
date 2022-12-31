@@ -16,7 +16,7 @@ namespace SimpleApp.Infrastructure.Repositories
             _context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
         }
 
-        protected readonly AppDbContext _context;
+        protected AppDbContext _context { get; }
 
         public virtual async Task<T> GetByIdAsync(Guid id)
         {
