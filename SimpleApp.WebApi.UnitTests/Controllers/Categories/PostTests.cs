@@ -21,11 +21,11 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var controller = Create();
             var errorMessage = "validation fail";
             CategoryLogicMock
-                .Setup(x => x.Add(It.IsAny<Category>()))
+                .Setup(x => x.AddAsync(It.IsAny<Category>()))
                 .ReturnsAsync(Result.Failure<Category>(_category.Name, errorMessage));
 
             // Act
-            var result = await controller.Post(_categoryDto);
+            var result = await controller.PostAsync(_categoryDto);
 
             // Assert
             result.Should().BeBadRequest<Category>(errorMessage);
@@ -33,7 +33,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
                x => x.Map<Category>(_categoryDto), Times.Once());
 
             CategoryLogicMock.Verify(
-               x => x.Add(_category), Times.Once());
+               x => x.AddAsync(_category), Times.Once());
 
             MapperMock.Verify(
               x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Never());
@@ -46,7 +46,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var controller = Create();
 
             // Act
-            var result = await controller.Post(_categoryDto);
+            var result = await controller.PostAsync(_categoryDto);
 
             // Assert
             result.Should().BeCreatedAtAction(_categoryDto);
@@ -54,7 +54,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
                x => x.Map<Category>(_categoryDto), Times.Once());
 
             CategoryLogicMock.Verify(
-               x => x.Add(_category), Times.Once());
+               x => x.AddAsync(_category), Times.Once());
 
             MapperMock.Verify(
                x => x.Map<CategoryDto>(_category), Times.Once());
@@ -73,7 +73,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             _categoryDto = Builder<CategoryDto>.CreateNew().Build();
             MapperMock.Setup(x => x.Map<Category>(It.IsAny<CategoryDto>()))
                .Returns(_category);
-            CategoryLogicMock.Setup(x => x.Add(It.IsAny<Category>()))
+            CategoryLogicMock.Setup(x => x.AddAsync(It.IsAny<Category>()))
                 .ReturnsAsync(Result.Ok(_category));
             MapperMock.Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))
                 .Returns(_categoryDto);

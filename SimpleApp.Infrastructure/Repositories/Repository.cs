@@ -18,20 +18,20 @@ namespace SimpleApp.Infrastructure.Repositories
             Context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
         }
 
-        public virtual async Task<T> GetById(Guid id)
+        public virtual async Task<T> GetByIdAsync(Guid id)
         {
             return await Context.Set<T>()
                 .FirstOrDefaultAsync(e => e.Id == id && e.IsActive);
         }
 
-        public virtual async Task<IEnumerable<T>> GetAllActive()
+        public virtual async Task<IEnumerable<T>> GetAllActiveAsync()
         {
             return await Context.Set<T>()
                 .Where(e => e.IsActive)
                 .ToListAsync();
         }
 
-        public virtual async Task<T> Add(T entity)
+        public virtual async Task<T> AddAsync(T entity)
         {
             await Context.Set<T>()
                 .AddAsync(entity);
@@ -44,7 +44,7 @@ namespace SimpleApp.Infrastructure.Repositories
             entity.IsActive = false;
         }
 
-        public virtual async Task SaveChanges()
+        public virtual async Task SaveChangesAsync()
         {
             await Context.SaveChangesAsync();
         }

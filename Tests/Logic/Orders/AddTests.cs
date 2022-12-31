@@ -19,7 +19,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             var logic = Create();
 
             // Act
-            Func<Task> result = async () => await logic.Add(null, Guid.Empty);
+            Func<Task> result = async () => await logic.AddAsync(null, Guid.Empty);
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
@@ -27,10 +27,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
                x => x.ValidateAsync(It.IsAny<Order>(), CancellationToken.None), Times.Never());
 
             OrderRepositoryMock.Verify(
-               x => x.Add(It.IsAny<Order>()), Times.Never());
+               x => x.AddAsync(It.IsAny<Order>()), Times.Never());
 
             OrderRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             ValidatorMock.SetValidationFailure(order.Id.ToString(), errorMessage);
 
             // Act
-            var result = await logic.Add(order, Guid.NewGuid());
+            var result = await logic.AddAsync(order, Guid.NewGuid());
 
             // Assert
             result.Should().BeFailure(property: order.Id.ToString(), message: errorMessage);
@@ -51,10 +51,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
                 x => x.ValidateAsync(order, CancellationToken.None), Times.Once());
 
             OrderRepositoryMock.Verify(
-               x => x.Add(It.IsAny<Order>()), Times.Never());
+               x => x.AddAsync(It.IsAny<Order>()), Times.Never());
 
             OrderRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             ValidatorMock.SetValidationSuccess();
 
             // Act
-            var result = await logic.Add(order, Guid.NewGuid());
+            var result = await logic.AddAsync(order, Guid.NewGuid());
 
             // Assert
             result.Should().BeSuccess(order);
@@ -74,10 +74,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
                x => x.ValidateAsync(order, CancellationToken.None), Times.Once);
 
             OrderRepositoryMock.Verify(
-               x => x.Add(order), Times.Once());
+               x => x.AddAsync(order), Times.Once());
 
             OrderRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Once());
+                x => x.SaveChangesAsync(), Times.Once());
         }
     }
 }

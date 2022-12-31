@@ -7,13 +7,13 @@ namespace SimpleApp.Core.Interfaces.Logics
 {
     public interface IOrderLogic : ILogic
     {
-        Task<Result<IEnumerable<Order>>> GetAllActiveOrders(Guid userId);
+        Task<Result<IEnumerable<Order>>> GetAllActiveOrdersAsync(Guid userId);
 
-        Task<Result<Order>> GetById(Guid id);
+        Task<Result<Order>> GetByIdAsync(Guid id);
 
-        Task<Result<Order>> Add(Order order, Guid userId);
+        Task<Result<Order>> AddAsync(Order order, Guid userId);
 
-        Task<Result<Order>> Update(Order order);
+        Task<Result<Order>> UpdateAsync(Order order);
 
         Result Delete(Order order);
     }

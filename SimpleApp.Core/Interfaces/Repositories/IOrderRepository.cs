@@ -7,6 +7,6 @@ namespace SimpleApp.Core.Interfaces.Repositories
 {
     public interface IOrderRepository : IRepository<Order>
     {
-        Task<IEnumerable<Order>> GetAllActiveOrders(Guid userId);
+        Task<IEnumerable<Order>> GetAllActiveOrdersAsync(Guid userId);
     }
 }

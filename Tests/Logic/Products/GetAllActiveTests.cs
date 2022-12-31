@@ -15,15 +15,15 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             var logic = Create();
             var products = Builder<Product>.CreateListOfSize(10).Build();
             ProductRepositoryMock
-                .Setup(r => r.GetAllActive()).ReturnsAsync(products);
+                .Setup(r => r.GetAllActiveAsync()).ReturnsAsync(products);
 
             // Act
-            var result = await logic.GetAllActive();
+            var result = await logic.GetAllActiveAsync();
 
             // Assert
             result.Should().BeSuccess(products);
             ProductRepositoryMock.Verify(
-                x => x.GetAllActive(), Times.Once());
+                x => x.GetAllActiveAsync(), Times.Once());
         }
     }
 }

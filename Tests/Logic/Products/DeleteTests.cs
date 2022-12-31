@@ -24,7 +24,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
                 x => x.Delete(It.IsAny<Product>()), Times.Never());
 
             ProductRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
                 x => x.Delete(product), Times.Once());
 
             ProductRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Once());
+                x => x.SaveChangesAsync(), Times.Once());
         }
     }
 }

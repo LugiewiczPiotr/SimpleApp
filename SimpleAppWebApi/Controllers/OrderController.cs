@@ -32,9 +32,9 @@ namespace SimpleApp.WebApi.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<OrderDto>))]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAsync()
         {
-            var result = await _orderLogic.GetAllActiveOrders(User.GetUserId());
+            var result = await _orderLogic.GetAllActiveOrdersAsync(User.GetUserId());
             if (result.Success == false)
             {
                 return BadRequest(result);
@@ -50,14 +50,14 @@ namespace SimpleApp.WebApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<OrderDto>))]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> GetAsync(Guid id)
         {
             if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var getResult = await _orderLogic.GetById(id);
+            var getResult = await _orderLogic.GetByIdAsync(id);
             if (getResult.Success == false)
             {
                 return NotFound(getResult);
@@ -77,7 +77,7 @@ namespace SimpleApp.WebApi.Controllers
         {
             var order = _mapper.Map<Order>(manageOrder);
 
-            var addResult = await _orderLogic.Add(order, User.GetUserId());
+            var addResult = await _orderLogic.AddAsync(order, User.GetUserId());
             if (addResult.Success == false)
             {
                 addResult.AddErrorToModelState(ModelState);
@@ -86,7 +86,7 @@ namespace SimpleApp.WebApi.Controllers
 
             var resultDto = _mapper.Map<OrderDto>(addResult.Value);
             return CreatedAtAction(
-                nameof(Get),
+                nameof(GetAsync),
                 new { id = addResult.Value.Id },
                 Result.Ok(resultDto));
         }
@@ -98,9 +98,9 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<OrderDto>))]
-        public async Task<IActionResult> Put(Guid id, [FromBody] ManageOrderDto manageOrderDto)
+        public async Task<IActionResult> PutAsync(Guid id, [FromBody] ManageOrderDto manageOrderDto)
         {
-            var getResult = await _orderLogic.GetById(id);
+            var getResult = await _orderLogic.GetByIdAsync(id);
             if (getResult.Success == false)
             {
                 getResult.AddErrorToModelState(ModelState);
@@ -109,7 +109,7 @@ namespace SimpleApp.WebApi.Controllers
 
             _mapper.Map(manageOrderDto, getResult.Value);
 
-            var updateResult = await _orderLogic.Update(getResult.Value);
+            var updateResult = await _orderLogic.UpdateAsync(getResult.Value);
             if (updateResult.Success == false)
             {
                 updateResult.AddErrorToModelState(ModelState);
@@ -127,9 +127,9 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var getResult = await _orderLogic.GetById(id);
+            var getResult = await _orderLogic.GetByIdAsync(id);
             if (getResult.Success == false)
             {
                 return NotFound(getResult);

@@ -27,7 +27,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
                x => x.DeleteByCategoryId(It.IsAny<Guid>()), Times.Never());
 
             CategoryRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
                 x => x.Delete(category), Times.Once());
 
             CategoryRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Once());
+                x => x.SaveChangesAsync(), Times.Once());
         }
     }
 }

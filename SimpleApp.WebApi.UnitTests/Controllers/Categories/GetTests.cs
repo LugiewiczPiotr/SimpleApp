@@ -20,16 +20,16 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var controller = Create();
             var errorMessage = "BadRequest";
             var categories = Builder<Category>.CreateListOfSize(1).Build().AsEnumerable();
-            CategoryLogicMock.Setup(x => x.GetAllActive())
+            CategoryLogicMock.Setup(x => x.GetAllActiveAsync())
                 .ReturnsAsync(Result.Failure<IEnumerable<Category>>(errorMessage));
 
             // Act
-            var result = await controller.Get();
+            var result = await controller.GetAsync();
 
             // Assert
             result.Should().BeBadRequest<IEnumerable<Category>>(errorMessage);
             CategoryLogicMock.Verify(
-                x => x.GetAllActive(), Times.Once());
+                x => x.GetAllActiveAsync(), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<IList<CategoryDto>>(It.IsAny<IEnumerable<Category>>()), Times.Never());
@@ -43,19 +43,19 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var categories = Builder<Category>.CreateListOfSize(1).Build().AsEnumerable();
             var categoryDtos = Builder<CategoryDto>.CreateListOfSize(1).Build();
             CategoryLogicMock
-                .Setup(r => r.GetAllActive())
+                .Setup(r => r.GetAllActiveAsync())
                 .ReturnsAsync(Result.Ok(categories));
             MapperMock
                 .Setup(m => m.Map<IList<CategoryDto>>(It.IsAny<IEnumerable<Category>>()))
                 .Returns(categoryDtos);
 
             // Act
-            var result = await controller.Get();
+            var result = await controller.GetAsync();
 
             // Assert
             result.Should().BeOk(categoryDtos);
             CategoryLogicMock.Verify(
-                x => x.GetAllActive(), Times.Once());
+                x => x.GetAllActiveAsync(), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<IList<CategoryDto>>(categories), Times.Once());

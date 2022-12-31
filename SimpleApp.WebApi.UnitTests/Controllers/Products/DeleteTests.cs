@@ -22,16 +22,16 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var guid = Guid.NewGuid();
             var errorMessage = $"Product with ID {guid} does not exist.";
             ProductLogicMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(Result.Failure<Product>(errorMessage));
 
             // Act
-            var result = await controller.Delete(guid);
+            var result = await controller.DeleteAsync(guid);
 
             // Assert
             result.Should().BeNotFound<Product>(errorMessage);
             ProductLogicMock
-                .Verify(x => x.GetById(guid), Times.Once());
+                .Verify(x => x.GetByIdAsync(guid), Times.Once());
             ProductLogicMock
                 .Verify(x => x.Delete(It.IsAny<Product>()), Times.Never());
         }
@@ -47,12 +47,12 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Returns(Result.Failure<Category>(_product.Name, errorMessage));
 
             // Act
-            var result = await controller.Delete(_product.Id);
+            var result = await controller.DeleteAsync(_product.Id);
 
             // Assert
             result.Should().BeBadRequest<Category>(errorMessage);
             ProductLogicMock
-                .Verify(x => x.GetById(_product.Id), Times.Once());
+                .Verify(x => x.GetByIdAsync(_product.Id), Times.Once());
             ProductLogicMock
                 .Verify(x => x.Delete(_product), Times.Once());
         }
@@ -64,12 +64,12 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var logic = Create();
 
             // Act
-            var result = await logic.Delete(_product.Id);
+            var result = await logic.DeleteAsync(_product.Id);
 
             // Assert
             result.Should().BeOfType<NoContentResult>();
             ProductLogicMock
-                .Verify(x => x.GetById(_product.Id), Times.Once());
+                .Verify(x => x.GetByIdAsync(_product.Id), Times.Once());
             ProductLogicMock
                 .Verify(x => x.Delete(_product), Times.Once());
         }
@@ -85,7 +85,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         {
             _product = Builder<Product>.CreateNew().Build();
             ProductLogicMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(Result.Ok(_product));
             ProductLogicMock
                 .Setup(r => r.Delete(It.IsAny<Product>())).Returns(Result.Ok());

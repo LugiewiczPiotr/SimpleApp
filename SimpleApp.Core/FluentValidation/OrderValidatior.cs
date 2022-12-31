@@ -13,7 +13,7 @@ namespace SimpleApp.Core.FluentValidation
                 orders.RuleFor(x => x.ProductId)
                 .NotEmpty()
                 .WithMessage("This field cannot be empty")
-                .MustAsync(async (product, canccelation) => await productRepository.CheckIfProductExist(product))
+                .MustAsync(async (product, canccelation) => await productRepository.CheckIfProductExistAsync(product))
                 .WithMessage("Product dont exist");
 
                 orders.RuleFor(x => x.Quantity)

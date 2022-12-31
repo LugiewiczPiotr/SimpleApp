@@ -1,11 +1,11 @@
-﻿using FizzWare.NBuilder;
+﻿using System.Threading.Tasks;
+using FizzWare.NBuilder;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimpleApp.Core;
 using SimpleApp.Core.Models.Entities;
 using SimpleApp.WebApi.Controllers;
 using SimpleApp.WebApi.DTO;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace SimpleApp.WebApi.UnitTests.Controllers.Products
@@ -22,11 +22,11 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var controller = Create();
             var errorMessage = "validation fail";
             ProductLogicMock
-                .Setup(x => x.Add(It.IsAny<Product>()))
+                .Setup(x => x.AddAsync(It.IsAny<Product>()))
                 .ReturnsAsync(Result.Failure<Product>(_product.Name, errorMessage));
 
             // Act
-            var result = await controller.Post(_productDto);
+            var result = await controller.PostAsync(_productDto);
 
             // Assert
             result.Should().BeBadRequest<Product>(errorMessage);
@@ -34,7 +34,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 x => x.Map<Product>(_productDto), Times.Once());
 
             ProductLogicMock.Verify(
-               x => x.Add(_product), Times.Once());
+               x => x.AddAsync(_product), Times.Once());
 
             MapperMock.Verify(
                x => x.Map<ProductDto>(It.IsAny<Category>()), Times.Never());
@@ -47,7 +47,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var controller = Create();
 
             // Act
-            var result = await controller.Post(_productDto);
+            var result = await controller.PostAsync(_productDto);
 
             // Assert
             result.Should().BeCreatedAtAction(_productDto);
@@ -55,7 +55,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
               x => x.Map<Product>(_productDto), Times.Once());
 
             ProductLogicMock.Verify(
-               x => x.Add(_product), Times.Once());
+               x => x.AddAsync(_product), Times.Once());
 
             MapperMock.Verify(
                x => x.Map<ProductDto>(_product), Times.Once());
@@ -74,7 +74,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             _productDto = Builder<ProductDto>.CreateNew().Build();
             MapperMock.Setup(x => x.Map<Product>(It.IsAny<ProductDto>()))
                 .Returns(_product);
-            ProductLogicMock.Setup(x => x.Add(It.IsAny<Product>()))
+            ProductLogicMock.Setup(x => x.AddAsync(It.IsAny<Product>()))
                 .ReturnsAsync(Result.Ok(_product));
             MapperMock.Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
                 .Returns(_productDto);

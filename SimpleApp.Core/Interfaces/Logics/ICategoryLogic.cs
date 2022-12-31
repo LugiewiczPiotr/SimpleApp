@@ -7,13 +7,13 @@ namespace SimpleApp.Core.Interfaces.Logics
 {
     public interface ICategoryLogic : ILogic
     {
-        Task <Result<IEnumerable<Category>>> GetAllActive();
+        Task<Result<IEnumerable<Category>>> GetAllActiveAsync();
 
-        Task <Result<Category>> GetById(Guid id);
+        Task<Result<Category>> GetByIdAsync(Guid id);
 
-        Task<Result<Category>> Add(Category category);
+        Task<Result<Category>> AddAsync(Category category);
 
-        Task<Result<Category>> Update(Category category);
+        Task<Result<Category>> UpdateAsync(Category category);
 
         Result Delete(Category category);
     }

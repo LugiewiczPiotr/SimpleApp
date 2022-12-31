@@ -69,8 +69,8 @@ namespace SimpleApp.Core.Logics
 
             var hashedPassword = _passwordHasher.HashPassword(user, user.Password);
             user.Password = hashedPassword;
-            _userRepository.Add(user);
-            _userRepository.SaveChanges();
+            _userRepository.AddAsync(user);
+            _userRepository.SaveChangesAsync();
 
             return Result.Ok(user);
         }

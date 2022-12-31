@@ -7,10 +7,14 @@ namespace SimpleApp.Core.Interfaces.Repositories
 {
     public interface IRepository<T> where T : BaseModel
     {
-        Task<T> Add(T entity);
+        Task<T> AddAsync(T entity);
+
         void Delete(T entity);
-        Task<IEnumerable<T>> GetAllActive();
-        Task<T> GetById(Guid id);
-        Task SaveChanges();
+
+        Task<IEnumerable<T>> GetAllActiveAsync();
+
+        Task<T> GetByIdAsync(Guid id);
+
+        Task SaveChangesAsync();
     }
 }

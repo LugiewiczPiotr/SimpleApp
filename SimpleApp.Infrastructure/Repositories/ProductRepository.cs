@@ -17,7 +17,7 @@ namespace SimpleApp.Infrastructure.Repositories
         {
         }
 
-        public override async Task<IEnumerable<Product>> GetAllActive()
+        public override async Task<IEnumerable<Product>> GetAllActiveAsync()
         {
             return await Context.Products
                 .Include(c => c.Category)
@@ -25,7 +25,7 @@ namespace SimpleApp.Infrastructure.Repositories
                  .ToListAsync();
         }
 
-        public override async Task<Product> GetById(Guid id)
+        public override async Task<Product> GetByIdAsync(Guid id)
         {
            return await Context.Products
                 .Include(c => c.Category)
@@ -39,7 +39,7 @@ namespace SimpleApp.Infrastructure.Repositories
                 .Update(x => new Product() { IsActive = false });
         }
 
-        public async Task<bool> CheckIfProductExist(Guid Id)
+        public async Task<bool> CheckIfProductExistAsync(Guid Id)
         {
             return await Context.Products
                  .Where(p => p.Id == Id).AnyAsync();

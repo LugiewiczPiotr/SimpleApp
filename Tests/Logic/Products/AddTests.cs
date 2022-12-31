@@ -18,7 +18,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             var logic = Create();
 
             // Act
-            Func<Task> result = async () => await logic.Add(null);
+            Func<Task> result = async () => await logic.AddAsync(null);
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
@@ -26,10 +26,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
                 x => x.ValidateAsync(It.IsAny<Product>(), CancellationToken.None), Times.Never());
 
             ProductRepositoryMock.Verify(
-               x => x.Add(It.IsAny<Product>()), Times.Never());
+               x => x.AddAsync(It.IsAny<Product>()), Times.Never());
 
             ProductRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             ValidatorMock.SetValidationFailure(product.Name, errorMessage);
 
             // Act
-            var result = await logic.Add(product);
+            var result = await logic.AddAsync(product);
 
             // Assert
             result.Should().BeFailure(property: product.Name, message: errorMessage);
@@ -50,10 +50,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
                x => x.ValidateAsync(product, CancellationToken.None), Times.Once());
 
             ProductRepositoryMock.Verify(
-               x => x.Add(It.IsAny<Product>()), Times.Never());
+               x => x.AddAsync(It.IsAny<Product>()), Times.Never());
 
             ProductRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
             ValidatorMock.SetValidationSuccess();
 
             // Act
-            var result = await logic.Add(product);
+            var result = await logic.AddAsync(product);
 
             // Assert
             result.Should().BeSuccess(product);
@@ -73,10 +73,10 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
               x => x.ValidateAsync(product, CancellationToken.None), Times.Once());
 
             ProductRepositoryMock.Verify(
-               x => x.Add(product), Times.Once());
+               x => x.AddAsync(product), Times.Once());
 
             ProductRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Once());
+                x => x.SaveChangesAsync(), Times.Once());
         }
     }
 }

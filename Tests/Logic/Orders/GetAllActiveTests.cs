@@ -19,16 +19,16 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             var orderId = orders.Cast<Order>()
                 .FirstOrDefault(x => x.UserId != null);
             OrderRepositoryMock
-                .Setup(r => r.GetAllActiveOrders(orderId.UserId))
+                .Setup(r => r.GetAllActiveOrdersAsync(orderId.UserId))
                 .ReturnsAsync(orders);
 
             // Act
-            var result = await logic.GetAllActiveOrders(orderId.UserId);
+            var result = await logic.GetAllActiveOrdersAsync(orderId.UserId);
 
             // Assert
             result.Should().BeSuccess(orders);
             OrderRepositoryMock.Verify(
-                x => x.GetAllActiveOrders(orderId.UserId), Times.Once());
+                x => x.GetAllActiveOrdersAsync(orderId.UserId), Times.Once());
         }
     }
 }

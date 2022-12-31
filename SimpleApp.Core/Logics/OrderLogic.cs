@@ -20,16 +20,16 @@ namespace SimpleApp.Core.Logics
             _validator = validator;
         }
 
-        public async Task<Result<IEnumerable<Order>>> GetAllActiveOrders(Guid userId)
+        public async Task<Result<IEnumerable<Order>>> GetAllActiveOrdersAsync(Guid userId)
         {
-            var orders = await _orderRepository.GetAllActiveOrders(userId);
+            var orders = await _orderRepository.GetAllActiveOrdersAsync(userId);
 
             return Result.Ok(orders);
         }
 
-        public async Task<Result<Order>> GetById(Guid id)
+        public async Task<Result<Order>> GetByIdAsync(Guid id)
         {
-            var order = await _orderRepository.GetById(id);
+            var order = await _orderRepository.GetByIdAsync(id);
             if (order == null)
             {
                 return Result.Failure<Order>($"Order with ID {id} does not exist.");
@@ -38,7 +38,7 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(order);
         }
 
-        public async Task<Result<Order>> Add(Order order, Guid userId)
+        public async Task<Result<Order>> AddAsync(Order order, Guid userId)
         {
             if (order == null)
             {
@@ -53,13 +53,13 @@ namespace SimpleApp.Core.Logics
                 return Result.Failure<Order>(validationResult.Errors);
             }
 
-            await _orderRepository.Add(order);
-            await _orderRepository.SaveChanges();
+            await _orderRepository.AddAsync(order);
+            await _orderRepository.SaveChangesAsync();
 
             return Result.Ok(order);
         }
 
-        public async Task<Result<Order>> Update(Order order)
+        public async Task<Result<Order>> UpdateAsync(Order order)
         {
             if (order == null)
             {
@@ -91,7 +91,7 @@ namespace SimpleApp.Core.Logics
                 return Result.Failure<Order>(validationResult.Errors);
             }
 
-            await _orderRepository.SaveChanges();
+            await _orderRepository.SaveChangesAsync();
 
             return Result.Ok(order);
         }
@@ -104,7 +104,7 @@ namespace SimpleApp.Core.Logics
             }
 
             _orderRepository.Delete(order);
-            _orderRepository.SaveChanges();
+            _orderRepository.SaveChangesAsync();
 
             return Result.Ok(order);
         }

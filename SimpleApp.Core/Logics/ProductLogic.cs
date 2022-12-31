@@ -19,16 +19,16 @@ namespace SimpleApp.Core.Logics
             _validator = validator;
         }
 
-        public async Task<Result<IEnumerable<Product>>> GetAllActive()
+        public async Task<Result<IEnumerable<Product>>> GetAllActiveAsync()
         {
-            var products = await _productRepository.GetAllActive();
+            var products = await _productRepository.GetAllActiveAsync();
 
             return Result.Ok(products);
         }
 
-        public async Task<Result<Product>> GetById(Guid id)
+        public async Task<Result<Product>> GetByIdAsync(Guid id)
         {
-            var product = await _productRepository.GetById(id);
+            var product = await _productRepository.GetByIdAsync(id);
             if (product == null)
             {
                 return Result.Failure<Product>($"Product with ID {id} does not exist.");
@@ -37,7 +37,7 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(product);
         }
 
-        public async Task<Result<Product>> Add(Product product)
+        public async Task<Result<Product>> AddAsync(Product product)
         {
             if (product == null)
             {
@@ -50,13 +50,13 @@ namespace SimpleApp.Core.Logics
                 return Result.Failure<Product>(validationResult.Errors);
             }
 
-            await _productRepository.Add(product);
-            await _productRepository.SaveChanges();
+            await _productRepository.AddAsync(product);
+            await _productRepository.SaveChangesAsync();
 
             return Result.Ok(product);
         }
 
-        public async Task<Result<Product>> Update(Product product)
+        public async Task<Result<Product>> UpdateAsync(Product product)
         {
             if (product == null)
             {
@@ -69,7 +69,7 @@ namespace SimpleApp.Core.Logics
                 return Result.Failure<Product>(validationResult.Errors);
             }
 
-            await _productRepository.SaveChanges();
+            await _productRepository.SaveChangesAsync();
 
             return Result.Ok(product);
         }
@@ -82,7 +82,7 @@ namespace SimpleApp.Core.Logics
             }
 
             _productRepository.Delete(product);
-            _productRepository.SaveChanges();
+            _productRepository.SaveChangesAsync();
 
             return Result.Ok();
         }

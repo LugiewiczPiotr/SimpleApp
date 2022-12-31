@@ -19,7 +19,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             var logic = Create();
 
             // Act
-            Func<Task> result = async () => await logic.Update(null);
+            Func<Task> result = async () => await logic.UpdateAsync(null);
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
@@ -27,7 +27,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
                 x => x.ValidateAsync(It.IsAny<Category>(), CancellationToken.None), Times.Never());
 
             CategoryRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             ValidatorMock.SetValidationFailure(category.Name, errorMessage);
 
             // Act
-            var result = await logic.Update(category);
+            var result = await logic.UpdateAsync(category);
 
             // Assert
             result.Should().BeFailure(property: category.Name, message: errorMessage);
@@ -48,7 +48,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
                 x => x.ValidateAsync(category, CancellationToken.None), Times.Once());
 
             CategoryRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             ValidatorMock.SetValidationSuccess();
 
             // Act
-            var result = await logic.Update(category);
+            var result = await logic.UpdateAsync(category);
 
             // Assert
             result.Should().BeSuccess(category);
@@ -68,7 +68,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
                 x => x.ValidateAsync(category, CancellationToken.None), Times.Once());
 
             CategoryRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Once());
+                x => x.SaveChangesAsync(), Times.Once());
         }
     }
 }

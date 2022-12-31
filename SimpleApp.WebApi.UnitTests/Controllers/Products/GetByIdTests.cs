@@ -20,16 +20,16 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var guid = Guid.NewGuid();
             var errorMessage = $"Product with ID {guid} does not exist.";
             ProductLogicMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(Result.Failure<Product>(errorMessage));
 
             // Act
-            var result = await controller.Get(guid);
+            var result = await controller.GetAsync(guid);
 
             // Assert
             result.Should().BeNotFound<Product>(errorMessage);
             ProductLogicMock.Verify(
-                x => x.GetById(guid), Times.Once());
+                x => x.GetByIdAsync(guid), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Never());
@@ -42,18 +42,18 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var controller = Create();
             var product = Builder<Product>.CreateNew().Build();
             var productDto = Builder<ProductDto>.CreateNew().Build();
-            ProductLogicMock.Setup(r => r.GetById(It.IsAny<Guid>()))
+            ProductLogicMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(Result.Ok(product));
             MapperMock.Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
                 .Returns(productDto);
 
             // Act
-            var result = await controller.Get(product.Id);
+            var result = await controller.GetAsync(product.Id);
 
             // Assert
             result.Should().BeOk(productDto);
             ProductLogicMock.Verify(
-                x => x.GetById(product.Id), Times.Once());
+                x => x.GetByIdAsync(product.Id), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<ProductDto>(product), Times.Once());

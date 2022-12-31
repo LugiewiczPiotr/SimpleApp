@@ -19,7 +19,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             var logic = Create();
 
             // Act
-            Func<Task> result = async () => await logic.Update(null);
+            Func<Task> result = async () => await logic.UpdateAsync(null);
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
@@ -27,7 +27,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
                 x => x.ValidateAsync(It.IsAny<Order>(), CancellationToken.None), Times.Never());
 
             OrderRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             ValidatorMock.SetValidationFailure(order.Id.ToString(), errorMessage);
 
             // Act
-            var result = await logic.Update(order);
+            var result = await logic.UpdateAsync(order);
 
             // Assert
             result.Should().BeFailure(property: order.Id.ToString(), message: errorMessage);
@@ -48,7 +48,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
                 x => x.ValidateAsync(order, CancellationToken.None), Times.Once());
 
             OrderRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
             ValidatorMock.SetValidationSuccess();
 
             // Act
-            var result = await logic.Update(order);
+            var result = await logic.UpdateAsync(order);
 
             // Assert
             result.Should().BeSuccess(order);
@@ -68,7 +68,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
                 x => x.ValidateAsync(order, CancellationToken.None), Times.Once());
 
             OrderRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Once());
+                x => x.SaveChangesAsync(), Times.Once());
         }
     }
 }

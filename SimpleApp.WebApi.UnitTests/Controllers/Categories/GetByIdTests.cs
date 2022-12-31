@@ -20,16 +20,16 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var guid = Guid.NewGuid();
             var errorMessage = $"Category with ID {guid} does not exist.";
             CategoryLogicMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(Result.Failure<Category>(errorMessage));
 
             // Act
-            var result = await controller.Get(guid);
+            var result = await controller.GetAsync(guid);
 
             // Assert
             result.Should().BeNotFound<Category>(errorMessage);
             CategoryLogicMock.Verify(
-                x => x.GetById(guid), Times.Once());
+                x => x.GetByIdAsync(guid), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Never());
@@ -42,18 +42,18 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var controller = Create();
             var category = Builder<Category>.CreateNew().Build();
             var categoryDto = Builder<CategoryDto>.CreateNew().Build();
-            CategoryLogicMock.Setup(r => r.GetById(It.IsAny<Guid>()))
+            CategoryLogicMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(Result.Ok(category));
             MapperMock.Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))
                 .Returns(categoryDto);
 
             // Act
-            var result = await controller.Get(category.Id);
+            var result = await controller.GetAsync(category.Id);
 
             // Assert
             result.Should().BeOk(categoryDto);
             CategoryLogicMock.Verify(
-                x => x.GetById(category.Id), Times.Once());
+                x => x.GetByIdAsync(category.Id), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<CategoryDto>(category), Times.Once());

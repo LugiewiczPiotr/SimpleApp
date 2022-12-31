@@ -20,16 +20,16 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var controller = Create();
             var errorMessage = "BadRequest";
             var products = Builder<Product>.CreateListOfSize(1).Build().AsEnumerable();
-            ProductLogicMock.Setup(x => x.GetAllActive())
+            ProductLogicMock.Setup(x => x.GetAllActiveAsync())
                 .ReturnsAsync(Result.Failure<IEnumerable<Product>>(errorMessage));
 
             // Act
-            var result = await controller.Get();
+            var result = await controller.GetAsync();
 
             // Assert
             result.Should().BeBadRequest<IEnumerable<Product>>(errorMessage);
             ProductLogicMock.Verify(
-                x => x.GetAllActive(), Times.Once());
+                x => x.GetAllActiveAsync(), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<IList<ProductDto>>(It.IsAny<IEnumerable<Product>>()), Times.Never());
@@ -43,19 +43,19 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var products = Builder<Product>.CreateListOfSize(1).Build().AsEnumerable();
             var productsDto = Builder<ProductDto>.CreateListOfSize(1).Build();
             ProductLogicMock
-                .Setup(r => r.GetAllActive())
+                .Setup(r => r.GetAllActiveAsync())
                 .ReturnsAsync(Result.Ok(products));
             MapperMock
                 .Setup(m => m.Map<IList<ProductDto>>(It.IsAny<IEnumerable<Product>>()))
                 .Returns(productsDto);
 
             // Act
-            var result = await controller.Get();
+            var result = await controller.GetAsync();
 
             // Assert
             result.Should().BeOk(productsDto);
             ProductLogicMock.Verify(
-                x => x.GetAllActive(), Times.Once());
+                x => x.GetAllActiveAsync(), Times.Once());
             MapperMock.Verify(
                 x => x.Map<IList<ProductDto>>(products), Times.Once());
         }

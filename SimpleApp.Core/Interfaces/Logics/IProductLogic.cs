@@ -7,10 +7,14 @@ namespace SimpleApp.Core.Interfaces.Logics
 {
     public interface IProductLogic : ILogic
     {
-        Task<Result<IEnumerable<Product>>> GetAllActive();
-        Task<Result<Product>> GetById(Guid id);
-        Task<Result<Product>> Add(Product product); 
-        Task<Result<Product>> Update(Product product);
+        Task<Result<IEnumerable<Product>>> GetAllActiveAsync();
+
+        Task<Result<Product>> GetByIdAsync(Guid id);
+
+        Task<Result<Product>> AddAsync(Product product); 
+
+        Task<Result<Product>> UpdateAsync(Product product);
+
         Result Delete(Product product);
     }
 }

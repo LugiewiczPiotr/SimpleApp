@@ -24,16 +24,16 @@ namespace SimpleApp.Core.Logics
             _validator = validator;
         }
 
-        public async Task<Result<IEnumerable<Category>>> GetAllActive()
+        public async Task<Result<IEnumerable<Category>>> GetAllActiveAsync()
         {
-            var categories = await _categoryRepository.GetAllActive();
+            var categories = await _categoryRepository.GetAllActiveAsync();
 
             return Result.Ok(categories);
         }
 
-        public async Task<Result<Category>> GetById(Guid id)
+        public async Task<Result<Category>> GetByIdAsync(Guid id)
         {
-            var category = await _categoryRepository.GetById(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null)
             {
                 return Result.Failure<Category>($"Category with ID {id} does not exist.");
@@ -42,7 +42,7 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(category);
         }
 
-        public async Task<Result<Category>> Add(Category category)
+        public async Task<Result<Category>> AddAsync(Category category)
         {
             if (category == null)
             {
@@ -55,13 +55,13 @@ namespace SimpleApp.Core.Logics
                 return Result.Failure<Category>(validationResult.Errors);
             }
 
-            await _categoryRepository.Add(category);
-            await _categoryRepository.SaveChanges();
+            await _categoryRepository.AddAsync(category);
+            await _categoryRepository.SaveChangesAsync();
 
             return Result.Ok(category);
         }
 
-        public async Task<Result<Category>> Update(Category category)
+        public async Task<Result<Category>> UpdateAsync(Category category)
         {
             if (category == null)
             {
@@ -74,7 +74,7 @@ namespace SimpleApp.Core.Logics
                 return Result.Failure<Category>(validationResult.Errors);
             }
 
-            await _categoryRepository.SaveChanges();
+            await _categoryRepository.SaveChangesAsync();
 
             return Result.Ok(category);
         }
@@ -88,7 +88,7 @@ namespace SimpleApp.Core.Logics
 
             _productRepository.DeleteByCategoryId(category.Id);
             _categoryRepository.Delete(category);
-            _categoryRepository.SaveChanges();
+            _categoryRepository.SaveChangesAsync();
 
             return Result.Ok();
         }
