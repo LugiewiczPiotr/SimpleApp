@@ -19,7 +19,7 @@ namespace SimpleApp.Core.FluentValidation
 
             RuleFor(x => x.Price)
                 .NotEmpty().WithMessage("This field cannot be empty")
-                .ScalePrecision(2, 7).WithMessage(" Price must not be more than 7 digits in total,with allowance for 2 decimals.")
+                .PrecisionScale(7, 2, false).WithMessage(" Price must not be more than 7 digits in total,with allowance for 2 decimals.")
                 .GreaterThan(0).WithMessage("Value must be greater than 0");
 
             RuleFor(x => x.CategoryId)
