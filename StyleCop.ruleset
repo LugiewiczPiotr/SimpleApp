@@ -7,7 +7,6 @@
     <Rule Id="IDE0005" Action="Warning" />
     <Rule Id="IDE0052" Action="None" />
     <Rule Id="IDE0060" Action="None" />
-    <Rule Id="IDE1006" Action="None" />
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA0001" Action="None" />
@@ -16,10 +15,9 @@
     <Rule Id="SA1111" Action="None" />
     <Rule Id="SA1127" Action="None" />
     <Rule Id="SA1200" Action="None" />
-    <Rule Id="SA1300" Action="None" />
     <Rule Id="SA1309" Action="None" />
     <Rule Id="SA1313" Action="None" />
-    <Rule Id="SA1401" Action="None" />
+    <Rule Id="SA1401" Action="Warning" />
     <Rule Id="SA1402" Action="None" />
     <Rule Id="SA1413" Action="None" />
     <Rule Id="SA1516" Action="None" />
