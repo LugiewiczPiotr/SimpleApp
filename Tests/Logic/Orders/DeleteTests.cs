@@ -25,7 +25,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
                 x => x.Delete(It.IsAny<Order>()), Times.Never());
 
             OrderRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Orders
                 x => x.Delete(order), Times.Once());
 
             OrderRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Once());
+                x => x.SaveChangesAsync(), Times.Once());
         }
     }
 }

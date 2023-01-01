@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -12,47 +13,47 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
     public class GetByIdTests : BaseTests
     {
         [Fact]
-        public void Return_NotFound_When_Category_Not_Exist()
+        public async Task Return_NotFound_When_Category_Not_Exist()
         {
             // Arrange
             var controller = Create();
             var guid = Guid.NewGuid();
             var errorMessage = $"Category with ID {guid} does not exist.";
             CategoryLogicMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Failure<Category>(errorMessage));
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(Result.Failure<Category>(errorMessage));
 
             // Act
-            var result = controller.Get(guid);
+            var result = await controller.GetAsync(guid);
 
             // Assert
             result.Should().BeNotFound<Category>(errorMessage);
             CategoryLogicMock.Verify(
-                x => x.GetById(guid), Times.Once());
+                x => x.GetByIdAsync(guid), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Never());
         }
 
         [Fact]
-        public void Return_Ok_Category_When_Category_is_Exist()
+        public async Task Return_Ok_Category_When_Category_is_Exist()
         {
             // Arrange
             var controller = Create();
             var category = Builder<Category>.CreateNew().Build();
             var categoryDto = Builder<CategoryDto>.CreateNew().Build();
-            CategoryLogicMock.Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(category));
+            CategoryLogicMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(Result.Ok(category));
             MapperMock.Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))
                 .Returns(categoryDto);
 
             // Act
-            var result = controller.Get(category.Id);
+            var result = await controller.GetAsync(category.Id);
 
             // Assert
             result.Should().BeOk(categoryDto);
             CategoryLogicMock.Verify(
-                x => x.GetById(category.Id), Times.Once());
+                x => x.GetByIdAsync(category.Id), Times.Once());
 
             MapperMock.Verify(
                 x => x.Map<CategoryDto>(category), Times.Once());

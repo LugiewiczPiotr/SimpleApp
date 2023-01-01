@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.Core.Interfaces.Logics;
@@ -18,9 +19,9 @@ namespace SimpleApp.Web.Controllers
             _mapper = mapper;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> IndexAsync()
         {
-            var categories = _categoryLogic.GetAllActive();
+            var categories = await _categoryLogic.GetAllActiveAsync();
 
             var indexViewModel = new IndexViewModel()
             {
@@ -30,14 +31,14 @@ namespace SimpleApp.Web.Controllers
             return View(indexViewModel);
         }
 
-        public IActionResult Details(Guid id)
+        public async Task<IActionResult> DetailsAsync(Guid id)
         {
             if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var getResult = _categoryLogic.GetById(id);
+            var getResult = await _categoryLogic.GetByIdAsync(id);
 
             if (getResult.Success == false)
             {
@@ -57,7 +58,7 @@ namespace SimpleApp.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CategoryViewModel categoryViewModel)
+        public async Task<ActionResult> CreateAsync(CategoryViewModel categoryViewModel)
         {
             if (ModelState.IsValid == false)
             {
@@ -66,7 +67,7 @@ namespace SimpleApp.Web.Controllers
 
             var category = _mapper.Map<Category>(categoryViewModel);
 
-            var addResult = _categoryLogic.Add(category);
+            var addResult = await _categoryLogic.AddAsync(category);
 
             if (addResult.Success == false)
             {
@@ -77,14 +78,14 @@ namespace SimpleApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(Guid id)
+        public async Task<ActionResult> EditAsync(Guid id)
         {
             if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var getResult = _categoryLogic.GetById(id);
+            var getResult = await _categoryLogic.GetByIdAsync(id);
 
             if (getResult.Success == false)
             {
@@ -97,14 +98,14 @@ namespace SimpleApp.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CategoryViewModel categoryViewModel)
+        public async Task<ActionResult> EditAsync(CategoryViewModel categoryViewModel)
         {
             if (ModelState.IsValid == false)
             {
                 return View(categoryViewModel);
             }
 
-            var getResult = _categoryLogic.GetById(categoryViewModel.Id);
+            var getResult = await _categoryLogic.GetByIdAsync(categoryViewModel.Id);
 
             if (getResult.Success == false)
             {
@@ -114,7 +115,7 @@ namespace SimpleApp.Web.Controllers
 
             _mapper.Map(categoryViewModel, getResult.Value);
 
-            var result = _categoryLogic.Update(getResult.Value);
+            var result = await _categoryLogic.UpdateAsync(getResult.Value);
 
             if (result.Success == false)
             {
@@ -126,14 +127,14 @@ namespace SimpleApp.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Delete(Guid id)
+        public async Task<ActionResult> DeleteAsync(Guid id)
         {
             if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var getResult = _categoryLogic.GetById(id);
+            var getResult = await _categoryLogic.GetByIdAsync(id);
 
             if (getResult.Success == false)
             {
@@ -147,9 +148,9 @@ namespace SimpleApp.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
-        public ActionResult DeletePost(Guid id)
+        public async Task<ActionResult> DeletePostAsync(Guid id)
         {
-            var getResult = _categoryLogic.GetById(id);
+            var getResult = await _categoryLogic.GetByIdAsync(id);
 
             if (getResult.Success == false)
             {

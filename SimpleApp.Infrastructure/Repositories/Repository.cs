@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SimpleApp.Core.Interfaces.Repositories;
 using SimpleApp.Core.Models.Entities;
 using SimpleApp.Infrastructure.Data;
@@ -9,30 +11,30 @@ namespace SimpleApp.Infrastructure.Repositories
 {
     public abstract class Repository<T> : IRepository<T> where T : BaseModel, new()
     {
-        protected readonly AppDbContext Context;
-
         protected Repository(AppDbContext dataContext)
         {
             Context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
         }
 
-        public virtual T GetById(Guid id)
+        protected AppDbContext Context { get; }
+
+        public virtual async Task<T> GetByIdAsync(Guid id)
         {
-            return Context.Set<T>()
-                .FirstOrDefault(e => e.Id == id && e.IsActive);
+            return await Context.Set<T>()
+                .FirstOrDefaultAsync(e => e.Id == id && e.IsActive);
         }
 
-        public virtual IEnumerable<T> GetAllActive()
+        public virtual async Task<IEnumerable<T>> GetAllActiveAsync()
         {
-            return Context.Set<T>()
+            return await Context.Set<T>()
                 .Where(e => e.IsActive)
-                .ToList();
+                .ToListAsync();
         }
 
-        public virtual T Add(T entity)
+        public virtual async Task<T> AddAsync(T entity)
         {
-            Context.Set<T>()
-                .Add(entity);
+            await Context.Set<T>()
+                .AddAsync(entity);
 
             return entity;
         }
@@ -42,9 +44,9 @@ namespace SimpleApp.Infrastructure.Repositories
             entity.IsActive = false;
         }
 
-        public virtual void SaveChanges()
+        public virtual async Task SaveChangesAsync()
         {
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
     }
 }

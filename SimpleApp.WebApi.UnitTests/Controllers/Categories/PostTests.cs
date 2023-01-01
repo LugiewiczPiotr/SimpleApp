@@ -1,4 +1,5 @@
-﻿using FizzWare.NBuilder;
+﻿using System.Threading.Tasks;
+using FizzWare.NBuilder;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimpleApp.Core;
@@ -14,17 +15,17 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
         private Category _category;
         private CategoryDto _categoryDto;
         [Fact]
-        public void Return_BeBadRequest_When_Category_Is_Not_Valid()
+        public async Task Return_BeBadRequest_When_Category_Is_Not_Valid()
         {
             // Arrange
             var controller = Create();
             var errorMessage = "validation fail";
             CategoryLogicMock
-                .Setup(x => x.Add(It.IsAny<Category>()))
-                .Returns(Result.Failure<Category>(_category.Name, errorMessage));
+                .Setup(x => x.AddAsync(It.IsAny<Category>()))
+                .ReturnsAsync(Result.Failure<Category>(_category.Name, errorMessage));
 
             // Act
-            var result = controller.Post(_categoryDto);
+            var result = await controller.PostAsync(_categoryDto);
 
             // Assert
             result.Should().BeBadRequest<Category>(errorMessage);
@@ -32,20 +33,20 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
                x => x.Map<Category>(_categoryDto), Times.Once());
 
             CategoryLogicMock.Verify(
-               x => x.Add(_category), Times.Once());
+               x => x.AddAsync(_category), Times.Once());
 
             MapperMock.Verify(
               x => x.Map<CategoryDto>(It.IsAny<Category>()), Times.Never());
         }
 
         [Fact]
-        public void Return_Created_When_Category_Is_Valid()
+        public async Task Return_Created_When_Category_Is_Valid()
         {
             // Arrange
             var controller = Create();
 
             // Act
-            var result = controller.Post(_categoryDto);
+            var result = await controller.PostAsync(_categoryDto);
 
             // Assert
             result.Should().BeCreatedAtAction(_categoryDto);
@@ -53,7 +54,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
                x => x.Map<Category>(_categoryDto), Times.Once());
 
             CategoryLogicMock.Verify(
-               x => x.Add(_category), Times.Once());
+               x => x.AddAsync(_category), Times.Once());
 
             MapperMock.Verify(
                x => x.Map<CategoryDto>(_category), Times.Once());
@@ -72,8 +73,8 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             _categoryDto = Builder<CategoryDto>.CreateNew().Build();
             MapperMock.Setup(x => x.Map<Category>(It.IsAny<CategoryDto>()))
                .Returns(_category);
-            CategoryLogicMock.Setup(x => x.Add(It.IsAny<Category>()))
-                .Returns(Result.Ok(_category));
+            CategoryLogicMock.Setup(x => x.AddAsync(It.IsAny<Category>()))
+                .ReturnsAsync(Result.Ok(_category));
             MapperMock.Setup(x => x.Map<CategoryDto>(It.IsAny<Category>()))
                 .Returns(_categoryDto);
         }

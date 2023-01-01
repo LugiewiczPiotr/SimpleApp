@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
@@ -17,19 +19,19 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             var logic = Create();
 
             // Act
-            Action result = () => logic.Update(null);
+            Func<Task> result = async () => await logic.UpdateAsync(null);
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
             ValidatorMock.Verify(
-                x => x.Validate(It.IsAny<Category>()), Times.Never());
+                x => x.ValidateAsync(It.IsAny<Category>(), CancellationToken.None), Times.Never());
 
             CategoryRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
-        public void Return_Failure_When_Category_Is_Not_Valid()
+        public async Task Return_Failure_When_Category_Is_Not_Valid()
         {
             // Arrange
             var logic = Create();
@@ -38,19 +40,19 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             ValidatorMock.SetValidationFailure(category.Name, errorMessage);
 
             // Act
-            var result = logic.Update(category);
+            var result = await logic.UpdateAsync(category);
 
             // Assert
             result.Should().BeFailure(property: category.Name, message: errorMessage);
             ValidatorMock.Verify(
-                x => x.Validate(category), Times.Once());
+                x => x.ValidateAsync(category, CancellationToken.None), Times.Once());
 
             CategoryRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Never());
+                x => x.SaveChangesAsync(), Times.Never());
         }
 
         [Fact]
-        public void Return_Success_When_Category_Is_Valid()
+        public async Task Return_Success_When_Category_Is_Valid()
         {
             // Arrange
             var logic = Create();
@@ -58,15 +60,15 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             ValidatorMock.SetValidationSuccess();
 
             // Act
-            var result = logic.Update(category);
+            var result = await logic.UpdateAsync(category);
 
             // Assert
             result.Should().BeSuccess(category);
             ValidatorMock.Verify(
-                x => x.Validate(category), Times.Once());
+                x => x.ValidateAsync(category, CancellationToken.None), Times.Once());
 
             CategoryRepositoryMock.Verify(
-                x => x.SaveChanges(), Times.Once());
+                x => x.SaveChangesAsync(), Times.Once());
         }
     }
 }

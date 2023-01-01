@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using SimpleApp.Core.Models.Entities;
 
 namespace SimpleApp.Core.Interfaces.Repositories
 {
     public interface IOrderRepository : IRepository<Order>
     {
-        IEnumerable<Order> GetAllActiveOrders(Guid userId);
+        Task<IEnumerable<Order>> GetAllActiveOrdersAsync(Guid userId);
     }
 }

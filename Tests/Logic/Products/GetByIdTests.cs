@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using Moq;
 using SimpleApp.Core.Models.Entities;
@@ -9,41 +10,41 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
     public class GetByIdTests : BaseTests
     {
         [Fact]
-        public void Return_Error_When_Product_Not_Exist()
+        public async Task Return_Error_When_Product_Not_Exist()
         {
             // Arrange
             var logic = Create();
             ProductRepositoryMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns((Product)null);
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync((Product)null);
             var guid = Guid.NewGuid();
 
             // Act
-            var result = logic.GetById(guid);
+            var result = await logic.GetByIdAsync(guid);
 
             // Assert
             result.Should().BeFailure($"Product with ID {guid} does not exist.");
             ProductRepositoryMock.Verify(
-                x => x.GetById(guid), Times.Once());
+                x => x.GetByIdAsync(guid), Times.Once());
         }
 
         [Fact]
-        public void Return_Product_From_Repository()
+        public async Task Return_Product_From_RepositoryAsync()
         {
             // Arrange
             var logic = Create();
             var product = Builder<Product>.CreateNew().Build();
             ProductRepositoryMock
-                .Setup(r => r.GetById(It.IsAny<Guid>())).
-                Returns(product);
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).
+                ReturnsAsync(product);
 
             // Act
-            var result = logic.GetById(product.Id);
+            var result = await logic.GetByIdAsync(product.Id);
 
             // Assert
             result.Should().BeSuccess(product);
             ProductRepositoryMock.Verify(
-                x => x.GetById(product.Id), Times.Once());
+                x => x.GetByIdAsync(product.Id), Times.Once());
         }
     }
 }

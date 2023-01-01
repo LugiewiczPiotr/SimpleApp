@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,9 +31,9 @@ namespace SimpleApp.WebApi.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<ProductDto>))]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAsync()
         {
-            var result = _productLogic.GetAllActive();
+            var result = await _productLogic.GetAllActiveAsync();
             if (result.Success == false)
             {
                 return BadRequest(result);
@@ -48,14 +49,14 @@ namespace SimpleApp.WebApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<ProductDto>))]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> GetAsync(Guid id)
         {
             if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var getResult = _productLogic.GetById(id);
+            var getResult = await _productLogic.GetByIdAsync(id);
             if (getResult.Success == false)
             {
                 return NotFound(getResult);
@@ -71,11 +72,11 @@ namespace SimpleApp.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<ProductDto>))]
-        public IActionResult Post([FromBody] ProductDto productDto)
+        public async Task<IActionResult> PostAsync([FromBody] ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
 
-            var addResult = _productLogic.Add(product);
+            var addResult = await _productLogic.AddAsync(product);
             if (addResult.Success == false)
             {
                 addResult.AddErrorToModelState(ModelState);
@@ -84,7 +85,7 @@ namespace SimpleApp.WebApi.Controllers
 
             var productResult = _mapper.Map<ProductDto>(addResult.Value);
             return CreatedAtAction(
-                nameof(Get),
+                nameof(GetAsync),
                 new { id = addResult.Value.Id },
                 Result.Ok(productResult));
         }
@@ -96,9 +97,9 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result<ProductDto>))]
-        public IActionResult Put(Guid id, [FromBody] ProductDto productDto)
+        public async Task<IActionResult> PutAsync(Guid id, [FromBody] ProductDto productDto)
         {
-            var getResult = _productLogic.GetById(id);
+            var getResult = await _productLogic.GetByIdAsync(id);
             if (getResult.Success == false)
             {
                 getResult.AddErrorToModelState(ModelState);
@@ -107,7 +108,7 @@ namespace SimpleApp.WebApi.Controllers
 
             _mapper.Map(productDto, getResult.Value);
 
-            var resultUpdate = _productLogic.Update(getResult.Value);
+            var resultUpdate = await _productLogic.UpdateAsync(getResult.Value);
             if (resultUpdate.Success == false)
             {
                 resultUpdate.AddErrorToModelState(ModelState);
@@ -126,9 +127,9 @@ namespace SimpleApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var getResult = _productLogic.GetById(id);
+            var getResult = await _productLogic.GetByIdAsync(id);
             if (getResult.Success == false)
             {
                 return NotFound(getResult);

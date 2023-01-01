@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -14,29 +15,29 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         private Product _product;
 
         [Fact]
-        public void Return_NotFound_When_Product_Not_Exist()
+        public async Task Return_NotFound_When_Product_Not_Exist()
         {
             // Arrange
             var controller = Create();
             var guid = Guid.NewGuid();
             var errorMessage = $"Product with ID {guid} does not exist.";
             ProductLogicMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Failure<Product>(errorMessage));
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(Result.Failure<Product>(errorMessage));
 
             // Act
-            var result = controller.Delete(guid);
+            var result = await controller.DeleteAsync(guid);
 
             // Assert
             result.Should().BeNotFound<Product>(errorMessage);
             ProductLogicMock
-                .Verify(x => x.GetById(guid), Times.Once());
+                .Verify(x => x.GetByIdAsync(guid), Times.Once());
             ProductLogicMock
                 .Verify(x => x.Delete(It.IsAny<Product>()), Times.Never());
         }
 
         [Fact]
-        public void Return_BeBadRequest_When_Product_Is_Not_Valid()
+        public async Task Return_BeBadRequest_When_Product_Is_Not_Valid()
         {
             // Arrange
             var errorMessage = "BadRequest";
@@ -46,29 +47,29 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Returns(Result.Failure<Category>(_product.Name, errorMessage));
 
             // Act
-            var result = controller.Delete(_product.Id);
+            var result = await controller.DeleteAsync(_product.Id);
 
             // Assert
             result.Should().BeBadRequest<Category>(errorMessage);
             ProductLogicMock
-                .Verify(x => x.GetById(_product.Id), Times.Once());
+                .Verify(x => x.GetByIdAsync(_product.Id), Times.Once());
             ProductLogicMock
                 .Verify(x => x.Delete(_product), Times.Once());
         }
 
         [Fact]
-        public void Return_NoContent_When_Product_Is_Deleted()
+        public async Task Return_NoContent_When_Product_Is_Deleted()
         {
             // Arrange
             var logic = Create();
 
             // Act
-            var result = logic.Delete(_product.Id);
+            var result = await logic.DeleteAsync(_product.Id);
 
             // Assert
             result.Should().BeOfType<NoContentResult>();
             ProductLogicMock
-                .Verify(x => x.GetById(_product.Id), Times.Once());
+                .Verify(x => x.GetByIdAsync(_product.Id), Times.Once());
             ProductLogicMock
                 .Verify(x => x.Delete(_product), Times.Once());
         }
@@ -84,8 +85,8 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
         {
             _product = Builder<Product>.CreateNew().Build();
             ProductLogicMock
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(Result.Ok(_product));
+                .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(Result.Ok(_product));
             ProductLogicMock
                 .Setup(r => r.Delete(It.IsAny<Product>())).Returns(Result.Ok());
         }

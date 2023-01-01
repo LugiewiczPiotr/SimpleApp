@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using SimpleApp.Core.Models.Entities;
 
 namespace SimpleApp.Core.Interfaces.Logics
 {
     public interface ICategoryLogic : ILogic
     {
-        Result<IEnumerable<Category>> GetAllActive();
+        Task<Result<IEnumerable<Category>>> GetAllActiveAsync();
 
-        Result<Category> GetById(Guid id);
+        Task<Result<Category>> GetByIdAsync(Guid id);
 
-        Result<Category> Add(Category category);
+        Task<Result<Category>> AddAsync(Category category);
 
-        Result<Category> Update(Category category);
+        Task<Result<Category>> UpdateAsync(Category category);
 
         Result Delete(Category category);
     }

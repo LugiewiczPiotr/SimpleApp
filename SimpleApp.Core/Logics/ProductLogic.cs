@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentValidation;
 using SimpleApp.Core.Interfaces.Logics;
 using SimpleApp.Core.Interfaces.Repositories;
@@ -18,16 +19,16 @@ namespace SimpleApp.Core.Logics
             _validator = validator;
         }
 
-        public Result<IEnumerable<Product>> GetAllActive()
+        public async Task<Result<IEnumerable<Product>>> GetAllActiveAsync()
         {
-            var products = _productRepository.GetAllActive();
+            var products = await _productRepository.GetAllActiveAsync();
 
             return Result.Ok(products);
         }
 
-        public Result<Product> GetById(Guid id)
+        public async Task<Result<Product>> GetByIdAsync(Guid id)
         {
-            var product = _productRepository.GetById(id);
+            var product = await _productRepository.GetByIdAsync(id);
             if (product == null)
             {
                 return Result.Failure<Product>($"Product with ID {id} does not exist.");
@@ -36,33 +37,33 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(product);
         }
 
-        public Result<Product> Add(Product product)
+        public async Task<Result<Product>> AddAsync(Product product)
         {
             ArgumentNullException.ThrowIfNull(nameof(product));
 
-            var validationResult = _validator.Validate(product);
+            var validationResult = await _validator.ValidateAsync(product);
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<Product>(validationResult.Errors);
             }
 
-            _productRepository.Add(product);
-            _productRepository.SaveChanges();
+            await _productRepository.AddAsync(product);
+            await _productRepository.SaveChangesAsync();
 
             return Result.Ok(product);
         }
 
-        public Result<Product> Update(Product product)
+        public async Task<Result<Product>> UpdateAsync(Product product)
         {
             ArgumentNullException.ThrowIfNull(nameof(product));
 
-            var validationResult = _validator.Validate(product);
+            var validationResult = await _validator.ValidateAsync(product);
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<Product>(validationResult.Errors);
             }
 
-            _productRepository.SaveChanges();
+            await _productRepository.SaveChangesAsync();
 
             return Result.Ok(product);
         }
@@ -72,7 +73,7 @@ namespace SimpleApp.Core.Logics
             ArgumentNullException.ThrowIfNull(nameof(product));
 
             _productRepository.Delete(product);
-            _productRepository.SaveChanges();
+            _productRepository.SaveChangesAsync();
 
             return Result.Ok();
         }
