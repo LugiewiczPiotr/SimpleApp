@@ -19,7 +19,7 @@ namespace SimpleApp.Infrastructure.Repositories
 
         public override async Task<IEnumerable<Product>> GetAllActiveAsync()
         {
-            return await _context.Products
+            return await Context.Products
                 .Include(c => c.Category)
                  .Where(p => p.IsActive)
                  .ToListAsync();
