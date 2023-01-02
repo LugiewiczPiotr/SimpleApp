@@ -18,6 +18,9 @@ namespace SimpleApp.Infrastructure.Data.EntityConfigurations
 
             builder.Property(c => c.Price)
                 .HasColumnType("decimal(9, 2)");
+
+            builder.Property(p => p.RowVersion)
+               .IsRowVersion();
         }
     }
 }
