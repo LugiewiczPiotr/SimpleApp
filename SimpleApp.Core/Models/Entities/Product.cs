@@ -9,5 +9,6 @@ namespace SimpleApp.Core.Models.Entities
         public virtual Category Category { get; set; }
         public Guid CategoryId { get; set; }
         public decimal Price { get; set; }
+        public byte[] RowVersion { get; set; }
     }
 }
