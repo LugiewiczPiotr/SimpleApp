@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Data;
+using System.Linq.Expressions;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -25,10 +29,22 @@ namespace SimpleApp.WebApi.Infrastructure.Middleware
             }
             catch (Exception exception)
             {
-                context.Response.StatusCode = 500;
-                var result = JsonConvert.SerializeObject(exception);
-                _logger.LogError(exception, "An unhandled exception has occurred");
                 context.Response.ContentType = "application/json";
+                var response = context.Response;
+                switch (exception)
+                {
+                    case DbUpdateConcurrencyException concurrencyException:
+                        response.StatusCode = (int)HttpStatusCode.Conflict;
+                        _logger.LogError(concurrencyException, "Changes to this 'customer' record can't be saved.");
+                        break;
+
+                    default:
+                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        _logger.LogError(exception, "An unhandled exception has occurred");
+                        break;
+                }
+
+                var result = JsonConvert.SerializeObject(exception);
                 await context.Response.WriteAsync(result);
             }
         }
