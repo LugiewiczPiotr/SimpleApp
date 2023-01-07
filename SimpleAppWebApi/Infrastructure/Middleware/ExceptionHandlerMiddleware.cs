@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data;
-using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -44,7 +42,10 @@ namespace SimpleApp.WebApi.Infrastructure.Middleware
                         break;
                 }
 
-                var result = JsonConvert.SerializeObject(exception);
+                var typeExcpetion = exception.GetType();
+                var exceptionResponse = new ExceptionHandlerResponse(typeExcpetion.Name, exception.Message);
+
+                var result = JsonConvert.SerializeObject(exceptionResponse);
                 await context.Response.WriteAsync(result);
             }
         }
