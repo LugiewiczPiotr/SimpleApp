@@ -27,27 +27,32 @@ namespace SimpleApp.WebApi.Infrastructure.Middleware
             }
             catch (Exception exception)
             {
-                context.Response.ContentType = "application/json";
-                var response = context.Response;
-                switch (exception)
-                {
-                    case DbUpdateConcurrencyException concurrencyException:
-                        response.StatusCode = (int)HttpStatusCode.Conflict;
-                        _logger.LogError(concurrencyException, "Changes to this 'customer' record can't be saved.");
-                        break;
-
-                    default:
-                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        _logger.LogError(exception, "An unhandled exception has occurred");
-                        break;
-                }
-
-                var typeExcpetion = exception.GetType();
-                var exceptionResponse = new ExceptionHandlerResponse(typeExcpetion.Name, exception.Message);
-
-                var result = JsonConvert.SerializeObject(exceptionResponse);
-                await context.Response.WriteAsync(result);
+                await SetHttpContextResponseAsync(exception, context);
             }
+        }
+
+        private async Task SetHttpContextResponseAsync(Exception exception, HttpContext context)
+        {
+            context.Response.ContentType = "application/json";
+            var response = context.Response;
+            switch (exception)
+            {
+                case DbUpdateConcurrencyException concurrencyException:
+                    response.StatusCode = (int)HttpStatusCode.Conflict;
+                    _logger.LogError(concurrencyException, "Changes to this 'customer' record can't be saved.");
+                    break;
+
+                default:
+                    response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    _logger.LogError(exception, "An unhandled exception has occurred");
+                    break;
+            }
+
+            var exceptionType = exception.GetType();
+            var exceptionResponse = new ExceptionHandlerResponse(exceptionType.Name, exception.Message);
+
+            var result = JsonConvert.SerializeObject(exceptionResponse);
+            await context.Response.WriteAsync(result);
         }
     }
 }
