@@ -15,6 +15,9 @@ namespace SimpleApp.Infrastructure.Data.EntityConfigurations
                 .IsRequired();
 
             builder.HasKey(c => new { c.OrderId, c.ProductId });
+
+            builder.Property(p => p.RowVersion)
+               .IsRowVersion();
         }
     }
 }

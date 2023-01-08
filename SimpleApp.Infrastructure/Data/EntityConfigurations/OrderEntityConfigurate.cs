@@ -13,6 +13,9 @@ namespace SimpleApp.Infrastructure.Data.EntityConfigurations
             builder
                .Property(x => x.Status)
                .HasConversion(new EnumToStringConverter<OrderStatus>());
+
+            builder.Property(p => p.RowVersion)
+               .IsRowVersion();
         }
     }
 }

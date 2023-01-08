@@ -19,5 +19,6 @@ namespace SimpleApp.Core.Models.Entities
         public DateTime? CancelledAt { get; set; }
         public OrderStatus Status { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
+        public byte[] RowVersion { get; set; }
     }
 }

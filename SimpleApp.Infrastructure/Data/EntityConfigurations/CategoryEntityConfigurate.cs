@@ -11,6 +11,9 @@ namespace SimpleApp.Infrastructure.Data.EntityConfigurations
             builder.Property(c => c.Name)
                 .IsRequired()
                 .HasMaxLength(20);
+
+            builder.Property(p => p.RowVersion)
+                .IsRowVersion();
         }
     }
 }
