@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.Infrastructure", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.WebApi", "SimpleAppWebApi\SimpleApp.WebApi.csproj", "{EA61DE78-4AAB-4C38-A660-30EA741F36EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.Core.UnitTests", "Tests\SimpleApp.Core.UnitTests.csproj", "{62025DA2-8647-4E94-B61D-044F28FA934C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.Core.UnitTests", "SimpleApp.Core.UnitTests\SimpleApp.Core.UnitTests.csproj", "{62025DA2-8647-4E94-B61D-044F28FA934C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleApp.WebApi.UnitTests", "SimpleApp.WebApi.UnitTests\SimpleApp.WebApi.UnitTests.csproj", "{29FAA632-430C-41BC-A515-8E189D6BB61F}"
 EndProject

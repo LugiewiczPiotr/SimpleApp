@@ -40,7 +40,7 @@ namespace SimpleApp.Core.Logics
 
         public async Task<Result<Order>> AddAsync(Order order, Guid userId)
         {
-            ArgumentNullException.ThrowIfNull(nameof(order));
+            ArgumentNullException.ThrowIfNull(order, nameof(order));
 
             order.UserId = userId;
 
@@ -58,7 +58,7 @@ namespace SimpleApp.Core.Logics
 
         public async Task<Result<Order>> UpdateAsync(Order order)
         {
-            ArgumentNullException.ThrowIfNull(nameof(order));
+            ArgumentNullException.ThrowIfNull(order, nameof(order));
 
             switch (order.Status)
             {
@@ -92,7 +92,7 @@ namespace SimpleApp.Core.Logics
 
         public Result Delete(Order order)
         {
-            ArgumentNullException.ThrowIfNull(nameof(order));
+            ArgumentNullException.ThrowIfNull(order, nameof(order));
 
             _orderRepository.Delete(order);
             _orderRepository.SaveChangesAsync();
