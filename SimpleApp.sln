@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.Core", "SimpleApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.Infrastructure", "SimpleApp.Infrastructure\SimpleApp.Infrastructure.csproj", "{87177A4E-A20E-4400-8154-3AD3212E6A27}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.WebApi", "SimpleAppWebApi\SimpleApp.WebApi.csproj", "{EA61DE78-4AAB-4C38-A660-30EA741F36EE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.Core.UnitTests", "SimpleApp.Core.UnitTests\SimpleApp.Core.UnitTests.csproj", "{62025DA2-8647-4E94-B61D-044F28FA934C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleApp.WebApi.UnitTests", "SimpleApp.WebApi.UnitTests\SimpleApp.WebApi.UnitTests.csproj", "{29FAA632-430C-41BC-A515-8E189D6BB61F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.WebApi.UnitTests", "SimpleApp.WebApi.UnitTests\SimpleApp.WebApi.UnitTests.csproj", "{29FAA632-430C-41BC-A515-8E189D6BB61F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleApp.WebApi", "SimpleApp.WebApi\SimpleApp.WebApi.csproj", "{8E819936-3BCA-4361-926F-FE839377C685}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,6 @@ Global
 		{87177A4E-A20E-4400-8154-3AD3212E6A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87177A4E-A20E-4400-8154-3AD3212E6A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87177A4E-A20E-4400-8154-3AD3212E6A27}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA61DE78-4AAB-4C38-A660-30EA741F36EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA61DE78-4AAB-4C38-A660-30EA741F36EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA61DE78-4AAB-4C38-A660-30EA741F36EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA61DE78-4AAB-4C38-A660-30EA741F36EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{62025DA2-8647-4E94-B61D-044F28FA934C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{62025DA2-8647-4E94-B61D-044F28FA934C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62025DA2-8647-4E94-B61D-044F28FA934C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{29FAA632-430C-41BC-A515-8E189D6BB61F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29FAA632-430C-41BC-A515-8E189D6BB61F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29FAA632-430C-41BC-A515-8E189D6BB61F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E819936-3BCA-4361-926F-FE839377C685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E819936-3BCA-4361-926F-FE839377C685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E819936-3BCA-4361-926F-FE839377C685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E819936-3BCA-4361-926F-FE839377C685}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
