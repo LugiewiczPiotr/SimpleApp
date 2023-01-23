@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using SimpleApp.Core.Interfaces.Logics;
@@ -51,11 +52,11 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(token);
         }
 
-        public Result<User> CreateAccount(User user)
+        public async Task<Result<User>> CreateAccountAsync(User user)
         {
             ArgumentNullException.ThrowIfNull(nameof(user));
 
-            var validationResult = _registerValidator.Validate(user);
+            var validationResult = await _registerValidator.ValidateAsync(user);
             if (validationResult.IsValid == false)
             {
                 return Result.Failure<User>(validationResult.Errors);
@@ -63,8 +64,8 @@ namespace SimpleApp.Core.Logics
 
             var hashedPassword = _passwordHasher.HashPassword(user, user.Password);
             user.Password = hashedPassword;
-            _userRepository.AddAsync(user);
-            _userRepository.SaveChangesAsync();
+            await _userRepository.AddAsync(user);
+            await _userRepository.SaveChangesAsync();
 
             return Result.Ok(user);
         }
