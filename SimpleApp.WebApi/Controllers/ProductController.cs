@@ -69,6 +69,7 @@ namespace SimpleApp.WebApi.Controllers
         /// <summary>
         /// Create product.
         /// </summary>
+        [ActionName("GetAsync")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Result<ProductDto>))]
