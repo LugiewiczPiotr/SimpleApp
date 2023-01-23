@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ namespace SimpleApp.WebApi.Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(User))]
-        public IActionResult Register([FromBody] RegisterDto data)
+        public async Task<IActionResult> RegisterAsync([FromBody] RegisterDto data)
         {
             if (data == null)
             {
@@ -39,7 +40,7 @@ namespace SimpleApp.WebApi.Controllers
             }
 
             var user = _mapper.Map<User>(data);
-            var createResult = _userLogic.CreateAccount(user);
+            var createResult = await _userLogic.CreateAccountAsync(user);
             if (createResult.Success == false)
             {
                 createResult.AddErrorToModelState(ModelState);
