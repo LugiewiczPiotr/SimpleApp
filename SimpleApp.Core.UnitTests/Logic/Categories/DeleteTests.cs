@@ -32,7 +32,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
         }
 
         [Fact]
-        public async Task Return_Success_When_Category_Is_DeletedAsync()
+        public async Task Return_Success_When_Category_Is_Deleted()
         {
             // Arrange
             var logic = Create();

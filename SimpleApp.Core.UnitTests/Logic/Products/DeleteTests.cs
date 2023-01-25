@@ -29,7 +29,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Products
         }
 
         [Fact]
-        public async Task Return_Success_When_Product_Is_DeletedAsync()
+        public async Task Return_Success_When_Product_Is_Deleted()
         {
             // Arrange
             var logic = Create();
