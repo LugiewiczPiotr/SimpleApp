@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
@@ -16,7 +17,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
             var logic = Create();
 
             // Act
-            Action result = () => logic.Delete(null);
+            Func<Task> result = async () => await logic.DeleteAsync(null);
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
@@ -31,7 +32,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
         }
 
         [Fact]
-        public void Return_Success_When_Category_Is_Deleted()
+        public async Task Return_Success_When_Category_Is_DeletedAsync()
         {
             // Arrange
             var logic = Create();
@@ -44,7 +45,7 @@ namespace SimpleApp.Core.UnitTests.Logic.Categories
                 r => r.DeleteByCategoryId(category.Id));
 
             // Act
-            var result = logic.Delete(category);
+            var result = await logic.DeleteAsync(category);
 
             // Assert
             result.Success.Should().BeTrue();
