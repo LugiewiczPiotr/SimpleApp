@@ -33,7 +33,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             ProductLogicMock
                 .Verify(x => x.GetByIdAsync(guid), Times.Once());
             ProductLogicMock
-                .Verify(x => x.Delete(It.IsAny<Product>()), Times.Never());
+                .Verify(x => x.DeleteAsync(It.IsAny<Product>()), Times.Never());
         }
 
         [Fact]
@@ -43,8 +43,8 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             var errorMessage = "BadRequest";
             var controller = Create();
             ProductLogicMock
-                .Setup(r => r.Delete(It.IsAny<Product>()))
-                .Returns(Result.Failure<Category>(_product.Name, errorMessage));
+                .Setup(r => r.DeleteAsync(It.IsAny<Product>()))
+                .ReturnsAsync(Result.Failure<Category>(_product.Name, errorMessage));
 
             // Act
             var result = await controller.DeleteAsync(_product.Id);
@@ -54,7 +54,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             ProductLogicMock
                 .Verify(x => x.GetByIdAsync(_product.Id), Times.Once());
             ProductLogicMock
-                .Verify(x => x.Delete(_product), Times.Once());
+                .Verify(x => x.DeleteAsync(_product), Times.Once());
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
             ProductLogicMock
                 .Verify(x => x.GetByIdAsync(_product.Id), Times.Once());
             ProductLogicMock
-                .Verify(x => x.Delete(_product), Times.Once());
+                .Verify(x => x.DeleteAsync(_product), Times.Once());
         }
 
         protected override ProductController Create()
@@ -88,7 +88,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Products
                 .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(Result.Ok(_product));
             ProductLogicMock
-                .Setup(r => r.Delete(It.IsAny<Product>())).Returns(Result.Ok());
+                .Setup(r => r.DeleteAsync(It.IsAny<Product>())).ReturnsAsync(Result.Ok());
         }
     }
 }
