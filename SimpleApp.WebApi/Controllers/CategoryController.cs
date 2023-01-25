@@ -135,7 +135,7 @@ namespace SimpleApp.WebApi.Controllers
                 return NotFound(getResult);
             }
 
-            var deleteResult = _categoryLogic.Delete(getResult.Value);
+            var deleteResult = await _categoryLogic.DeleteAsync(getResult.Value);
             if (deleteResult.Success == false)
             {
                 return BadRequest(deleteResult);

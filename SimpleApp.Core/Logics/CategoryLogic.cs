@@ -73,13 +73,13 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(category);
         }
 
-        public Result Delete(Category category)
+        public async Task<Result> DeleteAsync(Category category)
         {
             ArgumentNullException.ThrowIfNull(category, nameof(category));
 
             _productRepository.DeleteByCategoryId(category.Id);
             _categoryRepository.Delete(category);
-            _categoryRepository.SaveChangesAsync();
+            await _categoryRepository.SaveChangesAsync();
 
             return Result.Ok();
         }

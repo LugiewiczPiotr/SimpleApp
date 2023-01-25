@@ -68,12 +68,12 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(product);
         }
 
-        public Result Delete(Product product)
+        public async Task<Result> DeleteAsync(Product product)
         {
             ArgumentNullException.ThrowIfNull(product, nameof(product));
 
             _productRepository.Delete(product);
-            _productRepository.SaveChangesAsync();
+            await _productRepository.SaveChangesAsync();
 
             return Result.Ok();
         }

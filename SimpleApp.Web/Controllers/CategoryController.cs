@@ -157,7 +157,7 @@ namespace SimpleApp.Web.Controllers
                 return NotFound();
             }
 
-            var deleteResult = _categoryLogic.Delete(getResult.Value);
+            var deleteResult = await _categoryLogic.DeleteAsync(getResult.Value);
 
             if (deleteResult.Success == false)
             {

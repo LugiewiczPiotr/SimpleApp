@@ -15,6 +15,6 @@ namespace SimpleApp.Core.Interfaces.Logics
 
         Task<Result<Product>> UpdateAsync(Product product);
 
-        Result Delete(Product product);
+        Task<Result> DeleteAsync(Product product);
     }
 }

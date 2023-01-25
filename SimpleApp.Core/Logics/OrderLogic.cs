@@ -90,12 +90,12 @@ namespace SimpleApp.Core.Logics
             return Result.Ok(order);
         }
 
-        public Result Delete(Order order)
+        public async Task<Result> DeleteAsync(Order order)
         {
             ArgumentNullException.ThrowIfNull(order, nameof(order));
 
             _orderRepository.Delete(order);
-            _orderRepository.SaveChangesAsync();
+            await _orderRepository.SaveChangesAsync();
 
             return Result.Ok(order);
         }
