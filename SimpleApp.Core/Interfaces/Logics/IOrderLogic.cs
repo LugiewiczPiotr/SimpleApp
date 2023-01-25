@@ -15,6 +15,6 @@ namespace SimpleApp.Core.Interfaces.Logics
 
         Task<Result<Order>> UpdateAsync(Order order);
 
-        Result Delete(Order order);
+        Task<Result> DeleteAsync(Order order);
     }
 }

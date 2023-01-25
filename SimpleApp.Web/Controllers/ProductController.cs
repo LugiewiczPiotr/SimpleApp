@@ -161,7 +161,7 @@ namespace SimpleApp.Web.Controllers
                 return NotFound();
             }
 
-            var deleteResult = _productLogic.Delete(getResult.Value);
+            var deleteResult = await _productLogic.DeleteAsync(getResult.Value);
 
             if (deleteResult.Success == false)
             {

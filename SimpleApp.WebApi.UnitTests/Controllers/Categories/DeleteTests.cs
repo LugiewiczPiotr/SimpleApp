@@ -33,7 +33,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             CategoryLogicMock
                 .Verify(x => x.GetByIdAsync(guid), Times.Once());
             CategoryLogicMock
-                .Verify(x => x.Delete(It.IsAny<Category>()), Times.Never());
+                .Verify(x => x.DeleteAsync(It.IsAny<Category>()), Times.Never());
         }
 
         [Fact]
@@ -43,8 +43,8 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             var errorMessage = "BadRequest";
             var controller = Create();
             CategoryLogicMock
-                .Setup(r => r.Delete(It.IsAny<Category>()))
-                .Returns(Result.Failure<Category>(_category.Name, errorMessage));
+                .Setup(r => r.DeleteAsync(It.IsAny<Category>()))
+                .ReturnsAsync(Result.Failure<Category>(_category.Name, errorMessage));
 
             // Act
             var result = await controller.DeleteAsync(_category.Id);
@@ -54,7 +54,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             CategoryLogicMock
                 .Verify(x => x.GetByIdAsync(_category.Id), Times.Once());
             CategoryLogicMock
-                .Verify(x => x.Delete(_category), Times.Once());
+                .Verify(x => x.DeleteAsync(_category), Times.Once());
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
             CategoryLogicMock
                 .Verify(x => x.GetByIdAsync(_category.Id), Times.Once());
             CategoryLogicMock
-                .Verify(x => x.Delete(_category), Times.Once());
+                .Verify(x => x.DeleteAsync(_category), Times.Once());
         }
 
         protected override CategoryController Create()
@@ -88,7 +88,7 @@ namespace SimpleApp.WebApi.UnitTests.Controllers.Categories
                 .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(Result.Ok(_category));
             CategoryLogicMock
-                .Setup(r => r.Delete(It.IsAny<Category>())).Returns(Result.Ok());
+                .Setup(r => r.DeleteAsync(It.IsAny<Category>())).ReturnsAsync(Result.Ok());
         }
     }
 }

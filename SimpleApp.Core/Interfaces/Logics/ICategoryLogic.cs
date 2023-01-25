@@ -15,6 +15,6 @@ namespace SimpleApp.Core.Interfaces.Logics
 
         Task<Result<Category>> UpdateAsync(Category category);
 
-        Result Delete(Category category);
+        Task<Result> DeleteAsync(Category category);
     }
 }
