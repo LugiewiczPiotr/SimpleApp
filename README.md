@@ -3,7 +3,7 @@ This is an application that manages the product inventory. In this repository th
 
 ## Table of contents
 * [Technologies ](#technologies)
-- [Setup ](#setup-API)
+* [Setup ](#setup-API)
 
 	
 ## Technologies 
